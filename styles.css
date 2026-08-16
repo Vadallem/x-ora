@@ -63,23 +63,42 @@ header {
     font-family: 'Inter', sans-serif;
 }
 
-/* HERO SECTION */
+/* Modifica tu clase .hero existente por esto: */
+/* HERO SECTION (Pantalla Completa) */
 .hero {
     background-color: var(--azul-medianoche);
     color: var(--blanco);
-    padding: 4rem 5%;
-    text-align: left;
+    padding: 0 5%; /* Quitamos el padding vertical para usar el centrado de Flexbox */
+    min-height: calc(100vh - 100px); /* Ocupa toda la pantalla restando el tamaño aproximado de la cabecera */
+    text-align: center;
     border-bottom: 2px solid var(--naranja-aurora);
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra el contenido verticalmente */
+    align-items: center; /* Centra el contenido horizontalmente */
 }
 
 .hero h1 {
-    margin-bottom: 0.5rem;
+    font-size: 3.5rem; /* Hacemos el texto un poco más grande para aprovechar el espacio */
+    margin-bottom: 1rem;
 }
 
 .hero p {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: var(--gris-platino);
-    max-width: 600px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Ajuste responsive para pantallas móviles */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    .hero p {
+        font-size: 1.1rem;
+    }
 }
 
 /* TABS (DUALISMO DE MARCA) */
@@ -556,5 +575,104 @@ footer {
     }
     .form-group.full-width {
         grid-column: span 1;
+    }
+}
+
+/* =========================================
+   SISTEMA DE COBERTURA GLOBAL E INTERACTIVO (LOW-POLY)
+   ========================================= */
+.mapa-dashboard {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    background-color: var(--blanco);
+    border: 1px solid var(--gris-platino);
+    border-top: 4px solid var(--azul-profundo);
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    align-items: center;
+}
+
+.mapa-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.08));
+}
+
+/* Estilos de los Polígonos Base */
+.mapa-svg path {
+    fill: var(--gris-platino);
+    stroke: var(--azul-medianoche); /* Bordes oscuros y afilados */
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+    transition: all 0.3s ease;
+}
+
+/* Triangulación Interna (Estética Low-Poly) */
+.mapa-svg .linea-interna {
+    fill: none;
+    stroke: var(--azul-medianoche);
+    stroke-width: 1.5;
+    pointer-events: none; /* Permite que los clics traspasen a los países */
+}
+
+/* Países inactivos sutiles al pasar el mouse */
+.mapa-svg path:not(.pais-activo):hover {
+    fill: var(--gris-acero);
+}
+
+/* Países Activos (México y USA) */
+.mapa-svg path.pais-activo {
+    fill: var(--azul-profundo);
+    cursor: crosshair; /* Cursor técnico */
+}
+
+.mapa-svg path.pais-activo:hover,
+.mapa-svg path.pais-activo.seleccionado {
+    fill: var(--naranja-aurora); /* Acento cognitivo que indica selección activa */
+    stroke: var(--azul-medianoche);
+}
+
+/* Panel de Telemetría (Info) */
+.info-panel {
+    background-color: var(--gris-platino);
+    padding: 2rem;
+    border-left: 4px solid var(--gris-acero);
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-panel h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--azul-medianoche);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--gris-acero);
+    padding-bottom: 0.5rem;
+}
+
+.info-panel p {
+    font-family: 'Inter', sans-serif;
+    color: var(--gris-acero);
+    font-size: 0.95rem;
+    margin-bottom: 0.8rem;
+}
+
+.info-panel strong {
+    color: var(--azul-profundo);
+}
+
+@media (max-width: 768px) {
+    .mapa-dashboard {
+        grid-template-columns: 1fr;
+    }
+    .info-panel {
+        border-left: none;
+        border-top: 4px solid var(--gris-acero);
+        min-height: auto;
     }
 }

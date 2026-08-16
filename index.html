@@ -13,26 +13,35 @@
 </head>
 <body>
 
-    <!-- CABECERA CON NAV BAR (Asegúrate de replicar este menú en los demás HTML) -->
+    <!-- CABECERA CON NAV BAR -->
     <header>
         <div class="logo">
             <a href="index.html">x-ora<span class="logo-luz">_</span></a>
         </div>
         <nav class="main-nav">
-            <a href="index.html">Inicio</a>
+            <a href="index.html" style="color: var(--gris-platino); border-bottom: 2px solid var(--gris-platino); padding-bottom: 0.2rem;">Inicio</a>
             <a href="about.html">Nosotros</a>
             <a href="services.html">Services</a>
             <a href="studio.html">Studio</a>
-            <a href="contacto.html" class="active-nav-contact">Contacto</a>
+            <a href="contacto.html">Contacto</a>
         </nav>
     </header>
-    <!-- HERO / FILOSOFÍA -->
+
+    <!-- HERO / FILOSOFÍA (Texto Centrado) -->
     <section class="hero">
         <h1>De la incógnita a la primera luz.</h1>
         <p>Un puente de credibilidad entre el sector industrial de infraestructura crítica y el aprendizaje STEAM de alto nivel.</p>
     </section>
 
-    <!-- NAVEGACIÓN DUAL -->
+    <!-- SECCIÓN: X-ORA GENERAL (La Marca Madre) -->
+    <section class="content-section bg-gris" style="display: block; text-align: center; padding: 4rem 5%; border-bottom: 4px solid var(--gris-acero);">
+        <h2 style="font-size: 2rem; margin-bottom: 1rem;">Ecosistema Global</h2>
+        <p style="max-width: 800px; margin: 0 auto; color: var(--gris-acero); font-size: 1.1rem;">
+            La marca x-ora se proyecta como una arquitectura monolítica diseñada para actuar como un puente de credibilidad. Estratégicamente, no somos una marca paraguas, sino una marca madre que unifica ambos territorios bajo la premisa de la ingeniería como estructura de pensamiento. El rigor utilizado para comisionar un sistema de potencia crítica es el mismo que cultivamos para diagnosticar un punto crítico de fallo en un prototipo robótico.
+        </p>
+    </section>
+
+    <!-- NAVEGACIÓN DUAL (Tabs) -->
     <div class="tab-container">
         <button class="tab-btn active-services" id="btn-services" onclick="switchTab('services')">x-ora Services</button>
         <button class="tab-btn" id="btn-studio" onclick="switchTab('studio')">x-ora Studio</button>

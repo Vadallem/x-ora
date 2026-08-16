@@ -13,7 +13,7 @@
 </head>
 <body>
 
-    <!-- CABECERA CON NAV BAR (Asegúrate de replicar este menú en los demás HTML) -->
+    <!-- CABECERA CON NAV BAR -->
     <header>
         <div class="logo">
             <a href="index.html">x-ora<span class="logo-luz">_</span></a>
@@ -36,6 +36,48 @@
         <p style="margin-top: 1rem; font-size: 1.2rem; color: var(--gris-platino); max-width: 700px;">
             Transformamos la complejidad técnica en ejecución real. Proveemos la arquitectura y el rigor necesarios para garantizar la continuidad en infraestructuras críticas.
         </p>
+    </section>
+
+    <!-- SECCIÓN 5: COBERTURA Y MAPA GLOBAL -->
+    <section class="content-section bg-gris active">
+        <h2>Cobertura Operativa Global</h2>
+        <p style="color: var(--gris-acero); font-family: 'Inter', sans-serif; margin-bottom: 2rem;">
+            Nuestra capacidad de ejecución y soporte de infraestructura crítica opera actualmente con bases en Norteamérica. 
+            <em>Interactúe con las zonas resaltadas en el mapa para desplegar la telemetría.</em>
+        </p>
+        
+        <div class="mapa-dashboard">
+            <!-- MAPA VECTORIAL MapSVG -->
+            <svg class="mapa-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+                <!-- Created for MapSVG plugin -->
+                
+                <!-- 
+                  NOTA PARA TI: 
+                  Aquí debes pegar todos los <path> de tu archivo original MapSVG.
+                  A los países con los que quieras interactuar (ej. US y MX), 
+                  debes agregarles la clase "pais-activo" y el evento "onclick".
+                  A continuación un ejemplo de cómo deben quedar:
+                -->
+                
+                <!-- PAÍSES ACTIVOS (Interacción) -->
+                <path id="US" title="Estados Unidos" class="pais-activo" onclick="actualizarInfo('US')" d="... (PEGA AQUÍ LAS COORDENADAS DE USA) ..." />
+                <path id="MX" title="México" class="pais-activo" onclick="actualizarInfo('MX')" d="... (PEGA AQUÍ LAS COORDENADAS DE MÉXICO) ..." />
+                
+                <!-- PAÍSES INACTIVOS (El resto del mundo) -->
+                <path id="AD" title="Andorra" d="... (coordenadas) ..." />
+                <path id="AE" title="Emiratos Árabes Unidos" d="... (coordenadas) ..." />
+                <path id="AF" title="Afganistán" d="... (coordenadas) ..." />
+                <!-- ... Continúa pegando el resto de los <path> de tu archivo ... -->
+                
+            </svg>
+
+            <!-- PANEL DE INFORMACIÓN INTERACTIVO -->
+            <div class="info-panel" id="panel-telemetria">
+                <h3>[ Esperando Selección ]</h3>
+                <p>Seleccione una región operativa resaltada en el mapa para desplegar los protocolos de contacto y áreas de despliegue.</p>
+                <p style="font-size: 0.8rem; color: var(--gris-acero); margin-top: 2rem;">Estado del sistema: <em>Standby</em></p>
+            </div>
+        </div>
     </section>
 
     <!-- SECCIÓN 2: SISTEMAS Y ALCANCE -->
@@ -126,6 +168,46 @@
     <footer>
         <p>&copy; 2026 x-ora. Transformando la complejidad en ejecución real.</p>
     </footer>
+
+    <!-- LOGICA DEL MAPA INTERACTIVO -->
+    <script>
+        function actualizarInfo(region) {
+            const panel = document.getElementById('panel-telemetria');
+            
+            // 1. Remover la clase 'seleccionado' de todos los países
+            const todosLosPaises = document.querySelectorAll('.mapa-svg path');
+            todosLosPaises.forEach(pais => {
+                pais.classList.remove('seleccionado');
+            });
+            
+            // 2. Lógica para Estados Unidos (ID = US)
+            if (region === 'US') {
+                const usaPath = document.getElementById('US');
+                if(usaPath) usaPath.classList.add('seleccionado');
+                
+                panel.innerHTML = `
+                    <h3 style="border-bottom-color: var(--naranja-aurora);">Enlace Norteamérica</h3>
+                    <p><strong>Despliegue:</strong> Tech Hub Cluster, Austin, TX.</p>
+                    <p><strong>Sectores:</strong> Centros de Datos IT y Soporte de Infraestructura Crítica.</p>
+                    <p><strong>Nivel Operativo:</strong> Disponibilidad 99.995%</p>
+                    <p style="font-size: 0.8rem; margin-top: 1rem;">Contacto: usa_ops@x-ora.com</p>
+                `;
+            } 
+            // 3. Lógica para México (ID = MX)
+            else if (region === 'MX') {
+                const mexPath = document.getElementById('MX');
+                if(mexPath) mexPath.classList.add('seleccionado');
+                
+                panel.innerHTML = `
+                    <h3 style="border-bottom-color: var(--naranja-aurora);">Base Central LATAM</h3>
+                    <p><strong>Despliegue:</strong> Parque Industrial Tecnológico, CDMX.</p>
+                    <p><strong>Sectores:</strong> Manufactura Avanzada, Hospitalario y Automatización BMS.</p>
+                    <p><strong>Nivel Operativo:</strong> Centro de Comando (NOC) Integrado.</p>
+                    <p style="font-size: 0.8rem; margin-top: 1rem;">Contacto: latam_ops@x-ora.com</p>
+                `;
+            }
+        }
+    </script>
 
 </body>
 </html>
