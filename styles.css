@@ -1,0 +1,560 @@
+/* SISTEMA DE COLOR (GAMA CROMÁTICA) */
+:root {
+    --azul-profundo: #2d3f50;
+    --naranja-aurora: #ff8a00;
+    --gris-platino: #e2e8f0;
+    --gris-acero: #64748b;
+    --azul-medianoche: #0f172a;
+    --blanco: #ffffff;
+}
+
+/* SISTEMA TIPOGRÁFICO Y ESTRUCTURA BÁSICA */
+body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: var(--azul-medianoche);
+    background-color: var(--gris-platino);
+    margin: 0;
+    padding: 0;
+    text-align: left; /* Alineación izquierda para rigor editorial */
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 0;
+}
+
+h1 {
+    font-weight: 700; /* Bold */
+    text-transform: uppercase;
+    color: var(--blanco);
+}
+
+h2 {
+    font-weight: 600; /* Semi-Bold */
+    color: var(--azul-profundo);
+}
+
+/* NAVEGACIÓN Y HEADER */
+header {
+    background-color: var(--azul-profundo);
+    padding: 2rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid var(--gris-acero);
+}
+
+.logo {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: var(--blanco);
+    letter-spacing: -0.5px;
+}
+
+.logo-luz {
+    color: var(--naranja-aurora); /* Síntesis abstracta de la aurora */
+}
+
+.header-subtitle {
+    color: var(--gris-platino); 
+    font-family: 'Inter', sans-serif;
+}
+
+/* HERO SECTION */
+.hero {
+    background-color: var(--azul-medianoche);
+    color: var(--blanco);
+    padding: 4rem 5%;
+    text-align: left;
+    border-bottom: 2px solid var(--naranja-aurora);
+}
+
+.hero h1 {
+    margin-bottom: 0.5rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: var(--gris-platino);
+    max-width: 600px;
+}
+
+/* TABS (DUALISMO DE MARCA) */
+.tab-container {
+    display: flex;
+    background-color: var(--gris-acero);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--blanco);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tab-btn.active-services {
+    background-color: var(--azul-profundo);
+    border-bottom: 4px solid var(--blanco);
+}
+
+.tab-btn.active-studio {
+    background-color: var(--naranja-aurora);
+    border-bottom: 4px solid var(--azul-medianoche);
+    color: var(--azul-medianoche);
+}
+
+/* SECCIONES DE CONTENIDO */
+.content-section {
+    display: none;
+    padding: 4rem 5%;
+    background-color: var(--blanco);
+    min-height: 40vh;
+}
+
+.content-section.active {
+    display: block;
+}
+
+.descriptor {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: var(--gris-acero);
+    margin-bottom: 2rem;
+    display: inline-block;
+    border-bottom: 2px solid var(--gris-platino);
+}
+
+/* BOTONES "CONOCE MÁS" */
+.btn {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.8rem 2rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.btn-services {
+    background-color: var(--azul-profundo);
+    color: var(--blanco);
+    border: 2px solid var(--azul-profundo);
+}
+
+.btn-services:hover {
+    background-color: var(--azul-medianoche);
+    border-color: var(--azul-medianoche);
+}
+
+.btn-studio {
+    background-color: var(--blanco);
+    color: var(--naranja-aurora);
+    border: 2px solid var(--naranja-aurora);
+}
+
+.btn-studio:hover {
+    background-color: var(--naranja-aurora);
+    color: var(--azul-medianoche); /* Equilibrio profesional para Studio */
+}
+
+/* FOOTER */
+footer {
+    background-color: var(--azul-medianoche);
+    color: var(--gris-platino);
+    text-align: left;
+    padding: 2rem 5%;
+    font-size: 0.9rem;
+}
+
+/* NAVEGACIÓN PRINCIPAL (NAV BAR) */
+.main-nav {
+    display: flex;
+    gap: 2rem;
+}
+
+.main-nav a {
+    color: var(--blanco);
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.main-nav a:hover, .main-nav a.active-nav {
+    color: var(--naranja-aurora); /* Acento sutil para ubicación */
+}
+
+/* ENLACE LOGO */
+.logo a {
+    color: var(--blanco);
+    text-decoration: none;
+}
+
+/* VARIANTES DE SECCIÓN PARA SERVICES */
+.hero-services {
+    background-color: var(--azul-medianoche);
+    color: var(--blanco);
+    padding: 6rem 5%;
+    text-align: left;
+    border-bottom: 4px solid var(--azul-profundo); /* Menos naranja, más rigor industrial */
+}
+
+.hero-services h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.2rem;
+}
+
+.bg-gris {
+    background-color: var(--gris-platino); /* Alternancia de rigor mineral */
+}
+
+/* CUADRÍCULAS (GRIDS) TÉCNICAS */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.card {
+    background-color: var(--blanco);
+    border-top: 4px solid var(--azul-profundo);
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.card.card-alt {
+    background-color: var(--azul-profundo);
+    color: var(--blanco);
+    border-top: 4px solid var(--gris-acero);
+}
+
+.card h3 {
+    color: var(--azul-medianoche);
+    margin-bottom: 1rem;
+}
+
+.card.card-alt h3 {
+    color: var(--blanco);
+}
+
+/* LISTAS TÉCNICAS */
+.tech-list {
+    list-style: none;
+    padding: 0;
+}
+
+.tech-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--gris-platino);
+    font-family: 'Inter', sans-serif;
+    color: var(--gris-acero);
+}
+
+.tech-list li::before {
+    content: "■ ";
+    color: var(--azul-profundo);
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+}
+
+/* NAVEGACIÓN ACTIVA STUDIO */
+.main-nav a.active-nav-studio {
+    color: var(--naranja-aurora);
+}
+
+/* HERO SECTION STUDIO */
+.hero-studio {
+    background-color: var(--azul-medianoche);
+    color: var(--blanco);
+    padding: 6rem 5%;
+    text-align: left;
+    border-bottom: 4px solid var(--naranja-aurora);
+}
+
+.hero-studio h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.2rem;
+}
+
+/* TARJETAS STUDIO (Borde Naranja) */
+.card-studio {
+    background-color: var(--blanco);
+    border-top: 4px solid var(--naranja-aurora);
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.card-studio h3 {
+    color: var(--azul-medianoche);
+    margin-bottom: 1rem;
+}
+
+/* BOTÓN CALL TO ACTION STUDIO */
+.btn-studio-solid {
+    display: inline-block;
+    background-color: var(--naranja-aurora);
+    color: var(--azul-medianoche);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+}
+
+.btn-studio-solid:hover {
+    background-color: var(--blanco);
+    color: var(--naranja-aurora);
+    box-shadow: inset 0 0 0 2px var(--naranja-aurora);
+}
+
+/* ESTRUCTURA CONTACTO Y MAPA */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.contact-info p {
+    font-family: 'Inter', sans-serif;
+    color: var(--gris-acero);
+    margin-bottom: 1rem;
+}
+
+.contact-info h3 {
+    color: var(--azul-profundo);
+    margin-top: 2rem;
+}
+
+/* RESPONSIVE CONTACTO */
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* NAVEGACIÓN ACTIVA ABOUT */
+.main-nav a.active-nav-about {
+    color: var(--gris-platino);
+    border-bottom: 2px solid var(--gris-platino);
+    padding-bottom: 0.2rem;
+}
+
+/* HERO SECTION ABOUT (Marca Madre) */
+.hero-about {
+    background-color: var(--azul-profundo); /* Azul fundacional de la marca madre */
+    color: var(--blanco);
+    padding: 6rem 5%;
+    text-align: left;
+    border-bottom: 4px solid var(--gris-platino);
+}
+
+.hero-about h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.2rem;
+}
+
+/* TARJETAS DE GÉNESIS (Historia) */
+.genesis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.genesis-card {
+    background-color: var(--blanco);
+    border-left: 4px solid var(--azul-profundo);
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.genesis-card h3 {
+    color: var(--azul-medianoche);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* RELACIÓN SERVICES & STUDIO (Dualismo) */
+.dualism-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-top: 2rem;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.dualism-side {
+    flex: 1;
+    min-width: 300px;
+    padding: 3rem;
+}
+
+.dualism-services {
+    background-color: var(--azul-medianoche);
+    color: var(--blanco);
+    border-top: 4px solid var(--azul-profundo);
+}
+
+.dualism-studio {
+    background-color: var(--blanco);
+    color: var(--azul-medianoche);
+    border-top: 4px solid var(--naranja-aurora);
+}
+
+.dualism-side h3 {
+    margin-bottom: 1rem;
+}
+
+.dualism-services h3 {
+    color: var(--blanco);
+}
+
+/* NAVEGACIÓN ACTIVA CONTACTO */
+.main-nav a.active-nav-contact {
+    color: var(--gris-platino);
+    border-bottom: 2px solid var(--gris-platino);
+    padding-bottom: 0.2rem;
+}
+
+/* HERO SECTION CONTACTO */
+.hero-contact {
+    background-color: var(--azul-medianoche);
+    color: var(--blanco);
+    padding: 6rem 5%;
+    text-align: left;
+    border-bottom: 4px solid var(--gris-acero);
+}
+
+.hero-contact h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.2rem;
+}
+
+/* ESTILOS DE FORMULARIO DE CONTACTO (Arquitectura Geométrica) */
+.form-container {
+    background-color: var(--gris-platino);
+    padding: 3rem;
+    border-top: 4px solid var(--azul-profundo);
+    margin-top: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Variante Formulario Studio */
+.form-container.studio-form {
+    background-color: var(--blanco);
+    border: 1px solid var(--gris-platino);
+    border-top: 4px solid var(--naranja-aurora);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+.form-group label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: var(--azul-medianoche);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Inputs técnicos, sin bordes redondeados (0px) */
+.form-group input, 
+.form-group textarea, 
+.form-group select {
+    padding: 0.8rem;
+    border: 1px solid var(--gris-acero);
+    font-family: 'Inter', sans-serif;
+    background-color: var(--blanco);
+    color: var(--azul-medianoche);
+    outline: none;
+    border-radius: 0; 
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus, 
+.form-group select:focus {
+    border-color: var(--azul-profundo);
+}
+
+.studio-form .form-group input:focus, 
+.studio-form .form-group textarea:focus, 
+.studio-form .form-group select:focus {
+    border-color: var(--naranja-aurora);
+}
+
+/* Botones de Envío */
+.submit-btn {
+    margin-top: 1.5rem;
+    padding: 1rem 2rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.submit-services {
+    background-color: var(--azul-profundo);
+    color: var(--blanco);
+}
+
+.submit-services:hover {
+    background-color: var(--azul-medianoche);
+}
+
+.submit-studio {
+    background-color: var(--naranja-aurora);
+    color: var(--azul-medianoche);
+}
+
+.submit-studio:hover {
+    background-color: var(--blanco);
+    box-shadow: inset 0 0 0 2px var(--naranja-aurora);
+}
+
+/* Responsive para formularios */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-group.full-width {
+        grid-column: span 1;
+    }
+}

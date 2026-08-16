@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>x-ora | De la incógnita a la primera luz</title>
+    
+    <!-- Importación de Tipografías según el manual -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Enlace al archivo CSS externo -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- CABECERA CON NAV BAR (Asegúrate de replicar este menú en los demás HTML) -->
+    <header>
+        <div class="logo">
+            <a href="index.html">x-ora<span class="logo-luz">_</span></a>
+        </div>
+        <nav class="main-nav">
+            <a href="index.html">Inicio</a>
+            <a href="about.html">Nosotros</a>
+            <a href="services.html">Services</a>
+            <a href="studio.html">Studio</a>
+            <a href="contacto.html" class="active-nav-contact">Contacto</a>
+        </nav>
+    </header>
+    <!-- HERO / FILOSOFÍA -->
+    <section class="hero">
+        <h1>De la incógnita a la primera luz.</h1>
+        <p>Un puente de credibilidad entre el sector industrial de infraestructura crítica y el aprendizaje STEAM de alto nivel.</p>
+    </section>
+
+    <!-- NAVEGACIÓN DUAL -->
+    <div class="tab-container">
+        <button class="tab-btn active-services" id="btn-services" onclick="switchTab('services')">x-ora Services</button>
+        <button class="tab-btn" id="btn-studio" onclick="switchTab('studio')">x-ora Studio</button>
+    </div>
+
+    <!-- SECCIÓN: SERVICES -->
+    <section id="services" class="content-section active">
+        <h2>Ingeniería y Disponibilidad Operativa</h2>
+        <span class="descriptor">Descriptor: Critical Power & Control Systems</span>
+        <p>Nuestros procesos de comisionamiento y soporte para infraestructura crítica garantizan alta disponibilidad y autoridad técnica. Ejecutamos metodologías de prueba fundamentadas en diagnósticos concretos y evidencias medibles.</p>
+        <p><em>Rigor mineral, neutralidad operativa y limpieza técnica en cada ejecución.</em></p>
+        
+        <!-- Botón a Services -->
+        <a href="services.html" class="btn btn-services">Conoce más</a>
+    </section>
+
+    <!-- SECCIÓN: STUDIO -->
+    <section id="studio" class="content-section">
+        <h2>Ecosistema Educativo y Código STARIS</h2>
+        <span class="descriptor">Descriptor: Engineering & Technology</span>
+        <p>Un entorno de aprendizaje premium que inspira mediante el reto técnico. Diagnosticamos puntos críticos de fallo e iteramos prototipos tratando a nuestros estudiantes como personas altamente capaces.</p>
+        <p><em>El destello de la comprensión y el nacimiento del conocimiento sin estéticas lúdicas superficiales.</em></p>
+        
+        <!-- Botón a Studio -->
+        <a href="studio.html" class="btn btn-studio">Conoce más</a>
+    </section>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <p>&copy; 2026 x-ora. Transformando la complejidad en ejecución real.</p>
+    </footer>
+
+    <!-- Enlace al archivo JavaScript externo -->
+    <script src="script.js"></script>
+</body>
+</html>

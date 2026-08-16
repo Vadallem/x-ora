@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto | x-ora Ecosistema Global</title>
+    
+    <!-- Importación de Tipografías -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Enlace al archivo CSS principal -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Estilos específicos para las tarjetas de datos de contacto -->
+    <style>
+        .contact-data-container {
+            background-color: var(--gris-platino);
+            padding: 3rem;
+            border-top: 4px solid var(--azul-profundo);
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-data-container.studio-data {
+            background-color: var(--blanco);
+            border: 1px solid var(--gris-platino);
+            border-top: 4px solid var(--naranja-aurora);
+        }
+
+        .data-block h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            color: var(--azul-medianoche);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .data-block p {
+            font-family: 'Inter', sans-serif;
+            color: var(--gris-acero);
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .data-block strong {
+            color: var(--azul-profundo);
+        }
+        
+        .studio-data .data-block strong {
+            color: var(--naranja-aurora); /* Acento cognitivo para Studio */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABECERA CON NAV BAR -->
+    <header>
+        <div class="logo">
+            <a href="index.html">x-ora<span class="logo-luz">_</span></a>
+        </div>
+        <nav class="main-nav">
+            <a href="index.html">Inicio</a>
+            <a href="about.html">Nosotros</a>
+            <a href="services.html">Services</a>
+            <a href="studio.html">Studio</a>
+            <a href="contacto.html" class="active-nav-contact">Contacto</a>
+        </nav>
+    </header>
+
+    <!-- SECCIÓN: HERO -->
+    <section class="hero-contact">
+        <h1>Enlace Operativo</h1>
+        <p style="margin-top: 1rem; font-size: 1.2rem; color: var(--gris-platino); max-width: 700px;">
+            Establece comunicación directa con nuestro equipo. Selecciona la división correspondiente a tu requerimiento técnico o académico.
+        </p>
+    </section>
+
+    <!-- NAVEGACIÓN DUAL (TABS) -->
+    <div class="tab-container">
+        <button class="tab-btn active-services" id="btn-contact-services" onclick="switchContactTab('contact-services')">x-ora Services</button>
+        <button class="tab-btn" id="btn-contact-studio" onclick="switchContactTab('contact-studio')">x-ora Studio</button>
+    </div>
+
+    <!-- SECCIÓN DE DATOS: SERVICES -->
+    <section id="contact-services" class="content-section active">
+        <h2>Requerimiento de Ingeniería y Soporte</h2>
+        <span class="descriptor">Área: Critical Power & Control Systems</span>
+        <p>Contacte a nuestro centro de operaciones para comisionamiento, diagnóstico de infraestructura crítica o despliegue de soporte en campo. Operamos con rigor mineral y garantizamos alta disponibilidad.</p>
+        
+        <div class="contact-data-container">
+            <div class="data-block">
+                <h3>Dirección Operativa</h3>
+                <p><strong>Base Central:</strong> Parque Industrial Tecnológico, Nave 4.</p>
+                <p>Ciudad de México, CP 02300.</p>
+            </div>
+            
+            <div class="data-block">
+                <h3>Contacto Directo</h3>
+                <p><strong>Operaciones:</strong> +52 (55) 9000 1111</p>
+                <p><strong>Emergencias (24/7):</strong> +52 (55) 9000 1199</p>
+                <p><strong>Email:</strong> ingenieria@x-ora.com</p>
+            </div>
+
+            <div class="data-block">
+                <h3>Horario de Atención</h3>
+                <p><strong>Soporte en Campo:</strong> 24/7</p>
+                <p><strong>Oficinas Administrativas:</strong> Lunes a Viernes, 08:00 - 18:00 hrs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE DATOS: STUDIO -->
+    <section id="contact-studio" class="content-section">
+        <h2>Admisiones y Diagnóstico de Integración</h2>
+        <span class="descriptor">Área: Engineering & Technology</span>
+        <p>Comunícate con nuestro equipo de admisiones para agendar un diagnóstico técnico o coordinar una visita presencial a nuestros laboratorios y conocer nuestro modelo de aprendizaje basado en sistemas.</p>
+        
+        <div class="contact-data-container studio-data">
+            <div class="data-block">
+                <h3>Ubicación del Ecosistema</h3>
+                <p><strong>Campus x-ora Studio:</strong> Av. de la Innovación 404.</p>
+                <p>Ciudad de México, CP 02350.</p>
+                <p><em>(Las visitas requieren cita previa con un ingeniero residente).</em></p>
+            </div>
+            
+            <div class="data-block">
+                <h3>Contacto de Admisiones</h3>
+                <p><strong>Teléfono:</strong> +52 (55) 1234 5678</p>
+                <p><strong>WhatsApp:</strong> +52 (55) 1234 5679</p>
+                <p><strong>Email:</strong> admisiones@x-ora.com</p>
+            </div>
+
+            <div class="data-block">
+                <h3>Horario de Atención</h3>
+                <p><strong>Lunes a Viernes:</strong> 10:00 - 19:00 hrs.</p>
+                <p><strong>Sábados:</strong> 09:00 - 14:00 hrs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <p>&copy; 2026 x-ora. Transformando la complejidad en ejecución real.</p>
+    </footer>
+
+    <!-- Lógica JS para cambiar de pestañas en Contacto -->
+    <script>
+        function switchContactTab(tabId) {
+            // Ocultar las secciones de contacto
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Reiniciar estilos de los botones
+            document.getElementById('btn-contact-services').classList.remove('active-services');
+            document.getElementById('btn-contact-studio').classList.remove('active-studio');
+            
+            // Activar la sección correspondiente
+            document.getElementById(tabId).classList.add('active');
+            
+            // Aplicar el estilo activo al botón presionado
+            if (tabId === 'contact-services') {
+                document.getElementById('btn-contact-services').classList.add('active-services');
+            } else if (tabId === 'contact-studio') {
+                document.getElementById('btn-contact-studio').classList.add('active-studio');
+            }
+        }
+    </script>
+</body>
+</html>
