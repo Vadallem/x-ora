@@ -16,26 +16,32 @@
 
     <!-- CABECERA CON NAV BAR -->
     <header id="siteHeader">
-        <div class="logo">
-            <a href="index.html">x-ora<span class="logo-luz">_</span></a>
+        <div class="header-left">
+            <div class="logo">
+                <a href="index.html">x-ora<span class="logo-luz">_</span></a>
+            </div>
+
+            <nav class="main-nav" id="mainNav">
+                <a href="index.html" class="active-nav">Inicio</a>
+                <a href="about.html">Nosotros</a>
+                <a href="services.html">Services</a>
+                <a href="studio.html">Studio</a>
+                <a href="contacto.html">Contacto</a>
+            </nav>
         </div>
 
         <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mainNav">
             <span></span><span></span><span></span>
             <span class="sr-only">Abrir menú</span>
         </button>
-
-        <nav class="main-nav" id="mainNav">
-            <a href="index.html" class="active-nav">Inicio</a>
-            <a href="about.html">Nosotros</a>
-            <a href="services.html">Services</a>
-            <a href="studio.html">Studio</a>
-            <a href="contacto.html">Contacto</a>
-        </nav>
     </header>
 
     <!-- HERO / FILOSOFÍA -->
     <section class="hero">
+        <video class="hero-video" id="heroVideo" autoplay muted loop playsinline aria-hidden="true">
+            <source src="assets/Estrellas.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay" aria-hidden="true"></div>
         <h1 class="hero-title">
             <span class="line"><span class="line-inner">De la incógnita</span></span>
             <span class="line"><span class="line-inner">a la primera luz.</span></span>
@@ -45,36 +51,25 @@
 
     <!-- MANIFIESTO: X-ORA COMO MARCA MADRE -->
     <section class="manifesto reveal" aria-labelledby="manifesto-title">
-        <div class="manifesto-text">
-            <h2 id="manifesto-title">Ecosistema Global</h2>
-            <p>
-                La marca x-ora se proyecta como una arquitectura monolítica diseñada para actuar como un puente de credibilidad. Estratégicamente, no somos una marca paraguas, sino una marca madre que unifica ambos territorios bajo la premisa de la ingeniería como estructura de pensamiento. El rigor utilizado para comisionar un sistema de potencia crítica es el mismo que cultivamos para diagnosticar un punto crítico de fallo en un prototipo robótico.
-            </p>
+        <div class="manifesto-inner">
+            <div class="manifesto-text">
+                <h2 id="manifesto-title">Ecosistema Global</h2>
+                <p>
+                    La marca x-ora se proyecta como una arquitectura monolítica diseñada para actuar como un puente de credibilidad. Estratégicamente, no somos una marca paraguas, sino una marca madre que unifica ambos territorios bajo la premisa de la ingeniería como estructura de pensamiento. El rigor utilizado para comisionar un sistema de potencia crítica es el mismo que cultivamos para diagnosticar un punto crítico de fallo en un prototipo robótico.
+                </p>
+            </div>
+            <div class="manifesto-visual" aria-hidden="true"></div>
         </div>
-        <svg class="bridge-diagram" viewBox="0 0 320 130" aria-hidden="true" focusable="false">
-            <line x1="46" y1="60" x2="274" y2="60" class="bridge-line" />
-            <circle cx="46" cy="60" r="15" class="bridge-node bridge-node-services" />
-            <circle cx="274" cy="60" r="15" class="bridge-node bridge-node-studio" />
-            <text x="46" y="102" class="bridge-label">X</text>
-            <text x="274" y="102" class="bridge-label">ORA</text>
-        </svg>
     </section>
 
     <!-- SWITCH X — ORA: TRANSICIÓN DE TERRITORIO -->
     <section class="switch-section reveal" aria-labelledby="switch-title">
         <h2 id="switch-title" class="sr-only">Selecciona un territorio x-ora</h2>
 
-        <div class="xora-switch" id="xoraSwitch" data-territory="services">
-            <button type="button" class="switch-word switch-word-x is-active" id="labelServices" data-target="services">X</button>
-
-            <span class="switch-track">
-                <span class="switch-rail" aria-hidden="true"></span>
-                <span class="switch-pulse" aria-hidden="true"></span>
-                <input type="range" min="0" max="1" step="1" value="0" class="switch-input" id="territoryRange" aria-label="Cambiar entre x-ora Services y x-ora Studio">
-                <span class="switch-thumb" aria-hidden="true"></span>
-            </span>
-
-            <button type="button" class="switch-word switch-word-ora" id="labelStudio" data-target="studio">ORA</button>
+        <div class="xora-switch" id="xoraSwitch" role="radiogroup" aria-label="Cambiar entre x-ora Services y x-ora Studio" data-territory="services">
+            <span class="switch-glide" aria-hidden="true"></span>
+            <button type="button" class="switch-segment is-active" id="segServices" role="radio" aria-checked="true" data-target="services">Services</button>
+            <button type="button" class="switch-segment" id="segStudio" role="radio" aria-checked="false" tabindex="-1" data-target="studio">Studio</button>
         </div>
 
         <p class="switch-caption" id="switchCaption">x-ora Services — infraestructura crítica</p>

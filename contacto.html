@@ -58,17 +58,25 @@
 <body>
 
     <!-- CABECERA CON NAV BAR -->
-    <header>
-        <div class="logo">
-            <a href="index.html">x-ora<span class="logo-luz">_</span></a>
+    <header id="siteHeader">
+        <div class="header-left">
+            <div class="logo">
+                <a href="index.html">x-ora<span class="logo-luz">_</span></a>
+            </div>
+
+            <nav class="main-nav" id="mainNav">
+                <a href="index.html">Inicio</a>
+                <a href="about.html">Nosotros</a>
+                <a href="services.html">Services</a>
+                <a href="studio.html">Studio</a>
+                <a href="contacto.html" class="active-nav">Contacto</a>
+            </nav>
         </div>
-        <nav class="main-nav">
-            <a href="index.html">Inicio</a>
-            <a href="about.html">Nosotros</a>
-            <a href="services.html">Services</a>
-            <a href="studio.html">Studio</a>
-            <a href="contacto.html" class="active-nav-contact">Contacto</a>
-        </nav>
+
+        <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mainNav">
+            <span></span><span></span><span></span>
+            <span class="sr-only">Abrir menú</span>
+        </button>
     </header>
 
     <!-- SECCIÓN: HERO -->
@@ -146,6 +154,8 @@
     <footer>
         <p>&copy; 2026 x-ora. Transformando la complejidad en ejecución real.</p>
     </footer>
+
+    <script src="script.js"></script>
 
     <!-- Lógica JS para cambiar de pestañas en Contacto -->
     <script>

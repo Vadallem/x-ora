@@ -29,14 +29,75 @@ function initNavToggle() {
     });
 }
 
-// SOMBRA DE CABECERA AL HACER SCROLL
+// CHIP FLOTANTE QUE SIGUE AL ENLACE ACTIVO/HOVER EN LA NAV
+function initNavIndicator() {
+    const nav = document.getElementById('mainNav');
+    if (!nav) return;
+
+    const links = Array.from(nav.querySelectorAll('a'));
+    if (!links.length) return;
+
+    const glow = document.createElement('span');
+    glow.className = 'nav-glow';
+    nav.insertBefore(glow, nav.firstChild);
+
+    function moveTo(el) {
+        if (!el) {
+            glow.style.opacity = '0';
+            return;
+        }
+        const navRect = nav.getBoundingClientRect();
+        const linkRect = el.getBoundingClientRect();
+        glow.style.opacity = '1';
+        glow.style.width = `${linkRect.width}px`;
+        glow.style.height = `${linkRect.height}px`;
+        glow.style.transform = `translate(${linkRect.left - navRect.left}px, ${linkRect.top - navRect.top}px)`;
+    }
+
+    function restToActive() {
+        moveTo(nav.querySelector('a.active-nav'));
+    }
+
+    links.forEach(link => {
+        link.addEventListener('mouseenter', () => moveTo(link));
+        link.addEventListener('focus', () => moveTo(link));
+    });
+
+    nav.addEventListener('mouseleave', restToActive);
+    nav.addEventListener('focusout', event => {
+        if (!nav.contains(event.relatedTarget)) restToActive();
+    });
+
+    window.addEventListener('resize', restToActive);
+
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(restToActive);
+    }
+
+    restToActive();
+}
+
+// CABECERA: SE RETIRA AL BAJAR, REAPARECE AL SUBIR (nav transparente, sin bloque de fondo)
 function initHeaderScrollState() {
     const header = document.getElementById('siteHeader');
+    const nav = document.getElementById('mainNav');
     if (!header) return;
 
+    let lastScrollY = window.scrollY;
     let ticking = false;
+
     const update = () => {
-        header.classList.toggle('is-scrolled', window.scrollY > 40);
+        const scrollY = window.scrollY;
+        const scrollingDown = scrollY > lastScrollY;
+        const navOpen = nav && nav.classList.contains('is-open');
+
+        header.classList.toggle('is-scrolled', scrollY > 40);
+
+        if (!navOpen) {
+            header.classList.toggle('is-hidden', scrollingDown && scrollY > 160);
+        }
+
+        lastScrollY = scrollY;
         ticking = false;
     };
 
@@ -72,17 +133,32 @@ function initScrollReveal() {
     targets.forEach(el => observer.observe(el));
 }
 
-// SWITCH X — ORA: TRANSICIÓN ENTRE TERRITORIOS
+// VIDEO DE FONDO DEL HERO
+function initHeroVideo() {
+    const video = document.getElementById('heroVideo');
+    if (!video) return;
+
+    if (prefersReducedMotion.matches) {
+        video.pause();
+        return;
+    }
+
+    video.play().catch(() => {});
+}
+
+// SWITCH X — ORA: CONTROL SEGMENTADO (TRANSICIÓN ENTRE TERRITORIOS)
 function initTerritorySwitch() {
     const xoraSwitch = document.getElementById('xoraSwitch');
-    const range = document.getElementById('territoryRange');
     const wrapper = document.getElementById('territoryWrapper');
-    const labelServices = document.getElementById('labelServices');
-    const labelStudio = document.getElementById('labelStudio');
     const caption = document.getElementById('switchCaption');
     const announce = document.getElementById('switchAnnounce');
 
-    if (!xoraSwitch || !range || !wrapper) return;
+    if (!xoraSwitch || !wrapper) return;
+
+    const segments = {
+        services: document.getElementById('segServices'),
+        studio: document.getElementById('segStudio')
+    };
 
     const panels = {
         services: document.getElementById('panel-services'),
@@ -97,11 +173,19 @@ function initTerritorySwitch() {
     let current = wrapper.dataset.territory || 'services';
     let isAnimating = false;
 
+    function reflectSegments(territory) {
+        Object.entries(segments).forEach(([name, btn]) => {
+            const isActive = name === territory;
+            btn.classList.toggle('is-active', isActive);
+            btn.setAttribute('aria-checked', String(isActive));
+            btn.tabIndex = isActive ? 0 : -1;
+        });
+    }
+
     function setStaticState(territory) {
         xoraSwitch.dataset.territory = territory;
         wrapper.dataset.territory = territory;
-        labelServices.classList.toggle('is-active', territory === 'services');
-        labelStudio.classList.toggle('is-active', territory === 'studio');
+        reflectSegments(territory);
         caption.textContent = copy[territory];
         Object.entries(panels).forEach(([name, panel]) => {
             panel.hidden = name !== territory;
@@ -131,14 +215,8 @@ function initTerritorySwitch() {
         wrapper.classList.add('is-transitioning');
 
         xoraSwitch.dataset.territory = territory;
-        labelServices.classList.toggle('is-active', territory === 'services');
-        labelStudio.classList.toggle('is-active', territory === 'studio');
+        reflectSegments(territory);
         caption.textContent = copy[territory];
-
-        xoraSwitch.classList.add('is-pulsing');
-        xoraSwitch.addEventListener('animationend', () => {
-            xoraSwitch.classList.remove('is-pulsing');
-        }, { once: true });
 
         outgoing.classList.add('panel-exit');
 
@@ -166,22 +244,87 @@ function initTerritorySwitch() {
         }, 640);
     }
 
-    range.addEventListener('input', () => {
-        switchTo(range.value === '1' ? 'studio' : 'services');
-    });
-
-    [labelServices, labelStudio].forEach(button => {
-        button.addEventListener('click', () => {
-            const target = button.dataset.target;
-            range.value = target === 'studio' ? '1' : '0';
-            switchTo(target);
+    Object.entries(segments).forEach(([name, btn]) => {
+        btn.addEventListener('click', event => {
+            if (justDragged) {
+                event.preventDefault();
+                return;
+            }
+            switchTo(name);
         });
     });
+
+    xoraSwitch.addEventListener('keydown', event => {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+        event.preventDefault();
+        const target = current === 'services' ? 'studio' : 'services';
+        switchTo(target);
+        segments[target].focus();
+    });
+
+    // ARRASTRE / SLIDE CON EL DEDO (touch, pen y mouse vía Pointer Events)
+    const glide = xoraSwitch.querySelector('.switch-glide');
+    let dragging = false;
+    let justDragged = false;
+    let startX = 0;
+    let baseOffset = 0;
+    let trackWidth = 0;
+
+    function segmentWidth() {
+        return xoraSwitch.getBoundingClientRect().width / 2;
+    }
+
+    xoraSwitch.addEventListener('pointerdown', event => {
+        if (isAnimating) return;
+        dragging = true;
+        startX = event.clientX;
+        trackWidth = segmentWidth();
+        baseOffset = current === 'studio' ? trackWidth : 0;
+        glide.classList.add('is-dragging');
+        xoraSwitch.setPointerCapture(event.pointerId);
+    });
+
+    xoraSwitch.addEventListener('pointermove', event => {
+        if (!dragging) return;
+        const deltaX = event.clientX - startX;
+        if (Math.abs(deltaX) > 10) justDragged = true;
+        const offset = Math.min(Math.max(baseOffset + deltaX, 0), trackWidth);
+        glide.style.transform = `translateX(${offset}px)`;
+    });
+
+    function endDrag(event) {
+        if (!dragging) return;
+        dragging = false;
+
+        if (!justDragged) {
+            glide.classList.remove('is-dragging');
+            glide.style.transform = '';
+            return;
+        }
+
+        const deltaX = event.clientX - startX;
+        const offset = Math.min(Math.max(baseOffset + deltaX, 0), trackWidth);
+        const territory = offset > trackWidth / 2 ? 'studio' : 'services';
+
+        switchTo(territory);
+
+        requestAnimationFrame(() => {
+            glide.classList.remove('is-dragging');
+            glide.style.transform = '';
+        });
+
+        window.setTimeout(() => { justDragged = false; }, 80);
+    }
+
+    xoraSwitch.addEventListener('pointerup', endDrag);
+    xoraSwitch.addEventListener('pointercancel', endDrag);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     initNavToggle();
+    initNavIndicator();
     initHeaderScrollState();
     initScrollReveal();
+    initHeroVideo();
     initTerritorySwitch();
 });
