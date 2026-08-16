@@ -4,22 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>x-ora | De la incógnita a la primera luz</title>
-    
+
     <!-- Importación de Tipografías según el manual -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Enlace al archivo CSS externo -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <!-- CABECERA CON NAV BAR -->
-    <header>
+    <header id="siteHeader">
         <div class="logo">
             <a href="index.html">x-ora<span class="logo-luz">_</span></a>
         </div>
-        <nav class="main-nav">
-            <a href="index.html" style="color: var(--gris-platino); border-bottom: 2px solid var(--gris-platino); padding-bottom: 0.2rem;">Inicio</a>
+
+        <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mainNav">
+            <span></span><span></span><span></span>
+            <span class="sr-only">Abrir menú</span>
+        </button>
+
+        <nav class="main-nav" id="mainNav">
+            <a href="index.html" class="active-nav">Inicio</a>
             <a href="about.html">Nosotros</a>
             <a href="services.html">Services</a>
             <a href="studio.html">Studio</a>
@@ -27,47 +34,78 @@
         </nav>
     </header>
 
-    <!-- HERO / FILOSOFÍA (Texto Centrado) -->
+    <!-- HERO / FILOSOFÍA -->
     <section class="hero">
-        <h1>De la incógnita a la primera luz.</h1>
-        <p>Un puente de credibilidad entre el sector industrial de infraestructura crítica y el aprendizaje STEAM de alto nivel.</p>
+        <h1 class="hero-title">
+            <span class="line"><span class="line-inner">De la incógnita</span></span>
+            <span class="line"><span class="line-inner">a la primera luz.</span></span>
+        </h1>
+        <p class="hero-sub">Un puente de credibilidad entre el sector industrial de infraestructura crítica y el aprendizaje STEAM de alto nivel.</p>
     </section>
 
-    <!-- SECCIÓN: X-ORA GENERAL (La Marca Madre) -->
-    <section class="content-section bg-gris" style="display: block; text-align: center; padding: 4rem 5%; border-bottom: 4px solid var(--gris-acero);">
-        <h2 style="font-size: 2rem; margin-bottom: 1rem;">Ecosistema Global</h2>
-        <p style="max-width: 800px; margin: 0 auto; color: var(--gris-acero); font-size: 1.1rem;">
-            La marca x-ora se proyecta como una arquitectura monolítica diseñada para actuar como un puente de credibilidad. Estratégicamente, no somos una marca paraguas, sino una marca madre que unifica ambos territorios bajo la premisa de la ingeniería como estructura de pensamiento. El rigor utilizado para comisionar un sistema de potencia crítica es el mismo que cultivamos para diagnosticar un punto crítico de fallo en un prototipo robótico.
-        </p>
+    <!-- MANIFIESTO: X-ORA COMO MARCA MADRE -->
+    <section class="manifesto reveal" aria-labelledby="manifesto-title">
+        <div class="manifesto-text">
+            <h2 id="manifesto-title">Ecosistema Global</h2>
+            <p>
+                La marca x-ora se proyecta como una arquitectura monolítica diseñada para actuar como un puente de credibilidad. Estratégicamente, no somos una marca paraguas, sino una marca madre que unifica ambos territorios bajo la premisa de la ingeniería como estructura de pensamiento. El rigor utilizado para comisionar un sistema de potencia crítica es el mismo que cultivamos para diagnosticar un punto crítico de fallo en un prototipo robótico.
+            </p>
+        </div>
+        <svg class="bridge-diagram" viewBox="0 0 320 130" aria-hidden="true" focusable="false">
+            <line x1="46" y1="60" x2="274" y2="60" class="bridge-line" />
+            <circle cx="46" cy="60" r="15" class="bridge-node bridge-node-services" />
+            <circle cx="274" cy="60" r="15" class="bridge-node bridge-node-studio" />
+            <text x="46" y="102" class="bridge-label">X</text>
+            <text x="274" y="102" class="bridge-label">ORA</text>
+        </svg>
     </section>
 
-    <!-- NAVEGACIÓN DUAL (Tabs) -->
-    <div class="tab-container">
-        <button class="tab-btn active-services" id="btn-services" onclick="switchTab('services')">x-ora Services</button>
-        <button class="tab-btn" id="btn-studio" onclick="switchTab('studio')">x-ora Studio</button>
+    <!-- SWITCH X — ORA: TRANSICIÓN DE TERRITORIO -->
+    <section class="switch-section reveal" aria-labelledby="switch-title">
+        <h2 id="switch-title" class="sr-only">Selecciona un territorio x-ora</h2>
+
+        <div class="xora-switch" id="xoraSwitch" data-territory="services">
+            <button type="button" class="switch-word switch-word-x is-active" id="labelServices" data-target="services">X</button>
+
+            <span class="switch-track">
+                <span class="switch-rail" aria-hidden="true"></span>
+                <span class="switch-pulse" aria-hidden="true"></span>
+                <input type="range" min="0" max="1" step="1" value="0" class="switch-input" id="territoryRange" aria-label="Cambiar entre x-ora Services y x-ora Studio">
+                <span class="switch-thumb" aria-hidden="true"></span>
+            </span>
+
+            <button type="button" class="switch-word switch-word-ora" id="labelStudio" data-target="studio">ORA</button>
+        </div>
+
+        <p class="switch-caption" id="switchCaption">x-ora Services — infraestructura crítica</p>
+        <p class="sr-only" id="switchAnnounce" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- PANEL DE TERRITORIO -->
+    <div class="territory-wrapper" id="territoryWrapper" data-territory="services">
+        <span class="territory-bg territory-bg-services" aria-hidden="true"></span>
+        <span class="territory-bg territory-bg-studio" aria-hidden="true"></span>
+
+        <article class="territory-panel" id="panel-services" data-panel="services">
+            <span class="descriptor">Descriptor: Critical Power & Control Systems</span>
+            <h2>Ingeniería y Disponibilidad Operativa</h2>
+            <p>Nuestros procesos de comisionamiento y soporte para infraestructura crítica garantizan alta disponibilidad y autoridad técnica. Ejecutamos metodologías de prueba fundamentadas en diagnósticos concretos y evidencias medibles.</p>
+            <ul class="tech-list territory-list">
+                <li>Comisionamiento de potencia crítica</li>
+                <li>Diagnóstico de puntos críticos de fallo</li>
+                <li>Automatización y control industrial</li>
+            </ul>
+            <a href="services.html" class="btn btn-services">Conoce Services</a>
+        </article>
+
+        <article class="territory-panel" id="panel-studio" data-panel="studio" hidden>
+            <span class="descriptor">Descriptor: Engineering & Technology</span>
+            <h2>Ecosistema Educativo y Código STARIS</h2>
+            <p>Un entorno de aprendizaje premium que inspira mediante el reto técnico. Diagnosticamos puntos críticos de fallo e iteramos prototipos tratando a nuestros estudiantes como personas altamente capaces.</p>
+            <img src="assets/img1.jpeg" alt="Laboratorio STEAM de x-ora Studio, mesas y sillas de trabajo preparadas para prototipado" class="territory-image" loading="lazy" width="1600" height="1204">
+            <a href="studio.html" class="btn btn-studio">Conoce Studio</a>
+        </article>
     </div>
-
-    <!-- SECCIÓN: SERVICES -->
-    <section id="services" class="content-section active">
-        <h2>Ingeniería y Disponibilidad Operativa</h2>
-        <span class="descriptor">Descriptor: Critical Power & Control Systems</span>
-        <p>Nuestros procesos de comisionamiento y soporte para infraestructura crítica garantizan alta disponibilidad y autoridad técnica. Ejecutamos metodologías de prueba fundamentadas en diagnósticos concretos y evidencias medibles.</p>
-        <p><em>Rigor mineral, neutralidad operativa y limpieza técnica en cada ejecución.</em></p>
-        
-        <!-- Botón a Services -->
-        <a href="services.html" class="btn btn-services">Conoce más</a>
-    </section>
-
-    <!-- SECCIÓN: STUDIO -->
-    <section id="studio" class="content-section">
-        <h2>Ecosistema Educativo y Código STARIS</h2>
-        <span class="descriptor">Descriptor: Engineering & Technology</span>
-        <p>Un entorno de aprendizaje premium que inspira mediante el reto técnico. Diagnosticamos puntos críticos de fallo e iteramos prototipos tratando a nuestros estudiantes como personas altamente capaces.</p>
-        <p><em>El destello de la comprensión y el nacimiento del conocimiento sin estéticas lúdicas superficiales.</em></p>
-        
-        <!-- Botón a Studio -->
-        <a href="studio.html" class="btn btn-studio">Conoce más</a>
-    </section>
 
     <!-- PIE DE PÁGINA -->
     <footer>
