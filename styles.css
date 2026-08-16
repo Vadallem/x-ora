@@ -155,7 +155,8 @@ header.is-hidden {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.55) 0%, rgba(15, 23, 42, 0.7) 55%, var(--azul-medianoche) 100%);
+    /* Más transparente arriba, para que el header flote sin verse como una barra sólida */
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.1) 0%, rgba(15, 23, 42, 0.55) 45%, rgba(15, 23, 42, 0.7) 65%, var(--azul-medianoche) 100%);
 }
 
 .hero-title,
@@ -177,17 +178,10 @@ header.is-hidden {
 
 .hero-title .line {
     display: block;
-    overflow: hidden;
 }
 
 .hero-title .line-inner {
     display: block;
-    transform: translateY(115%);
-    animation: line-up 0.8s var(--ease-out) forwards;
-}
-
-.hero-title .line:nth-child(2) .line-inner {
-    animation-delay: 0.12s;
 }
 
 .hero-sub {
@@ -199,15 +193,24 @@ header.is-hidden {
     opacity: 0;
     transform: translateY(10px);
     animation: fade-up 0.7s var(--ease-out) forwards;
-    animation-delay: 0.55s;
-}
-
-@keyframes line-up {
-    to { transform: translateY(0); }
+    animation-delay: 0.95s;
 }
 
 @keyframes fade-up {
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============ DECRYPT TEXT (componente reutilizable) ============ */
+.decrypt-char {
+    color: inherit;
+    text-shadow: none;
+    transition: color 0.45s var(--ease-out), text-shadow 0.45s var(--ease-out);
+}
+
+.decrypt-char.is-flash {
+    transition: none;
+    color: var(--naranja-aurora);
+    text-shadow: 0 0 10px rgba(255, 138, 0, 0.75);
 }
 
 /* Ajuste responsive para pantallas móviles */
@@ -455,8 +458,27 @@ footer {
     margin-bottom: 0.2rem;
 }
 
+.hero-services .descriptor {
+    color: var(--gris-platino);
+    border-bottom-color: var(--gris-acero);
+}
+
+.hero-services p {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: var(--gris-platino);
+    max-width: 700px;
+}
+
 .bg-gris {
     background-color: var(--gris-platino); /* Alternancia de rigor mineral */
+}
+
+/* Párrafo secundario, atenuado (introducciones de sección) */
+.section-note {
+    color: var(--gris-acero);
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 2rem;
 }
 
 /* CUADRÍCULAS (GRIDS) TÉCNICAS */
@@ -465,6 +487,25 @@ footer {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
+}
+
+.sectors-grid {
+    margin-top: 3rem;
+}
+
+.sector-card {
+    border-left: 3px solid var(--azul-profundo);
+    padding-left: 1rem;
+}
+
+.sector-card h3 {
+    color: var(--azul-medianoche);
+    margin-bottom: 0.5rem;
+}
+
+.sector-card p {
+    color: var(--gris-acero);
+    font-size: 0.95rem;
 }
 
 .card {
@@ -489,6 +530,11 @@ footer {
     color: var(--blanco);
 }
 
+.card p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+}
+
 /* LISTAS TÉCNICAS */
 .tech-list {
     list-style: none;
@@ -509,11 +555,6 @@ footer {
     margin-right: 0.5rem;
 }
 
-/* NAVEGACIÓN ACTIVA STUDIO */
-.main-nav a.active-nav-studio {
-    color: var(--naranja-aurora);
-}
-
 /* HERO SECTION STUDIO */
 .hero-studio {
     background-color: var(--azul-medianoche);
@@ -528,6 +569,18 @@ footer {
     margin-bottom: 0.2rem;
 }
 
+.hero-studio .descriptor {
+    color: var(--gris-platino);
+    border-bottom-color: var(--naranja-aurora);
+}
+
+.hero-studio p {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: var(--gris-platino);
+    max-width: 700px;
+}
+
 /* TARJETAS STUDIO (Borde Naranja) */
 .card-studio {
     background-color: var(--blanco);
@@ -539,6 +592,12 @@ footer {
 .card-studio h3 {
     color: var(--azul-medianoche);
     margin-bottom: 1rem;
+}
+
+.card-studio p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--gris-acero);
 }
 
 /* BOTÓN CALL TO ACTION STUDIO */
@@ -582,18 +641,68 @@ footer {
     margin-top: 2rem;
 }
 
+/* TABLA DE HORARIOS (STUDIO) */
+.schedule-panel {
+    margin-top: 2rem;
+    background-color: var(--blanco);
+    border-top: 4px solid var(--azul-profundo);
+    padding: 2rem;
+}
+
+.schedule-table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    font-family: 'Inter', sans-serif;
+}
+
+.schedule-table th,
+.schedule-table td {
+    padding: 1rem 0;
+}
+
+.schedule-table th {
+    color: var(--azul-medianoche);
+}
+
+.schedule-table td {
+    color: var(--gris-acero);
+}
+
+.schedule-table thead tr {
+    border-bottom: 2px solid var(--gris-platino);
+}
+
+.schedule-table tbody tr {
+    border-bottom: 1px solid var(--gris-platino);
+}
+
+.schedule-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+/* MAPA PLACEHOLDER (STUDIO) */
+.map-container {
+    background-color: var(--gris-platino);
+    border: 1px solid var(--gris-acero);
+    height: 100%;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.map-container p {
+    color: var(--azul-profundo);
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+}
+
 /* RESPONSIVE CONTACTO */
 @media (max-width: 768px) {
     .contact-grid {
         grid-template-columns: 1fr;
     }
-}
-
-/* NAVEGACIÓN ACTIVA ABOUT */
-.main-nav a.active-nav-about {
-    color: var(--gris-platino);
-    border-bottom: 2px solid var(--gris-platino);
-    padding-bottom: 0.2rem;
 }
 
 /* HERO SECTION ABOUT (Marca Madre) */
@@ -608,6 +717,18 @@ footer {
 .hero-about h1 {
     font-size: 2.5rem;
     margin-bottom: 0.2rem;
+}
+
+.hero-about .descriptor {
+    color: var(--gris-platino);
+    border-bottom-color: var(--gris-acero);
+}
+
+.hero-about p {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: var(--gris-platino);
+    max-width: 700px;
 }
 
 /* TARJETAS DE GÉNESIS (Historia) */
@@ -629,6 +750,12 @@ footer {
     color: var(--azul-medianoche);
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
+}
+
+.genesis-card p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--gris-acero);
 }
 
 /* RELACIÓN SERVICES & STUDIO (Dualismo) */
@@ -664,15 +791,42 @@ footer {
     margin-bottom: 1rem;
 }
 
+.dualism-side p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
 .dualism-services h3 {
     color: var(--blanco);
 }
 
-/* NAVEGACIÓN ACTIVA CONTACTO */
-.main-nav a.active-nav-contact {
+.dualism-services p {
     color: var(--gris-platino);
-    border-bottom: 2px solid var(--gris-platino);
-    padding-bottom: 0.2rem;
+}
+
+.dualism-studio h3 {
+    color: var(--naranja-aurora);
+}
+
+.dualism-studio p {
+    color: var(--gris-acero);
+}
+
+.dualism-services .tech-list li {
+    color: var(--gris-platino);
+    border-bottom-color: var(--azul-profundo);
+}
+
+.dualism-studio .tech-list li {
+    border-bottom-color: var(--gris-platino);
+}
+
+.section-closing-note {
+    margin-top: 2rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--azul-profundo);
 }
 
 /* HERO SECTION CONTACTO */
@@ -689,116 +843,57 @@ footer {
     margin-bottom: 0.2rem;
 }
 
-/* ESTILOS DE FORMULARIO DE CONTACTO (Arquitectura Geométrica) */
-.form-container {
+.hero-contact p {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: var(--gris-platino);
+    max-width: 700px;
+}
+
+/* TARJETAS DE DATOS DE CONTACTO */
+.contact-data-container {
     background-color: var(--gris-platino);
     padding: 3rem;
     border-top: 4px solid var(--azul-profundo);
     margin-top: 2rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
 }
 
-/* Variante Formulario Studio */
-.form-container.studio-form {
+.contact-data-container.studio-data {
     background-color: var(--blanco);
     border: 1px solid var(--gris-platino);
     border-top: 4px solid var(--naranja-aurora);
 }
 
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.form-group.full-width {
-    grid-column: span 2;
-}
-
-.form-group label {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
+.data-block h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
     color: var(--azul-medianoche);
     margin-bottom: 0.5rem;
-    font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
-/* Inputs técnicos, sin bordes redondeados (0px) */
-.form-group input, 
-.form-group textarea, 
-.form-group select {
-    padding: 0.8rem;
-    border: 1px solid var(--gris-acero);
+.data-block p {
     font-family: 'Inter', sans-serif;
-    background-color: var(--blanco);
-    color: var(--azul-medianoche);
-    outline: none;
-    border-radius: 0; 
-    transition: border-color 0.3s;
+    color: var(--gris-acero);
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
 }
 
-.form-group input:focus, 
-.form-group textarea:focus, 
-.form-group select:focus {
-    border-color: var(--azul-profundo);
+.data-block strong {
+    color: var(--azul-profundo);
 }
 
-.studio-form .form-group input:focus, 
-.studio-form .form-group textarea:focus, 
-.studio-form .form-group select:focus {
-    border-color: var(--naranja-aurora);
-}
-
-/* Botones de Envío */
-.submit-btn {
-    margin-top: 1.5rem;
-    padding: 1rem 2rem;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    text-transform: uppercase;
-    cursor: pointer;
-    border: none;
-    transition: all 0.3s ease;
-}
-
-.submit-services {
-    background-color: var(--azul-profundo);
-    color: var(--blanco);
-}
-
-.submit-services:hover {
-    background-color: var(--azul-medianoche);
-}
-
-.submit-studio {
-    background-color: var(--naranja-aurora);
-    color: var(--azul-medianoche);
-}
-
-.submit-studio:hover {
-    background-color: var(--blanco);
-    box-shadow: inset 0 0 0 2px var(--naranja-aurora);
-}
-
-/* Responsive para formularios */
-@media (max-width: 768px) {
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-    .form-group.full-width {
-        grid-column: span 1;
-    }
+.studio-data .data-block strong {
+    color: var(--naranja-aurora);
 }
 
 /* =========================================
-   SISTEMA DE COBERTURA GLOBAL E INTERACTIVO (LOW-POLY)
+   SISTEMA DE COBERTURA GLOBAL (PLACEHOLDER)
    ========================================= */
 .mapa-dashboard {
     display: grid;
@@ -812,45 +907,21 @@ footer {
     align-items: center;
 }
 
-.mapa-svg {
-    width: 100%;
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.08));
+.mapa-placeholder {
+    min-height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--gris-platino);
+    border: 1px dashed var(--gris-acero);
 }
 
-/* Estilos de los Polígonos Base */
-.mapa-svg path {
-    fill: var(--gris-platino);
-    stroke: var(--azul-medianoche); /* Bordes oscuros y afilados */
-    stroke-width: 2.5;
-    stroke-linejoin: round;
-    transition: all 0.3s ease;
-}
-
-/* Triangulación Interna (Estética Low-Poly) */
-.mapa-svg .linea-interna {
-    fill: none;
-    stroke: var(--azul-medianoche);
-    stroke-width: 1.5;
-    pointer-events: none; /* Permite que los clics traspasen a los países */
-}
-
-/* Países inactivos sutiles al pasar el mouse */
-.mapa-svg path:not(.pais-activo):hover {
-    fill: var(--gris-acero);
-}
-
-/* Países Activos (México y USA) */
-.mapa-svg path.pais-activo {
-    fill: var(--azul-profundo);
-    cursor: crosshair; /* Cursor técnico */
-}
-
-.mapa-svg path.pais-activo:hover,
-.mapa-svg path.pais-activo.seleccionado {
-    fill: var(--naranja-aurora); /* Acento cognitivo que indica selección activa */
-    stroke: var(--azul-medianoche);
+.mapa-placeholder p {
+    color: var(--gris-acero);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    text-align: center;
+    padding: 0 1.5rem;
 }
 
 /* Panel de Telemetría (Info) */
@@ -879,6 +950,11 @@ footer {
     color: var(--gris-acero);
     font-size: 0.95rem;
     margin-bottom: 0.8rem;
+}
+
+.info-panel p:last-child {
+    font-size: 0.8rem;
+    margin-top: 1rem;
 }
 
 .info-panel strong {

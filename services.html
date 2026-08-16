@@ -38,10 +38,10 @@
     <!-- SECCIÓN 1: PRINCIPAL (HERO) -->
     <section class="hero-services">
         <h1>Alta Disponibilidad Operativa</h1>
-        <span class="descriptor" style="color: var(--gris-platino); border-bottom-color: var(--gris-acero);">
+        <span class="descriptor">
             Descriptor: Critical Power & Control Systems
         </span>
-        <p style="margin-top: 1rem; font-size: 1.2rem; color: var(--gris-platino); max-width: 700px;">
+        <p>
             Transformamos la complejidad técnica en ejecución real. Proveemos la arquitectura y el rigor necesarios para garantizar la continuidad en infraestructuras críticas.
         </p>
     </section>
@@ -49,41 +49,21 @@
     <!-- SECCIÓN 5: COBERTURA Y MAPA GLOBAL -->
     <section class="content-section bg-gris active">
         <h2>Cobertura Operativa Global</h2>
-        <p style="color: var(--gris-acero); font-family: 'Inter', sans-serif; margin-bottom: 2rem;">
-            Nuestra capacidad de ejecución y soporte de infraestructura crítica opera actualmente con bases en Norteamérica. 
-            <em>Interactúe con las zonas resaltadas en el mapa para desplegar la telemetría.</em>
+        <p class="section-note">
+            Nuestra capacidad de ejecución y soporte de infraestructura crítica opera actualmente con bases en Norteamérica: Estados Unidos y México.
         </p>
-        
-        <div class="mapa-dashboard">
-            <!-- MAPA VECTORIAL MapSVG -->
-            <svg class="mapa-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
-                <!-- Created for MapSVG plugin -->
-                
-                <!-- 
-                  NOTA PARA TI: 
-                  Aquí debes pegar todos los <path> de tu archivo original MapSVG.
-                  A los países con los que quieras interactuar (ej. US y MX), 
-                  debes agregarles la clase "pais-activo" y el evento "onclick".
-                  A continuación un ejemplo de cómo deben quedar:
-                -->
-                
-                <!-- PAÍSES ACTIVOS (Interacción) -->
-                <path id="US" title="Estados Unidos" class="pais-activo" onclick="actualizarInfo('US')" d="... (PEGA AQUÍ LAS COORDENADAS DE USA) ..." />
-                <path id="MX" title="México" class="pais-activo" onclick="actualizarInfo('MX')" d="... (PEGA AQUÍ LAS COORDENADAS DE MÉXICO) ..." />
-                
-                <!-- PAÍSES INACTIVOS (El resto del mundo) -->
-                <path id="AD" title="Andorra" d="... (coordenadas) ..." />
-                <path id="AE" title="Emiratos Árabes Unidos" d="... (coordenadas) ..." />
-                <path id="AF" title="Afganistán" d="... (coordenadas) ..." />
-                <!-- ... Continúa pegando el resto de los <path> de tu archivo ... -->
-                
-            </svg>
 
-            <!-- PANEL DE INFORMACIÓN INTERACTIVO -->
-            <div class="info-panel" id="panel-telemetria">
-                <h3>[ Esperando Selección ]</h3>
-                <p>Seleccione una región operativa resaltada en el mapa para desplegar los protocolos de contacto y áreas de despliegue.</p>
-                <p style="font-size: 0.8rem; color: var(--gris-acero); margin-top: 2rem;">Estado del sistema: <em>Standby</em></p>
+        <div class="mapa-dashboard">
+            <!-- Aquí puede integrarse un mapa SVG real de cobertura -->
+            <div class="mapa-placeholder">
+                <p>[ Mapa interactivo de cobertura próximamente ]</p>
+            </div>
+
+            <!-- PANEL DE INFORMACIÓN -->
+            <div class="info-panel">
+                <h3>Cobertura Actual</h3>
+                <p>Bases operativas en Estados Unidos y México, con soporte de infraestructura crítica y despliegue de campo.</p>
+                <p>Estado del sistema: <em>Standby</em></p>
             </div>
         </div>
     </section>
@@ -130,21 +110,21 @@
             <!-- Tarjeta de Proyecto 1 -->
             <div class="card card-alt">
                 <h3>Implementación Data Center Nivel IV</h3>
-                <p style="font-family: 'Inter'; font-size: 0.95rem;">
+                <p>
                     <strong>Alcance:</strong> Comisionamiento integral de sistemas de enfriamiento de precisión y potencia crítica de respaldo.
                 </p>
-                <p style="font-family: 'Inter'; font-size: 0.95rem;">
+                <p>
                     <strong>Resultado:</strong> Disponibilidad operativa validada al 99.995%, cumpliendo con la neutralidad operativa exigida.
                 </p>
             </div>
-            
+
             <!-- Tarjeta de Proyecto 2 -->
             <div class="card card-alt">
                 <h3>Automatización de Planta de Manufactura</h3>
-                <p style="font-family: 'Inter'; font-size: 0.95rem;">
+                <p>
                     <strong>Alcance:</strong> Integración de arquitectura de control para líneas de ensamble automatizado.
                 </p>
-                <p style="font-family: 'Inter'; font-size: 0.95rem;">
+                <p>
                     <strong>Resultado:</strong> Reducción de puntos críticos de fallo y optimización de telemetría en tiempo real.
                 </p>
             </div>
@@ -156,18 +136,18 @@
         <h2>Sectores de Operación</h2>
         <p>Nuestra credibilidad técnica se valida en industrias donde el rigor mineral y la certeza operativa son mandatorios.</p>
         
-        <div class="grid-container" style="margin-top: 3rem;">
-            <div style="border-left: 3px solid var(--azul-profundo); padding-left: 1rem;">
-                <h3 style="color: var(--azul-medianoche); margin-bottom: 0.5rem;">Centros de Datos (IT)</h3>
-                <p style="color: var(--gris-acero); font-size: 0.95rem;">Soporte a la infraestructura vertebral del flujo de información global.</p>
+        <div class="grid-container sectors-grid">
+            <div class="sector-card">
+                <h3>Centros de Datos (IT)</h3>
+                <p>Soporte a la infraestructura vertebral del flujo de información global.</p>
             </div>
-            <div style="border-left: 3px solid var(--azul-profundo); padding-left: 1rem;">
-                <h3 style="color: var(--azul-medianoche); margin-bottom: 0.5rem;">Manufactura Avanzada</h3>
-                <p style="color: var(--gris-acero); font-size: 0.95rem;">Control y telemetría para procesos industriales de alta tolerancia.</p>
+            <div class="sector-card">
+                <h3>Manufactura Avanzada</h3>
+                <p>Control y telemetría para procesos industriales de alta tolerancia.</p>
             </div>
-            <div style="border-left: 3px solid var(--azul-profundo); padding-left: 1rem;">
-                <h3 style="color: var(--azul-medianoche); margin-bottom: 0.5rem;">Infraestructura Hospitalaria</h3>
-                <p style="color: var(--gris-acero); font-size: 0.95rem;">Garantía de potencia ininterrumpida para sistemas críticos de soporte vital.</p>
+            <div class="sector-card">
+                <h3>Infraestructura Hospitalaria</h3>
+                <p>Garantía de potencia ininterrumpida para sistemas críticos de soporte vital.</p>
             </div>
         </div>
     </section>
@@ -178,46 +158,5 @@
     </footer>
 
     <script src="script.js"></script>
-
-    <!-- LOGICA DEL MAPA INTERACTIVO -->
-    <script>
-        function actualizarInfo(region) {
-            const panel = document.getElementById('panel-telemetria');
-            
-            // 1. Remover la clase 'seleccionado' de todos los países
-            const todosLosPaises = document.querySelectorAll('.mapa-svg path');
-            todosLosPaises.forEach(pais => {
-                pais.classList.remove('seleccionado');
-            });
-            
-            // 2. Lógica para Estados Unidos (ID = US)
-            if (region === 'US') {
-                const usaPath = document.getElementById('US');
-                if(usaPath) usaPath.classList.add('seleccionado');
-                
-                panel.innerHTML = `
-                    <h3 style="border-bottom-color: var(--naranja-aurora);">Enlace Norteamérica</h3>
-                    <p><strong>Despliegue:</strong> Tech Hub Cluster, Austin, TX.</p>
-                    <p><strong>Sectores:</strong> Centros de Datos IT y Soporte de Infraestructura Crítica.</p>
-                    <p><strong>Nivel Operativo:</strong> Disponibilidad 99.995%</p>
-                    <p style="font-size: 0.8rem; margin-top: 1rem;">Contacto: usa_ops@x-ora.com</p>
-                `;
-            } 
-            // 3. Lógica para México (ID = MX)
-            else if (region === 'MX') {
-                const mexPath = document.getElementById('MX');
-                if(mexPath) mexPath.classList.add('seleccionado');
-                
-                panel.innerHTML = `
-                    <h3 style="border-bottom-color: var(--naranja-aurora);">Base Central LATAM</h3>
-                    <p><strong>Despliegue:</strong> Parque Industrial Tecnológico, CDMX.</p>
-                    <p><strong>Sectores:</strong> Manufactura Avanzada, Hospitalario y Automatización BMS.</p>
-                    <p><strong>Nivel Operativo:</strong> Centro de Comando (NOC) Integrado.</p>
-                    <p style="font-size: 0.8rem; margin-top: 1rem;">Contacto: latam_ops@x-ora.com</p>
-                `;
-            }
-        }
-    </script>
-
 </body>
 </html>

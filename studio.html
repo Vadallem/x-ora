@@ -38,10 +38,10 @@
     <!-- SECCIÓN 1: PRINCIPAL (HERO) -->
     <section class="hero-studio">
         <h1>La primera luz del conocimiento</h1>
-        <span class="descriptor" style="color: var(--gris-platino); border-bottom-color: var(--naranja-aurora);">
+        <span class="descriptor">
             Descriptor: Engineering & Technology
         </span>
-        <p style="margin-top: 1rem; font-size: 1.2rem; color: var(--gris-platino); max-width: 700px;">
+        <p>
             Un ecosistema educativo STEAM de alto nivel. Transformamos la curiosidad científica en capacidad de ejecución mediante el rigor técnico y el diseño de sistemas.
         </p>
     </section>
@@ -60,15 +60,15 @@
         <div class="grid-container">
             <div class="card-studio">
                 <h3>Imaginar</h3>
-                <p style="font-family: 'Inter'; font-size: 0.95rem; color: var(--gris-acero);">Definición del reto técnico frente a lo desconocido. Formulación de hipótesis basadas en evidencia.</p>
+                <p>Definición del reto técnico frente a lo desconocido. Formulación de hipótesis basadas en evidencia.</p>
             </div>
             <div class="card-studio">
                 <h3>Experimentar</h3>
-                <p style="font-family: 'Inter'; font-size: 0.95rem; color: var(--gris-acero);">Aplicación de los principios del Código STARIS. Trabajo manipulativo estructurado y preciso.</p>
+                <p>Aplicación de los principios del Código STARIS. Trabajo manipulativo estructurado y preciso.</p>
             </div>
             <div class="card-studio">
                 <h3>Errar e Iterar</h3>
-                <p style="font-family: 'Inter'; font-size: 0.95rem; color: var(--gris-acero);">El error como dato métrico, no como fracaso. Rediseño continuo hasta que el mecanismo cobra vida.</p>
+                <p>El error como dato métrico, no como fracaso. Rediseño continuo hasta que el mecanismo cobra vida.</p>
             </div>
         </div>
     </section>
@@ -84,28 +84,32 @@
         <h2>Estructura de Horarios</h2>
         <p>Sesiones diseñadas para mantener la concentración y permitir la lectura prolongada de datos, código y ensamblaje sin fatiga cognitiva.</p>
         
-        <div style="margin-top: 2rem; background-color: var(--blanco); border-top: 4px solid var(--azul-profundo); padding: 2rem;">
-            <table style="width: 100%; text-align: left; border-collapse: collapse; font-family: 'Inter', sans-serif;">
-                <tr style="border-bottom: 2px solid var(--gris-platino);">
-                    <th style="padding: 1rem 0; color: var(--azul-medianoche);">Nivel / Grupo</th>
-                    <th style="padding: 1rem 0; color: var(--azul-medianoche);">Días de Sesión</th>
-                    <th style="padding: 1rem 0; color: var(--azul-medianoche);">Horario Operativo</th>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--gris-platino);">
-                    <td style="padding: 1rem 0; color: var(--gris-acero);">Fundamentos de Ingeniería</td>
-                    <td style="padding: 1rem 0; color: var(--gris-acero);">Lunes y Miércoles</td>
-                    <td style="padding: 1rem 0; color: var(--gris-acero);">16:00 - 18:00 hrs</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--gris-platino);">
-                    <td style="padding: 1rem 0; color: var(--gris-acero);">Sistemas y Control Avanzado</td>
-                    <td style="padding: 1rem 0; color: var(--gris-acero);">Martes y Jueves</td>
-                    <td style="padding: 1rem 0; color: var(--gris-acero);">16:30 - 18:30 hrs</td>
-                </tr>
-                <tr>
-                    <td style="padding: 1rem 0; color: var(--gris-acero);">Prototipado Sabatino</td>
-                    <td style="padding: 1rem 0; color: var(--gris-acero);">Sábados</td>
-                    <td style="padding: 1rem 0; color: var(--gris-acero);">09:00 - 13:00 hrs</td>
-                </tr>
+        <div class="schedule-panel">
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Nivel / Grupo</th>
+                        <th>Días de Sesión</th>
+                        <th>Horario Operativo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Fundamentos de Ingeniería</td>
+                        <td>Lunes y Miércoles</td>
+                        <td>16:00 - 18:00 hrs</td>
+                    </tr>
+                    <tr>
+                        <td>Sistemas y Control Avanzado</td>
+                        <td>Martes y Jueves</td>
+                        <td>16:30 - 18:30 hrs</td>
+                    </tr>
+                    <tr>
+                        <td>Prototipado Sabatino</td>
+                        <td>Sábados</td>
+                        <td>09:00 - 13:00 hrs</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </section>
@@ -130,9 +134,9 @@
             </div>
 
             <!-- Mapa (Placeholder Embebido de Google Maps) -->
-            <div class="map-container" style="background-color: var(--gris-platino); border: 1px solid var(--gris-acero); height: 100%; min-height: 300px; display: flex; align-items: center; justify-content: center;">
+            <div class="map-container">
                 <!-- Aquí puedes incrustar el iframe real de Google Maps -->
-                <p style="color: var(--azul-profundo); font-weight: 600; font-family: 'Montserrat', sans-serif;">[ Mapa Interactivo - Google Maps ]</p>
+                <p>[ Mapa Interactivo - Google Maps ]</p>
             </div>
         </div>
     </section>

@@ -1,5 +1,252 @@
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+// COMPONENTE DECRYPT TEXT: revela un texto carácter a carácter desde glifos aleatorios
+const DECRYPT_GLYPHS = '#%&@$?!*+=/{}[]<>~^';
+
+class DecryptText {
+    constructor(el, options = {}) {
+        this.el = el;
+        this.text = options.text ?? el.textContent.trim();
+        this.trigger = options.trigger || 'mount';
+        this.speed = options.speed ?? 45;
+        this.stagger = options.stagger ?? 38;
+        this.startDelay = options.startDelay ?? 0;
+        this.jitter = options.jitter ?? 120;
+        this.loop = options.loop ?? false;
+        this.retriggerOnHover = Boolean(options.retriggerOnHover);
+        this.glyphs = options.glyphs || DECRYPT_GLYPHS;
+
+        this._reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        this._rafId = null;
+        this._loopTimer = null;
+        this._loopPending = false;
+        this._chars = [];
+        this._active = false;
+        this._startTime = 0;
+        this._pausedAt = null;
+        this._hasPlayed = false;
+        this._lastHoverAt = 0;
+        this._inViewport = true;
+        this._observer = null;
+        this._boundVisibilityChange = () => this._handleVisibilityChange();
+        this._boundHover = () => this._handleHover();
+
+        this._buildDOM();
+
+        if (this._reducedMotion.matches) {
+            this._resolveAllImmediately();
+            return;
+        }
+
+        this._bindVisibility();
+        this._bindTriggerListeners();
+
+        if (this.trigger === 'mount') this.play();
+    }
+
+    _buildDOM() {
+        this.el.classList.add('decrypt-host');
+        this.el.setAttribute('aria-label', this.text);
+        this.el.textContent = '';
+
+        const wrap = document.createElement('span');
+        wrap.className = 'decrypt-chars';
+        wrap.setAttribute('aria-hidden', 'true');
+
+        this._chars = Array.from(this.text).map((char, index) => {
+            const span = document.createElement('span');
+            span.className = 'decrypt-char';
+            const isSpace = /\s/.test(char);
+            span.textContent = isSpace ? char : this._randomGlyph();
+            wrap.appendChild(span);
+            return {
+                span,
+                target: char,
+                isSpace,
+                resolved: isSpace,
+                resolveAt: this.startDelay + index * this.stagger + this._jitterOffset(),
+                lastSwap: 0
+            };
+        });
+
+        this.el.appendChild(wrap);
+    }
+
+    _jitterOffset() {
+        if (!this.jitter) return 0;
+        return Math.round((Math.random() - 0.5) * this.jitter);
+    }
+
+    _randomGlyph() {
+        return this.glyphs[Math.floor(Math.random() * this.glyphs.length)];
+    }
+
+    _resolveAllImmediately() {
+        this._chars.forEach(c => {
+            c.span.textContent = c.target;
+            c.resolved = true;
+        });
+    }
+
+    _bindVisibility() {
+        if (!('IntersectionObserver' in window)) {
+            this._inViewport = true;
+        } else {
+            this._observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    this._inViewport = entry.isIntersecting;
+                    if (entry.isIntersecting) {
+                        if (this.trigger === 'inview' && !this._hasPlayed) {
+                            this.play();
+                        } else {
+                            this._resume();
+                        }
+                    } else {
+                        this._pause();
+                    }
+                });
+            }, { threshold: 0.15 });
+            this._observer.observe(this.el);
+        }
+
+        document.addEventListener('visibilitychange', this._boundVisibilityChange);
+    }
+
+    _handleVisibilityChange() {
+        if (document.visibilityState === 'hidden') {
+            this._pause();
+        } else {
+            this._resume();
+        }
+    }
+
+    _bindTriggerListeners() {
+        if (this.trigger === 'hover' || this.retriggerOnHover) {
+            this.el.addEventListener('pointerenter', this._boundHover);
+        }
+    }
+
+    _handleHover() {
+        const now = performance.now();
+        if (this.trigger === 'hover' && !this._hasPlayed) {
+            this.play();
+            return;
+        }
+        if (this.retriggerOnHover && this._hasPlayed) {
+            if (now - this._lastHoverAt < 1500) return;
+            this._lastHoverAt = now;
+            this.play();
+        }
+    }
+
+    play() {
+        if (this._reducedMotion.matches) {
+            this._resolveAllImmediately();
+            return;
+        }
+
+        this._hasPlayed = true;
+        clearTimeout(this._loopTimer);
+        this._loopTimer = null;
+        this._loopPending = false;
+
+        this._chars.forEach((c, index) => {
+            if (!c.isSpace) {
+                c.resolved = false;
+                c.span.textContent = this._randomGlyph();
+                c.span.classList.remove('is-flash');
+            }
+            c.lastSwap = 0;
+            c.resolveAt = this.startDelay + index * this.stagger + this._jitterOffset();
+        });
+
+        this._startTime = performance.now();
+        this._pausedAt = null;
+        this._active = true;
+        this._rafId = requestAnimationFrame(() => this._tick());
+    }
+
+    _tick() {
+        if (!this._active) return;
+
+        if (document.visibilityState === 'hidden' || !this._inViewport) {
+            this._pause();
+            return;
+        }
+
+        const elapsed = performance.now() - this._startTime;
+        let allResolved = true;
+
+        for (const c of this._chars) {
+            if (c.resolved) continue;
+
+            if (elapsed >= c.resolveAt) {
+                c.span.textContent = c.target;
+                c.resolved = true;
+                c.span.classList.add('is-flash');
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => c.span.classList.remove('is-flash'));
+                });
+            } else {
+                allResolved = false;
+                if (elapsed - c.lastSwap >= this.speed) {
+                    c.span.textContent = this._randomGlyph();
+                    c.lastSwap = elapsed;
+                }
+            }
+        }
+
+        if (allResolved) {
+            this._active = false;
+            this._rafId = null;
+            if (this.loop) {
+                this._loopTimer = setTimeout(() => this.play(), this.loop);
+            }
+            return;
+        }
+
+        this._rafId = requestAnimationFrame(() => this._tick());
+    }
+
+    _pause() {
+        if (this._pausedAt !== null) return;
+        this._pausedAt = performance.now();
+
+        if (this._rafId) {
+            cancelAnimationFrame(this._rafId);
+            this._rafId = null;
+        }
+        if (this._loopTimer) {
+            clearTimeout(this._loopTimer);
+            this._loopTimer = null;
+            this._loopPending = true;
+        }
+    }
+
+    _resume() {
+        if (this._pausedAt === null) return;
+        const pausedDuration = performance.now() - this._pausedAt;
+        this._pausedAt = null;
+
+        if (this._active) {
+            this._startTime += pausedDuration;
+            this._rafId = requestAnimationFrame(() => this._tick());
+        } else if (this._loopPending) {
+            this._loopPending = false;
+            this._loopTimer = setTimeout(() => this.play(), this.loop);
+        }
+    }
+
+    destroy() {
+        this._active = false;
+        if (this._rafId) cancelAnimationFrame(this._rafId);
+        clearTimeout(this._loopTimer);
+        if (this._observer) this._observer.disconnect();
+        document.removeEventListener('visibilitychange', this._boundVisibilityChange);
+        this.el.removeEventListener('pointerenter', this._boundHover);
+    }
+}
+
 // NAVEGACIÓN MÓVIL
 function initNavToggle() {
     const toggle = document.getElementById('navToggle');
@@ -144,6 +391,42 @@ function initHeroVideo() {
     }
 
     video.play().catch(() => {});
+}
+
+// TITULAR DEL HERO: EFECTO DECRYPT (de la incógnita a la primera luz)
+function initHeroDecrypt() {
+    const lines = document.querySelectorAll('.hero-title .line-inner');
+    if (!lines.length) return;
+
+    lines.forEach((line, index) => {
+        new DecryptText(line, {
+            trigger: 'mount',
+            stagger: 34,
+            jitter: 90,
+            startDelay: 150 + index * 260,
+            retriggerOnHover: true
+        });
+    });
+}
+
+// TABS DE CONTACTO: ALTERNA ENTRE LAS DIVISIONES SERVICES Y STUDIO
+function initContactTabs() {
+    const buttons = document.querySelectorAll('.tab-btn[data-tab-target]');
+    if (!buttons.length) return;
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.dataset.tabTarget;
+            const isStudio = targetId === 'contact-studio';
+
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.toggle('active', section.id === targetId);
+            });
+
+            buttons.forEach(b => b.classList.remove('active-services', 'active-studio'));
+            btn.classList.add(isStudio ? 'active-studio' : 'active-services');
+        });
+    });
 }
 
 // SWITCH X — ORA: CONTROL SEGMENTADO (TRANSICIÓN ENTRE TERRITORIOS)
@@ -326,5 +609,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeaderScrollState();
     initScrollReveal();
     initHeroVideo();
+    initHeroDecrypt();
     initTerritorySwitch();
+    initContactTabs();
 });
