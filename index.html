@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>x-ora | De la incógnita a la primera luz</title>
+    <title>x-ora | Coming Soon</title>
 
     <!-- Importación de Tipografías según el manual -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,98 +14,22 @@
 </head>
 <body>
 
-    <!-- CABECERA CON NAV BAR -->
-    <header id="siteHeader">
-        <div class="header-left">
-            <div class="logo">
-                <a href="index.html">x-ora<span class="logo-luz">_</span></a>
-            </div>
-
-            <nav class="main-nav" id="mainNav">
-                <a href="index.html" class="active-nav">Inicio</a>
-                <a href="about.html">Nosotros</a>
-                <a href="services.html">Services</a>
-                <a href="studio.html">Studio</a>
-                <a href="contacto.html">Contacto</a>
-            </nav>
-        </div>
-
-        <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mainNav">
-            <span></span><span></span><span></span>
-            <span class="sr-only">Abrir menú</span>
-        </button>
-    </header>
-
-    <!-- HERO / FILOSOFÍA -->
-    <section class="hero">
+    <!-- COMING SOON (mismo fondo que el Hero de index.html) -->
+    <section class="hero hero-coming-soon">
         <video class="hero-video" id="heroVideo" autoplay muted loop playsinline aria-hidden="true">
             <source src="assets/Estrellas.mp4" type="video/mp4">
         </video>
         <div class="hero-overlay" aria-hidden="true"></div>
+
         <h1 class="hero-title">
-            <span class="line"><span class="line-inner">De la incógnita</span></span>
-            <span class="line"><span class="line-inner">a la primera luz.</span></span>
+            <span class="line"><span class="line-inner">X - ORA</span></span>
         </h1>
-        <p class="hero-sub">Un puente de credibilidad entre el sector industrial de infraestructura crítica y el aprendizaje STEAM de alto nivel.</p>
+        <p class="hero-sub">De la incógnita a la primera luz</p>
+
+        <p class="hero-title-xl">
+            <span class="line"><span class="line-inner">Coming Soon</span></span><span class="hero-dots" aria-hidden="true"><span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>
+        </p>
     </section>
-
-    <!-- MANIFIESTO: X-ORA COMO MARCA MADRE -->
-    <section class="manifesto reveal" aria-labelledby="manifesto-title">
-        <div class="manifesto-inner">
-            <div class="manifesto-text">
-                <h2 id="manifesto-title">Ecosistema Global</h2>
-                <p>
-                    La marca x-ora se proyecta como una arquitectura monolítica diseñada para actuar como un puente de credibilidad. Estratégicamente, no somos una marca paraguas, sino una marca madre que unifica ambos territorios bajo la premisa de la ingeniería como estructura de pensamiento. El rigor utilizado para comisionar un sistema de potencia crítica es el mismo que cultivamos para diagnosticar un punto crítico de fallo en un prototipo robótico.
-                </p>
-            </div>
-            <div class="manifesto-visual" aria-hidden="true"></div>
-        </div>
-    </section>
-
-    <!-- SWITCH X — ORA: TRANSICIÓN DE TERRITORIO -->
-    <section class="switch-section reveal" aria-labelledby="switch-title">
-        <h2 id="switch-title" class="sr-only">Selecciona un territorio x-ora</h2>
-
-        <div class="xora-switch" id="xoraSwitch" role="radiogroup" aria-label="Cambiar entre x-ora Services y x-ora Studio" data-territory="services">
-            <span class="switch-glide" aria-hidden="true"></span>
-            <button type="button" class="switch-segment is-active" id="segServices" role="radio" aria-checked="true" data-target="services">Services</button>
-            <button type="button" class="switch-segment" id="segStudio" role="radio" aria-checked="false" tabindex="-1" data-target="studio">Studio</button>
-        </div>
-
-        <p class="switch-caption" id="switchCaption">x-ora Services — infraestructura crítica</p>
-        <p class="sr-only" id="switchAnnounce" role="status" aria-live="polite"></p>
-    </section>
-
-    <!-- PANEL DE TERRITORIO -->
-    <div class="territory-wrapper" id="territoryWrapper" data-territory="services">
-        <span class="territory-bg territory-bg-services" aria-hidden="true"></span>
-        <span class="territory-bg territory-bg-studio" aria-hidden="true"></span>
-
-        <article class="territory-panel" id="panel-services" data-panel="services">
-            <span class="descriptor">Descriptor: Critical Power & Control Systems</span>
-            <h2>Ingeniería y Disponibilidad Operativa</h2>
-            <p>Nuestros procesos de comisionamiento y soporte para infraestructura crítica garantizan alta disponibilidad y autoridad técnica. Ejecutamos metodologías de prueba fundamentadas en diagnósticos concretos y evidencias medibles.</p>
-            <ul class="tech-list territory-list">
-                <li>Comisionamiento de potencia crítica</li>
-                <li>Diagnóstico de puntos críticos de fallo</li>
-                <li>Automatización y control industrial</li>
-            </ul>
-            <a href="services.html" class="btn btn-services">Conoce Services</a>
-        </article>
-
-        <article class="territory-panel" id="panel-studio" data-panel="studio" hidden>
-            <span class="descriptor">Descriptor: Engineering & Technology</span>
-            <h2>Ecosistema Educativo y Código STARIS</h2>
-            <p>Un entorno de aprendizaje premium que inspira mediante el reto técnico. Diagnosticamos puntos críticos de fallo e iteramos prototipos tratando a nuestros estudiantes como personas altamente capaces.</p>
-            <img src="assets/img1.jpeg" alt="Laboratorio STEAM de x-ora Studio, mesas y sillas de trabajo preparadas para prototipado" class="territory-image" loading="lazy" width="1600" height="1204">
-            <a href="studio.html" class="btn btn-studio">Conoce Studio</a>
-        </article>
-    </div>
-
-    <!-- PIE DE PÁGINA -->
-    <footer>
-        <p>&copy; 2026 x-ora. Transformando la complejidad en ejecución real.</p>
-    </footer>
 
     <!-- Enlace al archivo JavaScript externo -->
     <script src="script.js"></script>

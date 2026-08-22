@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>x-ora | De la incógnita a la primera luz</title>
+
+    <!-- Importación de Tipografías según el manual -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Enlace al archivo CSS externo -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- NAV BAR VERTICAL (DESKTOP: LATERAL DERECHA / MÓVIL: DESPLEGABLE) -->
+    <nav class="side-nav" id="sideNav" aria-label="Navegación principal">
+        <button type="button" class="side-nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">
+            <span class="sr-only">Abrir menú</span>
+            <span class="side-nav-arrow" aria-hidden="true"></span>
+        </button>
+
+        <div class="side-nav-links" id="navLinks">
+            <a href="index.html" class="active-nav">Inicio</a>
+            <a href="about.html">Nosotros</a>
+            <a href="services.html">Services</a>
+            <a href="studio.html">Studio</a>
+            <a href="contacto.html">Contacto</a>
+        </div>
+    </nav>
+
+    <!-- HERO / FILOSOFÍA -->
+    <section class="hero">
+        <video class="hero-video" id="heroVideo" autoplay muted loop playsinline aria-hidden="true">
+            <source src="assets/Estrellas.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay" aria-hidden="true"></div>
+        <img class="hero-logo" src="assets/Logo.png" alt="x-ora" width="500" height="500">
+        <h1 class="hero-title">
+            <span class="line"><span class="line-inner">X - ORA</span></span>
+            <span class="line"><span class="line-inner"></span></span>
+        </h1>
+        <p class="hero-sub">De la incógnita a la primera luz.</p>
+    </section>
+
+    <!-- MANIFIESTO: X-ORA COMO MARCA MADRE -->
+    <section class="manifesto" aria-labelledby="manifesto-title">
+        <div class="manifesto-inner reveal">
+            <div class="manifesto-text">
+                <h2 id="manifesto-title">Ecosistema Global</h2>
+                <p>
+                    La marca x-ora se proyecta como una arquitectura monolítica diseñada para actuar como un puente de credibilidad. Estratégicamente, no somos una marca paraguas, sino una marca madre que unifica ambos territorios bajo la premisa de la ingeniería como estructura de pensamiento. El rigor utilizado para comisionar un sistema de potencia crítica es el mismo que cultivamos para diagnosticar un punto crítico de fallo en un prototipo robótico.
+                </p>
+            </div>
+            <div class="manifesto-visual" aria-hidden="true"></div>
+        </div>
+    </section>
+
+    <!-- SWITCH X — ORA: TRANSICIÓN DE TERRITORIO -->
+    <section class="switch-section reveal" aria-labelledby="switch-title">
+        <h2 id="switch-title" class="sr-only">Selecciona un territorio x-ora</h2>
+
+        <div class="xora-diagonal" id="xoraDiagonal" role="radiogroup" aria-label="Cambiar entre x-ora Services y x-ora Studio" data-territory="services">
+            <button type="button" class="diagonal-half diagonal-services is-active" id="segServices" role="radio" aria-checked="true" data-target="services"><span>Services</span></button>
+            <button type="button" class="diagonal-half diagonal-studio" id="segStudio" role="radio" aria-checked="false" tabindex="-1" data-target="studio"><span>Studio</span></button>
+        </div>
+
+        <p class="sr-only" id="switchAnnounce" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- PANEL DE TERRITORIO -->
+    <div class="territory-wrapper" id="territoryWrapper" data-territory="services">
+        <span class="territory-bg territory-bg-services" aria-hidden="true"></span>
+        <span class="territory-bg territory-bg-studio" aria-hidden="true"></span>
+
+        <article class="territory-panel" id="panel-services" data-panel="services">
+            <span class="descriptor">Descriptor: Critical Power & Control Systems</span>
+            <h2>Ingeniería y Disponibilidad Operativa</h2>
+            <p>Nuestros procesos de comisionamiento y soporte para infraestructura crítica garantizan alta disponibilidad y autoridad técnica. Ejecutamos metodologías de prueba fundamentadas en diagnósticos concretos y evidencias medibles.</p>
+            <ul class="tech-list territory-list">
+                <li>Comisionamiento de potencia crítica</li>
+                <li>Diagnóstico de puntos críticos de fallo</li>
+                <li>Automatización y control industrial</li>
+            </ul>
+            <a href="services.html" class="btn btn-services">Conoce Services</a>
+        </article>
+
+        <article class="territory-panel" id="panel-studio" data-panel="studio" hidden>
+            <span class="descriptor">Descriptor: Engineering & Technology</span>
+            <h2>Ecosistema Educativo y Código STARIS</h2>
+            <p>Un entorno de aprendizaje premium que inspira mediante el reto técnico. Diagnosticamos puntos críticos de fallo e iteramos prototipos tratando a nuestros estudiantes como personas altamente capaces.</p>
+            <img src="assets/img1.jpeg" alt="Laboratorio STEAM de x-ora Studio, mesas y sillas de trabajo preparadas para prototipado" class="territory-image" loading="lazy" width="1600" height="1204">
+            <a href="studio.html" class="btn btn-studio">Conoce Studio</a>
+        </article>
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <p>&copy; 2026 x-ora. Transformando la complejidad en ejecución real.</p>
+    </footer>
+
+    <!-- Enlace al archivo JavaScript externo -->
+    <script src="script.js"></script>
+</body>
+</html>

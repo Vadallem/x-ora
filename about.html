@@ -13,27 +13,21 @@
 </head>
 <body>
 
-    <!-- CABECERA CON NAV BAR -->
-    <header id="siteHeader">
-        <div class="header-left">
-            <div class="logo">
-                <a href="index.html">x-ora<span class="logo-luz">_</span></a>
-            </div>
-
-            <nav class="main-nav" id="mainNav">
-                <a href="index.html">Inicio</a>
-                <a href="about.html" class="active-nav">Nosotros</a>
-                <a href="services.html">Services</a>
-                <a href="studio.html">Studio</a>
-                <a href="contacto.html">Contacto</a>
-            </nav>
-        </div>
-
-        <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mainNav">
-            <span></span><span></span><span></span>
+    <!-- NAV BAR VERTICAL (DESKTOP: LATERAL DERECHA / MÓVIL: DESPLEGABLE) -->
+    <nav class="side-nav" id="sideNav" aria-label="Navegación principal">
+        <button type="button" class="side-nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">
             <span class="sr-only">Abrir menú</span>
+            <span class="side-nav-arrow" aria-hidden="true"></span>
         </button>
-    </header>
+
+        <div class="side-nav-links" id="navLinks">
+            <a href="index.html">Inicio</a>
+            <a href="about.html" class="active-nav">Nosotros</a>
+            <a href="services.html">Services</a>
+            <a href="studio.html">Studio</a>
+            <a href="contacto.html">Contacto</a>
+        </div>
+    </nav>
 
     <!-- SECCIÓN 1: PRINCIPAL (HERO MARCA MADRE) -->
     <section class="hero-about">

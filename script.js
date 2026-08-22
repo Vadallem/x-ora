@@ -200,7 +200,7 @@ class DecryptText {
             this._active = false;
             this._rafId = null;
             if (this.loop) {
-                this._loopTimer = setTimeout(() => this.play(), this.loop);
+                this._loopTimer = setTimeout(() => this.play(), this._loopDelay());
             }
             return;
         }
@@ -233,8 +233,12 @@ class DecryptText {
             this._rafId = requestAnimationFrame(() => this._tick());
         } else if (this._loopPending) {
             this._loopPending = false;
-            this._loopTimer = setTimeout(() => this.play(), this.loop);
+            this._loopTimer = setTimeout(() => this.play(), this._loopDelay());
         }
+    }
+
+    _loopDelay() {
+        return typeof this.loop === 'function' ? this.loop() : this.loop;
     }
 
     destroy() {
@@ -247,10 +251,10 @@ class DecryptText {
     }
 }
 
-// NAVEGACIÓN MÓVIL
+// NAVEGACIÓN MÓVIL (MENÚ DESPLEGABLE DE LA NAV LATERAL)
 function initNavToggle() {
     const toggle = document.getElementById('navToggle');
-    const nav = document.getElementById('mainNav');
+    const nav = document.getElementById('navLinks');
     if (!toggle || !nav) return;
 
     const closeNav = () => {
@@ -278,7 +282,7 @@ function initNavToggle() {
 
 // CHIP FLOTANTE QUE SIGUE AL ENLACE ACTIVO/HOVER EN LA NAV
 function initNavIndicator() {
-    const nav = document.getElementById('mainNav');
+    const nav = document.getElementById('navLinks');
     if (!nav) return;
 
     const links = Array.from(nav.querySelectorAll('a'));
@@ -322,40 +326,6 @@ function initNavIndicator() {
     }
 
     restToActive();
-}
-
-// CABECERA: SE RETIRA AL BAJAR, REAPARECE AL SUBIR (nav transparente, sin bloque de fondo)
-function initHeaderScrollState() {
-    const header = document.getElementById('siteHeader');
-    const nav = document.getElementById('mainNav');
-    if (!header) return;
-
-    let lastScrollY = window.scrollY;
-    let ticking = false;
-
-    const update = () => {
-        const scrollY = window.scrollY;
-        const scrollingDown = scrollY > lastScrollY;
-        const navOpen = nav && nav.classList.contains('is-open');
-
-        header.classList.toggle('is-scrolled', scrollY > 40);
-
-        if (!navOpen) {
-            header.classList.toggle('is-hidden', scrollingDown && scrollY > 160);
-        }
-
-        lastScrollY = scrollY;
-        ticking = false;
-    };
-
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            requestAnimationFrame(update);
-            ticking = true;
-        }
-    }, { passive: true });
-
-    update();
 }
 
 // REVELACIÓN DE SECCIONES AL ENTRAR EN VIEWPORT
@@ -409,6 +379,22 @@ function initHeroDecrypt() {
     });
 }
 
+// TITULAR "COMING SOON": MISMO EFECTO DECRYPT DEL HERO, RETRIGGERED CADA 3-5s
+function initComingSoonDecrypt() {
+    const lines = document.querySelectorAll('.hero-title-xl .line-inner');
+    if (!lines.length) return;
+
+    lines.forEach((line, index) => {
+        new DecryptText(line, {
+            trigger: 'mount',
+            stagger: 34,
+            jitter: 90,
+            startDelay: 150 + index * 260,
+            loop: () => 3000 + Math.random() * 2000
+        });
+    });
+}
+
 // TABS DE CONTACTO: ALTERNA ENTRE LAS DIVISIONES SERVICES Y STUDIO
 function initContactTabs() {
     const buttons = document.querySelectorAll('.tab-btn[data-tab-target]');
@@ -429,14 +415,13 @@ function initContactTabs() {
     });
 }
 
-// SWITCH X — ORA: CONTROL SEGMENTADO (TRANSICIÓN ENTRE TERRITORIOS)
+// BOTÓN DIAGONAL SERVICES / STUDIO: TRANSICIÓN ENTRE TERRITORIOS
 function initTerritorySwitch() {
-    const xoraSwitch = document.getElementById('xoraSwitch');
+    const xoraDiagonal = document.getElementById('xoraDiagonal');
     const wrapper = document.getElementById('territoryWrapper');
-    const caption = document.getElementById('switchCaption');
     const announce = document.getElementById('switchAnnounce');
 
-    if (!xoraSwitch || !wrapper) return;
+    if (!xoraDiagonal || !wrapper) return;
 
     const segments = {
         services: document.getElementById('segServices'),
@@ -466,10 +451,9 @@ function initTerritorySwitch() {
     }
 
     function setStaticState(territory) {
-        xoraSwitch.dataset.territory = territory;
+        xoraDiagonal.dataset.territory = territory;
         wrapper.dataset.territory = territory;
         reflectSegments(territory);
-        caption.textContent = copy[territory];
         Object.entries(panels).forEach(([name, panel]) => {
             panel.hidden = name !== territory;
         });
@@ -497,9 +481,8 @@ function initTerritorySwitch() {
         wrapper.style.height = `${startHeight}px`;
         wrapper.classList.add('is-transitioning');
 
-        xoraSwitch.dataset.territory = territory;
+        xoraDiagonal.dataset.territory = territory;
         reflectSegments(territory);
-        caption.textContent = copy[territory];
 
         outgoing.classList.add('panel-exit');
 
@@ -528,88 +511,25 @@ function initTerritorySwitch() {
     }
 
     Object.entries(segments).forEach(([name, btn]) => {
-        btn.addEventListener('click', event => {
-            if (justDragged) {
-                event.preventDefault();
-                return;
-            }
-            switchTo(name);
-        });
+        btn.addEventListener('click', () => switchTo(name));
     });
 
-    xoraSwitch.addEventListener('keydown', event => {
+    xoraDiagonal.addEventListener('keydown', event => {
         if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
         event.preventDefault();
         const target = current === 'services' ? 'studio' : 'services';
         switchTo(target);
         segments[target].focus();
     });
-
-    // ARRASTRE / SLIDE CON EL DEDO (touch, pen y mouse vía Pointer Events)
-    const glide = xoraSwitch.querySelector('.switch-glide');
-    let dragging = false;
-    let justDragged = false;
-    let startX = 0;
-    let baseOffset = 0;
-    let trackWidth = 0;
-
-    function segmentWidth() {
-        return xoraSwitch.getBoundingClientRect().width / 2;
-    }
-
-    xoraSwitch.addEventListener('pointerdown', event => {
-        if (isAnimating) return;
-        dragging = true;
-        startX = event.clientX;
-        trackWidth = segmentWidth();
-        baseOffset = current === 'studio' ? trackWidth : 0;
-        glide.classList.add('is-dragging');
-        xoraSwitch.setPointerCapture(event.pointerId);
-    });
-
-    xoraSwitch.addEventListener('pointermove', event => {
-        if (!dragging) return;
-        const deltaX = event.clientX - startX;
-        if (Math.abs(deltaX) > 10) justDragged = true;
-        const offset = Math.min(Math.max(baseOffset + deltaX, 0), trackWidth);
-        glide.style.transform = `translateX(${offset}px)`;
-    });
-
-    function endDrag(event) {
-        if (!dragging) return;
-        dragging = false;
-
-        if (!justDragged) {
-            glide.classList.remove('is-dragging');
-            glide.style.transform = '';
-            return;
-        }
-
-        const deltaX = event.clientX - startX;
-        const offset = Math.min(Math.max(baseOffset + deltaX, 0), trackWidth);
-        const territory = offset > trackWidth / 2 ? 'studio' : 'services';
-
-        switchTo(territory);
-
-        requestAnimationFrame(() => {
-            glide.classList.remove('is-dragging');
-            glide.style.transform = '';
-        });
-
-        window.setTimeout(() => { justDragged = false; }, 80);
-    }
-
-    xoraSwitch.addEventListener('pointerup', endDrag);
-    xoraSwitch.addEventListener('pointercancel', endDrag);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     initNavToggle();
     initNavIndicator();
-    initHeaderScrollState();
     initScrollReveal();
     initHeroVideo();
     initHeroDecrypt();
+    initComingSoonDecrypt();
     initTerritorySwitch();
     initContactTabs();
 });
