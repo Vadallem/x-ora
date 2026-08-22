@@ -197,12 +197,6 @@ h2 {
     100% { opacity: 0; }
 }
 
-@media (max-width: 640px) {
-    .hero-video {
-        display: none;
-    }
-}
-
 .hero-title .line,
 .hero-title-xl .line {
     display: block;
