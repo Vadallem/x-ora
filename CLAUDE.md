@@ -3,14 +3,13 @@
 ## Stack:
 - HTML5
 - CSS3
-- JavaScript vanilla
+- JavaScript
 
 ## No utilizar:
 - React
 - Vue
 - Tailwind
 - Bootstrap
-- Frameworks innecesarios
 
 ### Objetivo:
 - Diseño Mobile Firts
@@ -22,22 +21,15 @@
 
 ## Sistema de colores
 
-### Marca / Marca matriz
-- Engineering Deep Blue: #2D3F50
+Usar únicamente estos 4 colores en todo el sitio (no introducir grises, negros u otros tonos fuera de esta paleta, salvo negro puro en sombras/`box-shadow` neutras):
 
-### x-ora Services
-- Gris platino: #E2E8F0
-- Gris acero: #64748B
-- Azul medianoche: #0F172A
-
-### x-ora Studio
-- Naranja aurora / Horizonte: #FF8A00
-
-### Neutro
-- Blanco: #FFFFFF
+- Azul profundo: #082A4A
+- Azul eléctrico: #0B6AB8
+- Naranja quemado: #E35C13
+- Blanco hueso: #F7F5F0
 
 ### Normas de color
-- El azul profundo es el color principal y unificador de la marca.
-- En todo lo referente a Services debe destacar el azul profundo, los grises minerales y el azul medianoche.
-- En todo lo referenta a Studio debe destacar el naranja aurora como acento activo.
+- El azul profundo (#082A4A) es el color principal y unificador de la marca; domina fondos y titulares.
+- En todo lo referente a Services debe destacar el azul profundo y el azul eléctrico como acento/interacción, sobre blanco hueso.
+- En todo lo referente a Studio debe destacar el naranja quemado como acento activo.
 - Evita los colores primarios saturados y las paletas de colores infantiles.

@@ -1,11 +1,11 @@
 /* SISTEMA DE COLOR (GAMA CROMÁTICA) */
 :root {
-    --azul-profundo: #2d3f50;
-    --naranja-aurora: #ff8a00;
-    --gris-platino: #e2e8f0;
-    --gris-acero: #64748b;
-    --azul-medianoche: #0f172a;
-    --blanco: #ffffff;
+    --azul-profundo: #082a4a;
+    --naranja-aurora: #e35c13;
+    --gris-platino: #f7f5f0;
+    --gris-acero: #0b6ab8;
+    --azul-medianoche: var(--azul-profundo);
+    --blanco: var(--gris-platino);
 
     /* Ritmo de movimiento (homepage) */
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -48,6 +48,14 @@ body {
     line-height: 1.6;
 }
 
+/* Bloquea el scroll en páginas de una sola pantalla (p. ej. index.html) */
+html.no-scroll,
+html.no-scroll body {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+}
+
 h1, h2, h3 {
     font-family: 'Montserrat', sans-serif;
     margin-top: 0;
@@ -67,10 +75,12 @@ h2 {
 /* HERO SECTION (Pantalla Completa) */
 .hero {
     position: relative;
+    box-sizing: border-box;
     background-color: var(--azul-medianoche);
     color: var(--blanco);
     padding: 0 5%;
     min-height: 100vh;
+    min-height: 100dvh;
     text-align: center;
     border-bottom: 2px solid var(--naranja-aurora);
     display: flex;
@@ -93,10 +103,11 @@ h2 {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.1) 0%, rgba(15, 23, 42, 0.55) 45%, rgba(15, 23, 42, 0.7) 65%, var(--azul-medianoche) 100%);
+    background: linear-gradient(180deg, rgba(8, 42, 74, 0.1) 0%, rgba(8, 42, 74, 0.55) 45%, rgba(8, 42, 74, 0.7) 65%, var(--azul-medianoche) 100%);
 }
 
 .hero-logo,
+.hero-logo-coming,
 .hero-title,
 .hero-sub {
     position: relative;
@@ -109,7 +120,15 @@ h2 {
     left: 5%;
     width: clamp(56px, 6vw, 92px);
     height: auto;
-    filter: drop-shadow(0 2px 10px rgba(15, 23, 42, 0.5));
+    filter: drop-shadow(0 2px 10px rgba(8, 42, 74, 0.5));
+}
+
+/* Logo centrado sobre el titular X-ORA en la pantalla "Coming Soon" */
+.hero-logo-coming {
+    display: block;
+    width: clamp(44px, 6vw, 72px);
+    height: auto;
+    margin: 0 auto clamp(1rem, 2.5vh, 1.6rem);
 }
 
 .hero-title {
@@ -233,7 +252,7 @@ h2 {
 .decrypt-char.is-flash {
     transition: none;
     color: var(--naranja-aurora);
-    text-shadow: 0 0 10px rgba(255, 138, 0, 0.75);
+    text-shadow: 0 0 10px rgba(227, 92, 19, 0.75);
 }
 
 /* Ajuste responsive para pantallas móviles */
@@ -367,11 +386,11 @@ footer {
     gap: 0.25rem;
     padding: 0.9rem 0.6rem;
     border-radius: 20px;
-    background: rgba(15, 23, 42, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(8, 42, 74, 0.4);
+    border: 1px solid rgba(247, 245, 240, 0.14);
     backdrop-filter: blur(18px) saturate(160%);
     -webkit-backdrop-filter: blur(18px) saturate(160%);
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.35);
+    box-shadow: 0 10px 30px rgba(8, 42, 74, 0.35);
 }
 
 .side-nav-links a {
@@ -402,8 +421,8 @@ footer {
     width: 0;
     height: 0;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 138, 0, 0.28);
+    background: rgba(247, 245, 240, 0.08);
+    border: 1px solid rgba(227, 92, 19, 0.28);
     opacity: 0;
     z-index: 0;
     pointer-events: none;
@@ -426,17 +445,17 @@ footer {
         width: 52px;
         height: 52px;
         border-radius: 50%;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        background: rgba(15, 23, 42, 0.55);
+        border: 1px solid rgba(247, 245, 240, 0.18);
+        background: rgba(8, 42, 74, 0.55);
         backdrop-filter: blur(16px) saturate(160%);
         -webkit-backdrop-filter: blur(16px) saturate(160%);
-        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.4);
+        box-shadow: 0 8px 20px rgba(8, 42, 74, 0.4);
         cursor: pointer;
         padding: 0;
     }
 
     .side-nav-toggle:hover {
-        background-color: rgba(15, 23, 42, 0.7);
+        background-color: rgba(8, 42, 74, 0.7);
     }
 
     .side-nav-arrow {
@@ -491,7 +510,7 @@ footer {
     color: var(--blanco);
     padding: 6rem 5%;
     text-align: left;
-    border-bottom: 4px solid var(--azul-profundo); /* Menos naranja, más rigor industrial */
+    border-bottom: 4px solid var(--gris-acero); /* Menos naranja, más rigor industrial */
 }
 
 .hero-services h1 {
@@ -819,7 +838,7 @@ footer {
 .dualism-services {
     background-color: var(--azul-medianoche);
     color: var(--blanco);
-    border-top: 4px solid var(--azul-profundo);
+    border-top: 4px solid var(--gris-acero);
 }
 
 .dualism-studio {
@@ -856,7 +875,7 @@ footer {
 
 .dualism-services .tech-list li {
     color: var(--gris-platino);
-    border-bottom-color: var(--azul-profundo);
+    border-bottom-color: var(--gris-acero);
 }
 
 .dualism-studio .tech-list li {
@@ -1033,7 +1052,7 @@ footer {
 .manifesto {
     background-color: var(--gris-platino);
     background-image:
-        linear-gradient(rgba(226, 232, 240, 0.88), rgba(226, 232, 240, 0.88)),
+        linear-gradient(rgba(247, 245, 240, 0.88), rgba(247, 245, 240, 0.88)),
         url('assets/PapelCuadiculado.jpg');
     background-size: cover;
     background-position: center;
@@ -1087,7 +1106,7 @@ footer {
 .switch-section {
     background-color: var(--azul-medianoche);
     padding: 0;
-    border-bottom: 4px solid var(--azul-profundo);
+    border-bottom: 4px solid var(--gris-acero);
 }
 
 .xora-diagonal {
@@ -1128,7 +1147,7 @@ footer {
 }
 
 .diagonal-services {
-    background: linear-gradient(135deg, var(--azul-profundo), var(--azul-medianoche));
+    background: linear-gradient(135deg, var(--gris-acero), var(--azul-medianoche));
     color: var(--blanco);
     clip-path: polygon(0 0, 57% 0, 43% 100%, 0 100%);
     justify-content: flex-start;
@@ -1136,7 +1155,7 @@ footer {
 }
 
 .diagonal-studio {
-    background: linear-gradient(135deg, #cc6d00, var(--naranja-aurora));
+    background: var(--naranja-aurora);
     color: var(--azul-medianoche);
     clip-path: polygon(58% 0, 100% 0, 100% 100%, 44% 100%);
     justify-content: flex-end;
@@ -1189,15 +1208,15 @@ footer {
 .territory-bg-services {
     background-color: var(--azul-medianoche);
     background-image:
-        linear-gradient(90deg, rgba(226, 232, 240, 0.05) 1px, transparent 1px),
-        linear-gradient(rgba(226, 232, 240, 0.05) 1px, transparent 1px);
+        linear-gradient(90deg, rgba(247, 245, 240, 0.05) 1px, transparent 1px),
+        linear-gradient(rgba(247, 245, 240, 0.05) 1px, transparent 1px);
     background-size: 42px 42px;
     opacity: 1;
 }
 
 .territory-bg-studio {
     background-color: var(--azul-medianoche);
-    background-image: radial-gradient(circle at 82% 15%, rgba(255, 138, 0, 0.22), transparent 55%);
+    background-image: radial-gradient(circle at 82% 15%, rgba(227, 92, 19, 0.22), transparent 55%);
     opacity: 0;
 }
 
@@ -1243,7 +1262,7 @@ footer {
 
 .territory-list li {
     color: var(--gris-platino);
-    border-bottom-color: rgba(226, 232, 240, 0.2);
+    border-bottom-color: rgba(247, 245, 240, 0.2);
 }
 
 .territory-list li::before {
@@ -1292,5 +1311,110 @@ footer {
 @media (max-width: 768px) {
     .territory-panel {
         padding: 3.5rem 6% 4rem;
+    }
+}
+
+/* =========================================
+   MAPA DE COBERTURA — JSVECTORMAP (map.html)
+   ========================================= */
+.map-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    min-height: 320px;
+    background-color: var(--azul-medianoche);
+    border: 1px solid var(--gris-acero);
+    overflow: hidden;
+}
+
+/* El SVG interno de jsVectorMap debe llenar el escenario por completo */
+.map-stage svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Oculta controles de zoom nativos (usamos un mapa estático, sin pan/zoom) */
+.jvm-zoomin,
+.jvm-zoomout {
+    display: none;
+}
+
+/* Tooltip de marcador: solo aparece al pasar el cursor sobre un pin (nunca sobre un país) */
+.jvm-tooltip {
+    background-color: var(--azul-profundo) !important;
+    color: var(--blanco) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    padding: 0.35rem 0.75rem !important;
+    border: none !important;
+    border-radius: 4px !important;
+    box-shadow: 0 4px 12px rgba(8, 42, 74, 0.35) !important;
+}
+
+/* Pines (círculos SVG renderizados por la librería) */
+.jvm-marker {
+    cursor: pointer;
+    transition: fill var(--dur-pulse) var(--ease-out);
+}
+
+.jvm-marker:focus-visible {
+    outline: 2px solid var(--naranja-aurora);
+    outline-offset: 3px;
+}
+
+.jvm-marker.is-selected {
+    fill: var(--naranja-aurora) !important;
+    animation: map-pin-pulse 1.8s var(--ease-out) infinite;
+}
+
+@keyframes map-pin-pulse {
+    0%, 100% { r: 9px; filter: drop-shadow(0 0 0 rgba(227, 92, 19, 0.55)); }
+    50% { r: 12px; filter: drop-shadow(0 0 7px rgba(227, 92, 19, 0.85)); }
+}
+
+/* Leyenda bajo el mapa */
+.map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: var(--gris-acero);
+}
+
+.map-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.map-legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--gris-platino);
+    border: 1px solid var(--gris-acero);
+}
+
+.map-legend-dot.is-active {
+    background-color: var(--naranja-aurora);
+    border-color: var(--naranja-aurora);
+}
+
+/* Panel de información: nombre del país seleccionado */
+.info-panel-map {
+    min-height: 320px;
+}
+
+.map-country-name {
+    min-height: 1.3em;
+    color: var(--azul-medianoche);
+}
+
+@media (max-width: 768px) {
+    .info-panel-map {
+        min-height: auto;
     }
 }

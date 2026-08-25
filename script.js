@@ -523,6 +523,182 @@ function initTerritorySwitch() {
     });
 }
 
+// Encuadra el mapa para mostrar exactamente el conjunto de coordenadas dado: se acerca si
+// están agrupadas (con un tope de zoom para que un solo punto no se acerque de más) y se
+// aleja/expande solo si el conjunto lo requiere (p. ej. al agregar un punto lejano como Rusia).
+// jsVectorMap no ofrece un "fit bounds" público para marcadores (solo para regiones vía
+// setFocus), así que lo replicamos apoyándonos en su método público coordsToPoint(): a partir
+// de la escala/traslación actuales (también públicas) invertimos esa proyección para obtener
+// las coordenadas en el espacio base del mapa, y con eso pedimos a _setScale —su primitiva de
+// zoom interna, la misma que usan setFocus y los botones de zoom— que centre y escale la vista.
+function fitMapToPins(map, stage, coordsList, { padding = 60, maxZoomFactor = 6, animate = true } = {}) {
+    if (!coordsList.length) return;
+
+    const scale = map.scale;
+    const transX = map.transX;
+    const transY = map.transY;
+
+    const basePoints = coordsList.map(([lat, lng]) => {
+        const p = map.coordsToPoint(lat, lng);
+        return { x: p.x / scale - transX, y: p.y / scale - transY };
+    });
+
+    const xs = basePoints.map(p => p.x);
+    const ys = basePoints.map(p => p.y);
+    const minX = Math.min(...xs);
+    const maxX = Math.max(...xs);
+    const minY = Math.min(...ys);
+    const maxY = Math.max(...ys);
+
+    // Margen convertido a espacio base según la escala actual (así un solo punto o dos
+    // puntos idénticos no producen una caja de ancho/alto cero al dividir).
+    const paddingBase = padding / scale;
+    const bboxWidth = Math.max(maxX - minX + paddingBase * 2, 1);
+    const bboxHeight = Math.max(maxY - minY + paddingBase * 2, 1);
+
+    const fitScale = Math.min(stage.clientWidth / bboxWidth, stage.clientHeight / bboxHeight);
+    const targetScale = Math.min(fitScale, scale * maxZoomFactor);
+
+    map._setScale(targetScale, -(minX + maxX) / 2, -(minY + maxY) / 2, true, animate);
+}
+
+// MAPA DE COBERTURA (jsVectorMap): mapa vectorial minimalista con pines seleccionables
+// (México / Estados Unidos, extensible). Los nombres de país solo se muestran al pasar
+// el cursor sobre un pin — el hover de los países del mapa nunca revela su tooltip.
+function initCoverageMap() {
+    const stage = document.getElementById('mapStage');
+    const nameEl = document.getElementById('mapCountryName');
+    if (!stage || !nameEl || typeof jsVectorMap === 'undefined') return;
+
+    const dashboard = stage.closest('.mapa-dashboard') || stage;
+    const CYCLE_INTERVAL_MS = 6000;
+
+    // Coordenadas reales (lat, lng). Agregar más bases a futuro = agregar una entrada aquí;
+    // el encuadre del mapa y la alternancia automática se ajustan solos al nuevo conjunto.
+    const COVERAGE_PINS = [
+        { id: 'mx', country: 'México', coords: [19.4326, -99.1332] },
+        { id: 'us', country: 'Estados Unidos', coords: [39.8283, -98.5795] }
+    ];
+
+    const map = new jsVectorMap({
+        selector: `#${stage.id}`,
+        map: 'world',
+        backgroundColor: '#082a4a', // azul-medianoche
+        draggable: false,
+        zoomButtons: false,
+        zoomOnScroll: false,
+        regionsSelectable: false,
+        markersSelectable: false,
+        regionStyle: {
+            initial: { fill: '#082a4a', stroke: '#0b6ab8', strokeWidth: 0.6 }, // azul-profundo
+            hover: { fill: '#0b6ab8' } // gris-acero (sin tooltip: ver onRegionTooltipShow)
+        },
+        markerStyle: {
+            initial: { fill: '#f7f5f0', fillOpacity: 1, stroke: '#082a4a', strokeWidth: 1.5, strokeOpacity: 1, r: 9 }, // gris-platino, +50% de tamaño
+            hover: { fill: '#e35c13', stroke: '#e35c13' } // naranja-aurora
+        },
+        markers: COVERAGE_PINS.map(pin => ({ name: pin.country, coords: pin.coords })),
+        onRegionTooltipShow(event) {
+            event.preventDefault(); // Los países nunca muestran su nombre al pasar el cursor
+        },
+        onMarkerClick(event, index) {
+            selectManually(Number(index));
+        }
+    });
+
+    // Círculos SVG reales que la librería renderiza para cada pin, en el mismo orden que COVERAGE_PINS
+    const markerEls = Array.from(stage.querySelectorAll('.jvm-marker'));
+    const elements = new Map();
+
+    COVERAGE_PINS.forEach((pin, index) => {
+        const el = markerEls[index];
+        if (!el) return;
+
+        el.setAttribute('tabindex', '0');
+        el.setAttribute('role', 'button');
+        el.setAttribute('aria-pressed', 'false');
+        el.setAttribute('aria-label', `Ver cobertura en ${pin.country}`);
+        el.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                selectManually(index);
+            }
+        });
+
+        elements.set(pin.id, el);
+    });
+
+    let cycleIndex = 0;
+    let cycleTimer = null;
+
+    function selectPin(id, animate) {
+        const pin = COVERAGE_PINS.find(p => p.id === id);
+        if (!pin) return;
+
+        elements.forEach((el, elId) => {
+            const isSelected = elId === id;
+            el.classList.toggle('is-selected', isSelected);
+            el.setAttribute('aria-pressed', String(isSelected));
+        });
+
+        // El decrypt se anima solo en selecciones reales del usuario: en la selección
+        // inicial (mount) el panel puede seguir fuera del viewport y DecryptText pausa
+        // su animación al no estar visible, dejando el texto a medio resolver.
+        if (animate && !prefersReducedMotion.matches) {
+            new DecryptText(nameEl, {
+                text: pin.country,
+                trigger: 'mount',
+                stagger: 30,
+                jitter: 70
+            });
+        } else {
+            nameEl.textContent = pin.country;
+        }
+    }
+
+    // Selección disparada por el usuario (clic o teclado): además de aplicar la selección,
+    // sincroniza el índice del ciclo automático y le da un respiro completo antes de retomarlo.
+    function selectManually(index) {
+        cycleIndex = index;
+        selectPin(COVERAGE_PINS[index].id, true);
+        startCycle();
+    }
+
+    function stopCycle() {
+        if (cycleTimer) {
+            window.clearInterval(cycleTimer);
+            cycleTimer = null;
+        }
+    }
+
+    function startCycle() {
+        stopCycle();
+        if (COVERAGE_PINS.length < 2 || prefersReducedMotion.matches) return;
+
+        cycleTimer = window.setInterval(() => {
+            cycleIndex = (cycleIndex + 1) % COVERAGE_PINS.length;
+            selectPin(COVERAGE_PINS[cycleIndex].id, true);
+        }, CYCLE_INTERVAL_MS);
+    }
+
+    fitMapToPins(map, stage, COVERAGE_PINS.map(p => p.coords), { animate: false });
+    selectPin(COVERAGE_PINS[0].id, false);
+    startCycle();
+
+    // Pausa la alternancia automática mientras el usuario interactúa con el mapa o el panel
+    // (mouse o teclado) y la retoma al salir — el ciclo no debe competir con la lectura.
+    dashboard.addEventListener('mouseenter', stopCycle);
+    dashboard.addEventListener('mouseleave', startCycle);
+    dashboard.addEventListener('focusin', stopCycle);
+    dashboard.addEventListener('focusout', startCycle);
+
+    // jsVectorMap no re-escucha el resize por su cuenta: hay que pedirle que
+    // recalcule el tamaño cuando el contenedor cambia (aspect-ratio responsivo).
+    // updateSize() reescala scale/transX/transY de forma proporcional, así que conserva
+    // el encuadre ya calculado por fitMapToPins en vez de volver a la vista mundial completa.
+    window.addEventListener('resize', () => map.updateSize());
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initNavToggle();
     initNavIndicator();
@@ -532,4 +708,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initComingSoonDecrypt();
     initTerritorySwitch();
     initContactTabs();
+    initCoverageMap();
 });
