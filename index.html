@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es" class="no-scroll">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>x-ora | Coming Soon</title>
+    <title>X-ORA | De la incógnita a la primera luz</title>
 
     <!-- Importación de Tipografías según el manual -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,27 +11,202 @@
 
     <!-- Enlace al archivo CSS externo -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Decide, antes del primer pintado, si la intro debe reproducirse o saltarse esta carga
+         (evita el parpadeo de mostrarla y ocultarla después con JS diferido) -->
+    <script>
+    (function () {
+        try {
+            if (sessionStorage.getItem('xoraIntroSeen')) {
+                document.documentElement.classList.add('intro-skip');
+            } else {
+                document.documentElement.classList.add('no-scroll', 'intro-pending');
+            }
+        } catch (e) {}
+    })();
+    </script>
 </head>
-<body class="no-scroll">
+<body>
 
-    <!-- COMING SOON (mismo fondo que el Hero de index.html) -->
-    <section class="hero hero-coming-soon">
-        <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto" poster="assets/hero-poster.jpg" aria-hidden="true">
-            <source src="assets/Estrellas.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay" aria-hidden="true"></div>
-
-        <img class="hero-logo-coming" src="assets/Logo.svg" alt="x-ora" width="410" height="402">
-
-        <h1 class="hero-title">
-            <span class="line"><span class="line-inner">X - ORA</span></span>
+    <!-- INTRO: RECREACIÓN EN CÓDIGO DEL VIDEO DE MARCA X-ORA.mp4 -->
+    <div class="intro" id="introOverlay" aria-hidden="true">
+        <h1 class="intro-title">
+            <span class="intro-letter">X</span><span class="intro-letter intro-accent">-</span><span class="intro-letter">O</span><span class="intro-letter">R</span><span class="intro-letter">A</span>
         </h1>
-        <p class="hero-sub">De la incógnita a la primera luz</p>
+        <div class="intro-blocks" aria-hidden="true">
+            <span class="intro-block intro-block-electrico"></span>
+            <span class="intro-block intro-block-naranja"></span>
+            <span class="intro-block intro-block-crema"></span>
+        </div>
+    </div>
 
-        <p class="hero-title-xl">
-            <span class="line"><span class="line-inner">Coming Soon</span></span><span class="hero-dots" aria-hidden="true"><span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>
+    <!-- NAV BAR CLÁSICA SUPERIOR (LOGO IZQUIERDA + ENLACES, SIEMPRE VISIBLE) -->
+    <nav class="top-nav" aria-label="Navegación principal">
+        <a href="index.html" class="top-nav-logo" aria-label="X-ORA — Inicio">
+            <img src="assets/Logo.svg" alt="X-ORA" width="38" height="37">
+        </a>
+
+        <button type="button" class="nav-toggle" id="navToggle" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="navLinks">
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+        </button>
+
+        <div class="top-nav-links" id="navLinks">
+            <a href="index.html" class="active-nav">Inicio</a>
+            <a href="about.html">Nosotros</a>
+            <a href="services.html">Services</a>
+            <a href="studio.html">Studio</a>
+            <a href="contacto.html">Contacto</a>
+        </div>
+    </nav>
+
+    <!-- BOTÓN FLOTANTE DE WHATSAPP: redirige a Contacto -->
+    <a href="contacto.html" class="whatsapp-float" aria-label="Contáctanos por WhatsApp">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.4.7 4.62 1.9 6.5L4 29l7.66-1.86a12.9 12.9 0 0 0 4.36.76h.01c6.62 0 12.02-5.4 12.02-12.02C28.05 8.4 22.65 3 16.02 3Zm0 21.9c-1.68 0-3.32-.44-4.75-1.28l-.34-.2-3.63.88.96-3.55-.22-.36a9.86 9.86 0 0 1-1.51-5.37c0-5.47 4.45-9.92 9.92-9.92a9.86 9.86 0 0 1 7.02 2.9 9.86 9.86 0 0 1 2.9 7.02c0 5.47-4.46 9.92-9.92 9.92l.57-.04Zm5.44-7.43c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z"/></svg>
+    </a>
+
+    <!-- HERO / FILOSOFÍA -->
+    <section class="hero hero-home">
+        <div class="hero-logo-mark" aria-hidden="true">
+            <svg viewBox="87 0 410 402" xmlns="http://www.w3.org/2000/svg">
+                <path d="M496.52,0l-25.61,13.1c-71.83,40.57-133.42,97.5-191.95,154.98-67.45,66.23-135.01,137.23-184.69,218.06l-7.09,14.81c2.62-20.58,14.08-39.15,24.95-56.37,49.19-77.93,122.83-158.13,190.51-220.64C358.9,71.97,422.71,23.61,496.52,0Z"/>
+                <path d="M482.71,385.33c-63.94-65.62-125.97-133.09-189.93-198.71-3.23-1.92-6.26,1.72-5,5.01,59.55,64.77,122.03,126.95,181.44,191.89,3.79,4.15,8.12,8.67,11.7,12.91.57.67,1.45.98,1.19,2.1l-205.9-209.15-.57-2.13c7.2.08,13.5-6.7,13.21-13.81,2.44,2.01,4.73,4.3,6.91,6.59,61.54,64.96,120.44,132.45,181.27,198.07l5.69,7.21Z"/>
+                <path d="M265.44,145.24c-7.33-.1-12.14,6.1-13.17,12.86l-1.22.34L116.59,18c1.03.6,2.1,1.31,3,2.09,13.8,11.84,27.91,26.02,41.12,38.71,29.48,28.32,57.95,57.71,87.02,86.44,4.52,3.37,8.25-1.79,4.5-5.7L118.39,1.2c1.19,0,2.39,1.1,3.29,1.81,16.11,12.88,34.13,31.57,49.25,46.19,27.32,26.42,54.98,53.91,81.33,81.33,3.1,3.22,10.5,10.16,12.6,13.21.35.51.84.59.59,1.51Z"/>
+            </svg>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="line"><span class="line-inner">X - ORA</span></span>
+            </h1>
+            <p class="hero-slogan">De la incógnita a la primera luz</p>
+            <div class="hero-cta-row">
+                <p class="hero-desc">Ofrecemos ingeniería de campo, integración y soporte técnico para sistemas de potencia y control crítico, y formamos a niños de 5 a 9 años en ingeniería aplicada a través de X-ORA Studio.</p>
+                <a href="#manifesto" class="btn btn-studio-solid hero-cta">Conoce más</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MANIFIESTO: X-ORA COMO MARCA MADRE -->
+    <section class="manifesto" id="manifesto" aria-labelledby="manifesto-title">
+        <div class="manifesto-inner reveal">
+            <div class="manifesto-text">
+                <h2 id="manifesto-title">Origen</h2>
+                <p>
+                    X-ORA es una marca de tecnología e ingeniería que diseña, integra y activa sistemas, experiencias y aprendizajes. Aplicamos el mismo pensamiento de ingeniería a dos terrenos distintos: la infraestructura de potencia y control crítico, y la formación temprana en ingeniería aplicada.
+                </p>
+            </div>
+        </div>
+        <p class="manifesto-lead reveal">
+            Conoce nuestras dos ramas
+            <span class="manifesto-lead-arrow" aria-hidden="true"></span>
         </p>
     </section>
+
+    <!-- SWITCH X — ORA: TRANSICIÓN DE TERRITORIO -->
+    <section class="switch-section reveal" aria-labelledby="switch-title">
+        <h2 id="switch-title" class="sr-only">Selecciona un territorio X-ORA</h2>
+
+        <div class="xora-diagonal" id="xoraDiagonal" role="radiogroup" aria-label="Cambiar entre X-ORA Services y X-ORA Studio" data-territory="services">
+            <button type="button" class="diagonal-half diagonal-services is-active" id="segServices" role="radio" aria-checked="true" data-target="services"><span><span class="diagonal-check" aria-hidden="true"></span>Services</span></button>
+            <button type="button" class="diagonal-half diagonal-studio" id="segStudio" role="radio" aria-checked="false" tabindex="-1" data-target="studio"><span><span class="diagonal-check" aria-hidden="true"></span>Studio</span></button>
+        </div>
+
+        <p class="sr-only" id="switchAnnounce" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- PANEL DE TERRITORIO -->
+    <div class="territory-wrapper" id="territoryWrapper" data-territory="services">
+        <span class="territory-bg territory-bg-services" aria-hidden="true"></span>
+        <span class="territory-bg territory-bg-studio" aria-hidden="true"></span>
+
+        <!-- Muro de fotos oversized de Studio: vive al nivel del wrapper (no dentro del panel)
+             para anclarse a su altura fija y estable; el panel puede ser más bajo que el
+             wrapper y, si la galería colgara de él, su sangrado ya no llegaría al footer. Se
+             sale por arriba/abajo (lo tapan el switch y el footer) igual que el logo del hero.
+             3 tiras verticales, mitad sube y mitad baja, en loop infinito. Puramente
+             decorativo -> aria-hidden + alt vacío. -->
+        <div class="studio-gallery" aria-hidden="true">
+            <div class="gallery-rotate">
+                <div class="gallery-col gallery-col-up">
+                    <div class="gallery-track">
+                        <img src="assets/Studio/web/1.jpg" alt="" loading="lazy">
+                        <img src="assets/Studio/web/2.jpg" alt="" loading="lazy">
+                        <img src="assets/Studio/web/3.jpg" alt="" loading="lazy">
+                        <img src="assets/Studio/web/1.jpg" alt="" loading="lazy">
+                        <img src="assets/Studio/web/2.jpg" alt="" loading="lazy">
+                        <img src="assets/Studio/web/3.jpg" alt="" loading="lazy">
+                    </div>
+                </div>
+                <div class="gallery-col gallery-col-down">
+                    <div class="gallery-track">
+                        <img src="assets/Studio/web/4.jpg" alt="" loading="lazy">
+                        <img src="assets/Studio/web/5.jpg" alt="" loading="lazy">
+                        <img src="assets/Studio/web/6.jpg" alt="" loading="lazy">
+                        <img src="assets/Studio/web/4.jpg" alt="" loading="lazy">
+                        <img src="assets/Studio/web/5.jpg" alt="" loading="lazy">
+                        <img src="assets/Studio/web/6.jpg" alt="" loading="lazy">
+                    </div>
+                </div>
+                <div class="gallery-col gallery-col-up">
+                    <div class="gallery-track">
+                        <img src="assets/Studio/web/7.jpg" alt="" loading="lazy">
+                        <img src="assets/Studio/web/1.jpg" alt="" loading="lazy">
+                        <img src="assets/Studio/web/4.jpg" alt="" loading="lazy">
+                        <img src="assets/Studio/web/7.jpg" alt="" loading="lazy">
+                        <img src="assets/Studio/web/1.jpg" alt="" loading="lazy">
+                        <img src="assets/Studio/web/4.jpg" alt="" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <article class="territory-panel" id="panel-services" data-panel="services">
+            <div class="services-panel-content">
+                <h2>X - ORA Services</h2>
+                <p>Brindamos ingeniería de campo, integración, comisionamiento y soporte técnico para sistemas de potencia y control crítico: desde el control de generadores hasta el diagnóstico de causa raíz en sitio.</p>
+                <p>Desarrollamos soluciones avanzadas que van desde sistemas de control de generadores y controles de paralelismo, hasta sistemas de transferencia automática de potencia, te garantizamos una coordinación de ingeniería impecable</p>
+                <p>Conoce nuestro portafolio de servicios.</p>
+                <a href="services.html" class="btn btn-services"><span>Conoce Services</span><span class="btn-arrow" aria-hidden="true">→</span></a>
+            </div>
+            <div class="services-panel-media" aria-hidden="true">
+                <img src="assets/Services/1.jpeg" alt="" loading="lazy">
+            </div>
+        </article>
+
+        <article class="territory-panel" id="panel-studio" data-panel="studio" hidden>
+            <div class="territory-text">
+                <h2>X - ORA Studio</h2>
+                <p>X-ORA Studio es un espacio de ingeniería y tecnología para niños de 5 a 9 años que construyen, prueban y programan sus propias soluciones en lugar de solo consumir tecnología.</p>
+
+                <p>Cada sesión combina retos técnicos guiados con kits LEGO Education, sensores y programación, en grupos reducidos dentro de un taller diseñado para la concentración.</p>
+
+                <p>Conoce el modelo de aprendizaje o agenda una visita al Studio.</p>
+
+                <a href="studio.html" class="btn btn-studio"><span>Conoce Studio</span><span class="btn-arrow" aria-hidden="true">→</span></a>
+            </div>
+        </article>
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <div class="footer-inner">
+            <p class="footer-copy">&copy; 2026 X-ORA. Transformando la complejidad en ejecución real.</p>
+            <div class="footer-contact">
+                <a href="tel:+525512345678">+52 (55) 1234 5678</a>
+                <span>Av. San Juan 77-Loc 15, Chapultepec, Cuernavaca, Mor.</span>
+                <!-- TODO: reemplazar "#" con los enlaces reales de Instagram y Facebook de x-ora -->
+                <span class="footer-social">
+                    <a href="#" target="_blank" rel="noopener" aria-label="Instagram de X-ORA">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.15.5.5.87 1.03 1.15 1.72.25.63.42 1.36.47 2.42.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.77c-.5.5-1.03.87-1.72 1.15-.63.25-1.36.42-2.42.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.72c-.25-.63-.42-1.36-.47-2.42C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.15-1.77.5-.5 1.03-.87 1.72-1.15.63-.25 1.36-.42 2.42-.47C8.94 2.01 9.28 2 12 2Zm0 1.8c-2.67 0-2.99.01-4.04.06-.87.04-1.34.18-1.65.3-.42.16-.72.36-1.03.67-.31.31-.5.6-.67 1.03-.12.31-.26.78-.3 1.65C4.26 8.56 4.25 8.88 4.25 11.55v.45c0 2.67.01 2.99.06 4.04.04.87.18 1.34.3 1.65.16.42.36.72.67 1.03.31.31.6.5 1.03.67.31.12.78.26 1.65.3 1.05.05 1.37.06 4.04.06s2.99-.01 4.04-.06c.87-.04 1.34-.18 1.65-.3.42-.16.72-.36 1.03-.67.31-.31.5-.6.67-1.03.12-.31.26-.78.3-1.65.05-1.05.06-1.37.06-4.04s-.01-2.99-.06-4.04c-.04-.87-.18-1.34-.3-1.65-.16-.42-.36-.72-.67-1.03a2.8 2.8 0 0 0-1.03-.67c-.31-.12-.78-.26-1.65-.3-1.05-.05-1.37-.06-4.04-.06ZM12 7.35A4.65 4.65 0 1 1 12 16.65 4.65 4.65 0 0 1 12 7.35Zm0 1.8a2.85 2.85 0 1 0 0 5.7 2.85 2.85 0 0 0 0-5.7Zm4.84-2a1.08 1.08 0 1 1 0 2.16 1.08 1.08 0 0 1 0-2.16Z"/></svg>
+                    </a>
+                    <a href="#" target="_blank" rel="noopener" aria-label="Facebook de X-ORA">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8.4h2.82l.42-3.28H13.5V8.24c0-.95.26-1.6 1.62-1.6h1.74V3.72C16.55 3.65 15.55 3.56 14.38 3.56c-2.46 0-4.14 1.5-4.14 4.26v2.5H7.4v3.28h2.84V22Z"/></svg>
+                    </a>
+                </span>
+            </div>
+        </div>
+    </footer>
 
     <!-- Enlace al archivo JavaScript externo -->
     <script src="script.js"></script>

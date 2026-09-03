@@ -251,35 +251,6 @@ class DecryptText {
     }
 }
 
-// NAVEGACIÓN MÓVIL (MENÚ DESPLEGABLE DE LA NAV LATERAL)
-function initNavToggle() {
-    const toggle = document.getElementById('navToggle');
-    const nav = document.getElementById('navLinks');
-    if (!toggle || !nav) return;
-
-    const closeNav = () => {
-        toggle.setAttribute('aria-expanded', 'false');
-        nav.classList.remove('is-open');
-    };
-
-    toggle.addEventListener('click', () => {
-        const isOpen = nav.classList.toggle('is-open');
-        toggle.setAttribute('aria-expanded', String(isOpen));
-    });
-
-    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeNav));
-
-    document.addEventListener('keydown', event => {
-        if (event.key === 'Escape') closeNav();
-    });
-
-    document.addEventListener('click', event => {
-        if (nav.classList.contains('is-open') && !nav.contains(event.target) && event.target !== toggle) {
-            closeNav();
-        }
-    });
-}
-
 // CHIP FLOTANTE QUE SIGUE AL ENLACE ACTIVO/HOVER EN LA NAV
 function initNavIndicator() {
     const nav = document.getElementById('navLinks');
@@ -328,6 +299,42 @@ function initNavIndicator() {
     restToActive();
 }
 
+// MENÚ HAMBURGUESA (colapso de .top-nav-links en móvil, breakpoint 768px)
+function initNavToggle() {
+    const toggle = document.getElementById('navToggle');
+    const nav = document.getElementById('navLinks');
+    if (!toggle || !nav) return;
+
+    function closeMenu() {
+        nav.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Abrir menú de navegación');
+    }
+
+    function openMenu() {
+        nav.classList.add('is-open');
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.setAttribute('aria-label', 'Cerrar menú de navegación');
+    }
+
+    toggle.addEventListener('click', () => {
+        const isOpen = nav.classList.contains('is-open');
+        isOpen ? closeMenu() : openMenu();
+    });
+
+    nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) closeMenu();
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') closeMenu();
+    });
+}
+
 // REVELACIÓN DE SECCIONES AL ENTRAR EN VIEWPORT
 function initScrollReveal() {
     const targets = document.querySelectorAll('.reveal');
@@ -345,7 +352,7 @@ function initScrollReveal() {
                 obs.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.2, rootMargin: '0px 0px -15% 0px' });
 
     targets.forEach(el => observer.observe(el));
 }
@@ -364,9 +371,12 @@ function initHeroVideo() {
 }
 
 // TITULAR DEL HERO: EFECTO DECRYPT (de la incógnita a la primera luz)
+// En home.html (.hero-home) se repite sola cada 2-3s; en el "Coming Soon" de index.html
+// se mantiene como estaba (solo al montar / al pasar el cursor).
 function initHeroDecrypt() {
     const lines = document.querySelectorAll('.hero-title .line-inner');
     if (!lines.length) return;
+    const isHome = Boolean(document.querySelector('.hero-home'));
 
     lines.forEach((line, index) => {
         new DecryptText(line, {
@@ -374,9 +384,94 @@ function initHeroDecrypt() {
             stagger: 34,
             jitter: 90,
             startDelay: 150 + index * 260,
-            retriggerOnHover: true
+            retriggerOnHover: true,
+            loop: isHome ? (() => 2000 + Math.random() * 1000) : false
         });
     });
+}
+
+// QUÉ SIGNIFICA X-ORA (about.html): cada símbolo oversized (X, guion, ORA) se decodifica
+// al entrar en el viewport — mismo componente que el titular del hero, pero disparado por
+// scroll ('inview') en vez de al montar, para explicarlos uno a uno según se avanza.
+function initXoraMeaningDecrypt() {
+    const symbols = document.querySelectorAll('.xora-def-symbol');
+    if (!symbols.length) return;
+
+    symbols.forEach(symbol => {
+        new DecryptText(symbol, {
+            trigger: 'inview',
+            speed: 40,
+            stagger: 55,
+            jitter: 140
+        });
+    });
+}
+
+// KICKER DEL HERO DE ABOUT ("¿Quiénes somos?"): mismo componente decrypt que los
+// titulares, pero disparado al montar (está en el primer viewport) en vez de por scroll.
+function initAboutHeroDecrypt() {
+    const kicker = document.querySelector('.hero-about .descriptor');
+    if (!kicker) return;
+
+    new DecryptText(kicker, {
+        trigger: 'mount',
+        speed: 40,
+        stagger: 40,
+        jitter: 100,
+        startDelay: 80
+    });
+}
+
+// INTRO DE MARCA (home.html): recreación en código de X-ORA.mp4 — letras → wipe → blanco → fade out,
+// y solo entonces revela el Hero (para que el decrypt del título se vea, no corra oculto detrás de la intro).
+function initIntro() {
+    const overlay = document.getElementById('introOverlay');
+    const html = document.documentElement;
+    // Solo home.html activa este flujo (vía el script inline en su <head>); index.html usa
+    // "no-scroll" de forma permanente para su propio diseño de una sola pantalla y no debe tocarse.
+    const introWasPending = html.classList.contains('intro-pending');
+
+    function revealHero() {
+        const content = document.querySelector('.hero-content');
+        if (content) content.classList.add('is-visible');
+        const logo = document.querySelector('.hero-logo-mark');
+        if (logo) logo.classList.add('is-visible');
+        initHeroDecrypt();
+    }
+
+    function unlockScroll() {
+        if (introWasPending) html.classList.remove('no-scroll', 'intro-pending');
+    }
+
+    function finishIntro() {
+        try { sessionStorage.setItem('xoraIntroSeen', '1'); } catch (e) {}
+        unlockScroll();
+        if (overlay) overlay.remove();
+        revealHero();
+    }
+
+    const skip = !overlay || html.classList.contains('intro-skip') || prefersReducedMotion.matches;
+
+    if (skip) {
+        unlockScroll();
+        revealHero();
+        return;
+    }
+
+    let done = false;
+    const finishNow = () => {
+        if (done) return;
+        done = true;
+        finishIntro();
+    };
+
+    overlay.addEventListener('click', finishNow);
+
+    // Deja "X-ORA" completo y legible en pantalla un instante antes de barrer
+    // (la última letra termina de entrar a los 580ms; 900ms le da ~320ms de lectura).
+    window.setTimeout(() => overlay.classList.add('is-wiping'), 900);
+    window.setTimeout(() => overlay.classList.add('is-done'), 1300);
+    window.setTimeout(finishNow, 1650);
 }
 
 // TITULAR "COMING SOON": MISMO EFECTO DECRYPT DEL HERO, RETRIGGERED CADA 3-5s
@@ -391,26 +486,6 @@ function initComingSoonDecrypt() {
             jitter: 90,
             startDelay: 150 + index * 260,
             loop: () => 3000 + Math.random() * 2000
-        });
-    });
-}
-
-// TABS DE CONTACTO: ALTERNA ENTRE LAS DIVISIONES SERVICES Y STUDIO
-function initContactTabs() {
-    const buttons = document.querySelectorAll('.tab-btn[data-tab-target]');
-    if (!buttons.length) return;
-
-    buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const targetId = btn.dataset.tabTarget;
-            const isStudio = targetId === 'contact-studio';
-
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.toggle('active', section.id === targetId);
-            });
-
-            buttons.forEach(b => b.classList.remove('active-services', 'active-studio'));
-            btn.classList.add(isStudio ? 'active-studio' : 'active-services');
         });
     });
 }
@@ -434,12 +509,70 @@ function initTerritorySwitch() {
     };
 
     const copy = {
-        services: 'x-ora Services — infraestructura crítica',
-        studio: 'x-ora Studio — aprendizaje STEAM de alto nivel'
+        services: 'X-ORA Services — infraestructura crítica',
+        studio: 'X-ORA Studio — aprendizaje STEAM de alto nivel'
     };
 
     let current = wrapper.dataset.territory || 'services';
     let isAnimating = false;
+
+    // Mide la altura natural de un panel aunque esté oculto (hidden), sin que se note el
+    // parpadeo: lo saca del flujo e invisible mientras se mide, luego lo vuelve a ocultar.
+    // Usa el tamaño de la propia caja (no scrollHeight): el muro de fotos de Studio es
+    // "position: absolute" y se sale a propósito por arriba/abajo, y scrollHeight cuenta
+    // ese desborde como si fuera contenido normal, inflando la medición.
+    function measureNaturalHeight(panel) {
+        const wasHidden = panel.hidden;
+        if (wasHidden) {
+            panel.hidden = false;
+            panel.style.visibility = 'hidden';
+        }
+        // Neutraliza en línea el position:absolute + inset:0 + height:100% fijos por CSS
+        // (que estiran el panel visible al alto del wrapper): sin esto, mediríamos el alto
+        // ya estirado en vez del alto natural del contenido, y el más alto de los dos
+        // paneles nunca podría medirse correctamente (siempre daría el alto del wrapper).
+        panel.style.position = 'absolute';
+        panel.style.top = 'auto';
+        panel.style.right = 'auto';
+        panel.style.bottom = 'auto';
+        panel.style.left = '0';
+        panel.style.width = '100%';
+        panel.style.height = 'auto';
+        const height = panel.getBoundingClientRect().height;
+        panel.style.position = '';
+        panel.style.top = '';
+        panel.style.right = '';
+        panel.style.bottom = '';
+        panel.style.left = '';
+        panel.style.width = '';
+        panel.style.height = '';
+        if (wasHidden) {
+            panel.style.visibility = '';
+            panel.hidden = true;
+        }
+        return height;
+    }
+
+    // Ambos paneles comparten una sola altura fija (la del más alto) para que el contenedor
+    // no se agrande ni encoja al cambiar de territorio — solo cambia el contenido. Se fija
+    // "height" (no "min-height"): el panel visible se estira al 100% de este alto (ver CSS
+    // ".territory-panel"), y una altura de contenedor solo "mínima" no es un valor definido
+    // sobre el que un hijo pueda resolver un "height: 100%".
+    function syncWrapperHeight() {
+        const tallest = Math.max(
+            measureNaturalHeight(panels.services),
+            measureNaturalHeight(panels.studio)
+        );
+        wrapper.style.height = `${tallest}px`;
+    }
+
+    syncWrapperHeight();
+
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(syncWrapperHeight, 150);
+    });
 
     function reflectSegments(territory) {
         Object.entries(segments).forEach(([name, btn]) => {
@@ -475,13 +608,10 @@ function initTerritorySwitch() {
         }
 
         isAnimating = true;
-
-        // Bloquea la altura actual del contenedor para animar hacia la nueva.
-        const startHeight = wrapper.getBoundingClientRect().height;
-        wrapper.style.height = `${startHeight}px`;
         wrapper.classList.add('is-transitioning');
 
         xoraDiagonal.dataset.territory = territory;
+        wrapper.dataset.territory = territory;
         reflectSegments(territory);
 
         outgoing.classList.add('panel-exit');
@@ -489,21 +619,11 @@ function initTerritorySwitch() {
         incoming.hidden = false;
         incoming.classList.add('panel-enter');
 
-        // Mide la altura natural del panel entrante ya visible (posición absoluta) y anima hacia ella.
-        requestAnimationFrame(() => {
-            const endHeight = incoming.scrollHeight;
-            wrapper.dataset.territory = territory;
-            requestAnimationFrame(() => {
-                wrapper.style.height = `${endHeight}px`;
-            });
-        });
-
         window.setTimeout(() => {
             outgoing.hidden = true;
             outgoing.classList.remove('panel-exit');
             incoming.classList.remove('panel-enter');
             wrapper.classList.remove('is-transitioning');
-            wrapper.style.height = '';
             current = territory;
             isAnimating = false;
             announce.textContent = copy[territory];
@@ -523,190 +643,325 @@ function initTerritorySwitch() {
     });
 }
 
-// Encuadra el mapa para mostrar exactamente el conjunto de coordenadas dado: se acerca si
-// están agrupadas (con un tope de zoom para que un solo punto no se acerque de más) y se
-// aleja/expande solo si el conjunto lo requiere (p. ej. al agregar un punto lejano como Rusia).
-// jsVectorMap no ofrece un "fit bounds" público para marcadores (solo para regiones vía
-// setFocus), así que lo replicamos apoyándonos en su método público coordsToPoint(): a partir
-// de la escala/traslación actuales (también públicas) invertimos esa proyección para obtener
-// las coordenadas en el espacio base del mapa, y con eso pedimos a _setScale —su primitiva de
-// zoom interna, la misma que usan setFocus y los botones de zoom— que centre y escale la vista.
-function fitMapToPins(map, stage, coordsList, { padding = 60, maxZoomFactor = 6, animate = true } = {}) {
-    if (!coordsList.length) return;
+// CARRUSEL DE TEXTO GENÉRICO (una palabra a la vez, con fundido): usado tanto por
+// "Aprendizajes y Clases" en studio.html como por "Alcance" en services.html. Corre sin
+// pausa al pasar el cursor —se mantiene girando siempre, en ambos usos— y respeta
+// prefers-reduced-motion mostrando la lista completa en vez de animarla.
+function initWordCarousel(elementId, words, intervalMs = 1700) {
+    const word = document.getElementById(elementId);
+    if (!word || !words.length) return;
 
-    const scale = map.scale;
-    const transX = map.transX;
-    const transY = map.transY;
+    let index = 0;
 
-    const basePoints = coordsList.map(([lat, lng]) => {
-        const p = map.coordsToPoint(lat, lng);
-        return { x: p.x / scale - transX, y: p.y / scale - transY };
-    });
+    if (prefersReducedMotion.matches) {
+        word.textContent = words.join(' · ');
+        return;
+    }
 
-    const xs = basePoints.map(p => p.x);
-    const ys = basePoints.map(p => p.y);
-    const minX = Math.min(...xs);
-    const maxX = Math.max(...xs);
-    const minY = Math.min(...ys);
-    const maxY = Math.max(...ys);
+    function rotate() {
+        word.classList.add('is-swapping');
+        setTimeout(() => {
+            index = (index + 1) % words.length;
+            word.textContent = words[index];
+            word.classList.remove('is-swapping');
+        }, 300);
+    }
 
-    // Margen convertido a espacio base según la escala actual (así un solo punto o dos
-    // puntos idénticos no producen una caja de ancho/alto cero al dividir).
-    const paddingBase = padding / scale;
-    const bboxWidth = Math.max(maxX - minX + paddingBase * 2, 1);
-    const bboxHeight = Math.max(maxY - minY + paddingBase * 2, 1);
-
-    const fitScale = Math.min(stage.clientWidth / bboxWidth, stage.clientHeight / bboxHeight);
-    const targetScale = Math.min(fitScale, scale * maxZoomFactor);
-
-    map._setScale(targetScale, -(minX + maxX) / 2, -(minY + maxY) / 2, true, animate);
+    setInterval(rotate, intervalMs);
 }
 
-// MAPA DE COBERTURA (jsVectorMap): mapa vectorial minimalista con pines seleccionables
-// (México / Estados Unidos, extensible). Los nombres de país solo se muestran al pasar
-// el cursor sobre un pin — el hover de los países del mapa nunca revela su tooltip.
+// STUDIO: CARRUSEL DE TEXTO "APRENDIZAJES Y CLASES" (robótica / ciencia / programación)
+function initStudioCarousel() {
+    initWordCarousel('studioCarouselWord', ['Robótica', 'Ciencia', 'Programación', 'Electrónica', 'Diseño', 'Automatización', 'Prototipado', 'Innovación', 'Aprendizaje']);
+}
+
+// SERVICES: CARRUSEL DE TEXTO "ALCANCE" (los países donde x-ora tiene presencia)
+function initAlcanceCarousel() {
+    initWordCarousel('alcanceCarouselWord', ['México', 'Estados Unidos', 'Panamá', 'Liberia', 'Jordania', 'Turquía', 'Chad', 'Nigeria', 'Perú', 'Guatemala', 'Gabón', 'Kosovo', 'Kirguistán', 'Esuatini', 'India', 'Guam', 'Nicaragua']);
+}
+
+// STUDIO: CARRUSEL DE UNA SOLA IMAGEN (INSTALACIONES)
+function initStudioFacilities() {
+    const carousel = document.getElementById('facilitiesCarousel');
+    const layers = [
+        document.getElementById('facilitiesCarouselImgA'),
+        document.getElementById('facilitiesCarouselImgB')
+    ];
+    const dotsWrap = document.getElementById('facilitiesDots');
+    const prevBtn = document.getElementById('facilitiesPrev');
+    const nextBtn = document.getElementById('facilitiesNext');
+    if (!carousel || !layers[0] || !layers[1] || !dotsWrap || !prevBtn || !nextBtn) return;
+
+    const items = [
+        { src: 'assets/Studio/classroom/1.jpg', alt: 'Estación de trabajo en el taller de X-ORA Studio' },
+        { src: 'assets/Studio/classroom/2.jpg', alt: 'Zona de prototipado de X-ORA Studio' },
+        { src: 'assets/Studio/classroom/3.jpg', alt: 'Área de ensamblaje y trabajo manipulativo' },
+        { src: 'assets/Studio/classroom/4.jpg', alt: 'Espacio de cómputo y programación' },
+        { src: 'assets/Studio/classroom/5.jpg', alt: 'Vista general del salón de X-ORA Studio' }
+    ];
+
+    // Precarga todas las fotos para que la capa "buffer" nunca tenga que
+    // esperar una descarga cuando el usuario navegue el carrusel.
+    items.forEach(item => { new Image().src = item.src; });
+
+    let current = 0;
+    let activeIndex = 0;
+
+    const dots = items.map((item, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', `Ir a la imagen ${i + 1}`);
+        dot.addEventListener('click', () => goTo(i));
+        dotsWrap.appendChild(dot);
+        return dot;
+    });
+
+    function renderDots() {
+        dots.forEach((dot, i) => dot.classList.toggle('is-active', i === current));
+    }
+
+    // Crossfade con dos <img> apiladas (ver .facilities-carousel-img en el CSS):
+    // la entrante se precarga oculta y solo se cruza con la saliente cuando ya
+    // terminó de decodificar. Así nunca hay un instante con el <img> vacío ni
+    // un cambio de src a medio fundido — lo que se veía como "el fade no hace
+    // nada y luego cambia de golpe" cuando una sola imagen cargaba su nuevo
+    // src mientras estaba en opacity:0.
+    function goTo(index) {
+        current = (index + items.length) % items.length;
+        renderDots();
+        const target = items[current];
+
+        const activeLayer = layers[activeIndex];
+        const bufferIndex = 1 - activeIndex;
+        const bufferLayer = layers[bufferIndex];
+
+        if (prefersReducedMotion.matches) {
+            activeLayer.src = target.src;
+            activeLayer.alt = target.alt;
+            return;
+        }
+
+        function crossfade() {
+            bufferLayer.classList.add('is-active');
+            bufferLayer.removeAttribute('aria-hidden');
+            activeLayer.classList.remove('is-active');
+            activeLayer.setAttribute('aria-hidden', 'true');
+            activeIndex = bufferIndex;
+        }
+
+        bufferLayer.alt = target.alt;
+
+        // Si la capa "buffer" ya tenía cargada justo esta imagen (p. ej. al
+        // volver con "anterior" a la foto que quedó en el buffer), cambiar el
+        // src al mismo valor no vuelve a disparar "load" en la mayoría de los
+        // navegadores — se cruza de inmediato en vez de quedarse esperando un
+        // evento que nunca llega.
+        const targetUrl = new URL(target.src, document.baseURI).href;
+        if (bufferLayer.src === targetUrl && bufferLayer.complete) {
+            crossfade();
+        } else {
+            bufferLayer.onload = crossfade;
+            bufferLayer.src = target.src;
+        }
+    }
+
+    renderDots();
+
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+
+    carousel.addEventListener('keydown', event => {
+        if (event.key === 'ArrowRight') goTo(current + 1);
+        if (event.key === 'ArrowLeft') goTo(current - 1);
+    });
+
+    if (prefersReducedMotion.matches) return;
+
+    // Un solo temporizador controlado por dos banderas (hover/foco): evita que
+    // mouseleave y focusout, si se disparan por separado, terminen creando dos
+    // intervalos simultáneos (eso causaba el salto/parpadeo visto solo en el
+    // avance automático, nunca al hacer clic manualmente).
+    let timer = null;
+    let isHovering = false;
+    let isFocused = false;
+
+    function stopAutoplay() {
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+        }
+    }
+
+    function startAutoplay() {
+        if (timer || isHovering || isFocused) return;
+        timer = setInterval(() => goTo(current + 1), 4500);
+    }
+
+    carousel.addEventListener('mouseenter', () => { isHovering = true; stopAutoplay(); });
+    carousel.addEventListener('mouseleave', () => { isHovering = false; startAutoplay(); });
+    carousel.addEventListener('focusin', () => { isFocused = true; stopAutoplay(); });
+    carousel.addEventListener('focusout', () => { isFocused = false; startAutoplay(); });
+
+    startAutoplay();
+}
+
+// MAPA DE COBERTURA (jsVectorMap): mapa mundial completo y estático para la sección
+// "Alcance" de services.html — sin clic, sin teclado, sin pines, sin paneo. Los países sin
+// presencia quedan en azul claro (relleno y contorno); los países con base propia quedan en
+// azul profundo con contorno blanco, para que resalten sobre el resto (choropleth vía
+// "series.regions"). jsVectorMap centra y ajusta el mapa completo al contenedor por su cuenta.
 function initCoverageMap() {
     const stage = document.getElementById('mapStage');
-    const nameEl = document.getElementById('mapCountryName');
-    if (!stage || !nameEl || typeof jsVectorMap === 'undefined') return;
+    if (!stage || typeof jsVectorMap === 'undefined') return;
 
-    const dashboard = stage.closest('.mapa-dashboard') || stage;
-    const CYCLE_INTERVAL_MS = 6000;
-
-    // Coordenadas reales (lat, lng). Agregar más bases a futuro = agregar una entrada aquí;
-    // el encuadre del mapa y la alternancia automática se ajustan solos al nuevo conjunto.
-    const COVERAGE_PINS = [
-        { id: 'mx', country: 'México', coords: [19.4326, -99.1332] },
-        { id: 'us', country: 'Estados Unidos', coords: [39.8283, -98.5795] }
-    ];
+    // Países ISO2 con base propia (alimentan el relleno/contorno destacado más abajo).
+    const PRESENT_ISO = ['MX', 'US', 'PA', 'LR', 'JO', 'TR', 'TD', 'NG', 'PE', 'GT', 'GA', 'XK', 'KG', 'SZ', 'IN', 'GU', 'NI'];
+    const presentIsoValues = Object.fromEntries(PRESENT_ISO.map(iso => [iso, 1]));
 
     const map = new jsVectorMap({
         selector: `#${stage.id}`,
         map: 'world',
-        backgroundColor: '#082a4a', // azul-medianoche
+        backgroundColor: '#f7f5f0', // blanco hueso
         draggable: false,
         zoomButtons: false,
         zoomOnScroll: false,
         regionsSelectable: false,
         markersSelectable: false,
         regionStyle: {
-            initial: { fill: '#082a4a', stroke: '#0b6ab8', strokeWidth: 0.6 }, // azul-profundo
-            hover: { fill: '#0b6ab8' } // gris-acero (sin tooltip: ver onRegionTooltipShow)
+            // Países sin presencia: azul claro, relleno y contorno iguales. El contorno un
+            // poco más grueso que el relleno tapa la línea blanca de fondo que se asoma por
+            // el hairline entre países vecinos (artefacto de antialiasing del SVG del mapa).
+            initial: { fill: '#0b6ab8', stroke: '#0b6ab8', strokeWidth: 1.2 }
+            // Sin "hover": el mapa es puramente ilustrativo (ver pointer-events:none en
+            // .jvm-region, styles.css) — los países ya no se iluminan al pasar el cursor.
         },
-        markerStyle: {
-            initial: { fill: '#f7f5f0', fillOpacity: 1, stroke: '#082a4a', strokeWidth: 1.5, strokeOpacity: 1, r: 9 }, // gris-platino, +50% de tamaño
-            hover: { fill: '#e35c13', stroke: '#e35c13' } // naranja-aurora
-        },
-        markers: COVERAGE_PINS.map(pin => ({ name: pin.country, coords: pin.coords })),
-        onRegionTooltipShow(event) {
-            event.preventDefault(); // Los países nunca muestran su nombre al pasar el cursor
-        },
-        onMarkerClick(event, index) {
-            selectManually(Number(index));
+        // Países con base propia: relleno azul profundo y contorno blanco hueso, para que
+        // resalten sobre el resto (dos series de choropleth de valor uniforme —mismo color en
+        // ambos extremos de la escala—, una por atributo).
+        series: {
+            regions: [
+                {
+                    attribute: 'fill',
+                    values: presentIsoValues,
+                    scale: ['#082a4a', '#082a4a'],
+                    normalizeFunction: 'polynomial'
+                },
+                {
+                    attribute: 'stroke',
+                    values: presentIsoValues,
+                    scale: ['#f7f5f0', '#f7f5f0'],
+                    normalizeFunction: 'polynomial'
+                }
+            ]
         }
     });
 
-    // Círculos SVG reales que la librería renderiza para cada pin, en el mismo orden que COVERAGE_PINS
-    const markerEls = Array.from(stage.querySelectorAll('.jvm-marker'));
-    const elements = new Map();
-
-    COVERAGE_PINS.forEach((pin, index) => {
-        const el = markerEls[index];
-        if (!el) return;
-
-        el.setAttribute('tabindex', '0');
-        el.setAttribute('role', 'button');
-        el.setAttribute('aria-pressed', 'false');
-        el.setAttribute('aria-label', `Ver cobertura en ${pin.country}`);
-        el.addEventListener('keydown', event => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                selectManually(index);
-            }
-        });
-
-        elements.set(pin.id, el);
-    });
-
-    let cycleIndex = 0;
-    let cycleTimer = null;
-
-    function selectPin(id, animate) {
-        const pin = COVERAGE_PINS.find(p => p.id === id);
-        if (!pin) return;
-
-        elements.forEach((el, elId) => {
-            const isSelected = elId === id;
-            el.classList.toggle('is-selected', isSelected);
-            el.setAttribute('aria-pressed', String(isSelected));
-        });
-
-        // El decrypt se anima solo en selecciones reales del usuario: en la selección
-        // inicial (mount) el panel puede seguir fuera del viewport y DecryptText pausa
-        // su animación al no estar visible, dejando el texto a medio resolver.
-        if (animate && !prefersReducedMotion.matches) {
-            new DecryptText(nameEl, {
-                text: pin.country,
-                trigger: 'mount',
-                stagger: 30,
-                jitter: 70
-            });
-        } else {
-            nameEl.textContent = pin.country;
-        }
-    }
-
-    // Selección disparada por el usuario (clic o teclado): además de aplicar la selección,
-    // sincroniza el índice del ciclo automático y le da un respiro completo antes de retomarlo.
-    function selectManually(index) {
-        cycleIndex = index;
-        selectPin(COVERAGE_PINS[index].id, true);
-        startCycle();
-    }
-
-    function stopCycle() {
-        if (cycleTimer) {
-            window.clearInterval(cycleTimer);
-            cycleTimer = null;
-        }
-    }
-
-    function startCycle() {
-        stopCycle();
-        if (COVERAGE_PINS.length < 2 || prefersReducedMotion.matches) return;
-
-        cycleTimer = window.setInterval(() => {
-            cycleIndex = (cycleIndex + 1) % COVERAGE_PINS.length;
-            selectPin(COVERAGE_PINS[cycleIndex].id, true);
-        }, CYCLE_INTERVAL_MS);
-    }
-
-    fitMapToPins(map, stage, COVERAGE_PINS.map(p => p.coords), { animate: false });
-    selectPin(COVERAGE_PINS[0].id, false);
-    startCycle();
-
-    // Pausa la alternancia automática mientras el usuario interactúa con el mapa o el panel
-    // (mouse o teclado) y la retoma al salir — el ciclo no debe competir con la lectura.
-    dashboard.addEventListener('mouseenter', stopCycle);
-    dashboard.addEventListener('mouseleave', startCycle);
-    dashboard.addEventListener('focusin', stopCycle);
-    dashboard.addEventListener('focusout', startCycle);
-
-    // jsVectorMap no re-escucha el resize por su cuenta: hay que pedirle que
-    // recalcule el tamaño cuando el contenedor cambia (aspect-ratio responsivo).
-    // updateSize() reescala scale/transX/transY de forma proporcional, así que conserva
-    // el encuadre ya calculado por fitMapToPins en vez de volver a la vista mundial completa.
+    // jsVectorMap no re-escucha el resize por su cuenta: hay que pedirle que recalcule el
+    // tamaño cuando el contenedor cambia (aspect-ratio responsivo), para que el mapa completo
+    // se mantenga centrado y ajustado al escenario.
     window.addEventListener('resize', () => map.updateSize());
 }
 
+// SERVICES: CARRUSEL DE TARJETAS "SISTEMAS Y ALCANCE" (dos a la vez, con flechas).
+// Avanza por "páginas" moviendo el track en píxeles (el ancho del viewport por página):
+// el track es un flex row cuyo ancho de caja queda limitado al del viewport (overflow:hidden
+// en el padre), así que un translateX en % —relativo al ancho de la propia caja del track,
+// no al de su contenido desbordado— no alcanza a desplazar una página completa.
+function initServicesSystemsCarousel() {
+    const viewport = document.getElementById('servicesSystemsViewport');
+    const track = document.getElementById('servicesSystemsTrack');
+    const prevBtn = document.getElementById('servicesSystemsPrev');
+    const nextBtn = document.getElementById('servicesSystemsNext');
+    if (!viewport || !track || !prevBtn || !nextBtn) return;
+
+    const cards = Array.from(track.children);
+    // Debe coincidir con el breakpoint de .services-systems-track .service-card en styles.css
+    const perPageQuery = window.matchMedia('(min-width: 480px)');
+    let page = 0;
+
+    function perPage() {
+        return perPageQuery.matches ? 2 : 1;
+    }
+
+    function pageCount() {
+        return Math.max(1, Math.ceil(cards.length / perPage()));
+    }
+
+    function render() {
+        const count = pageCount();
+        page = Math.min(page, count - 1);
+        // El ancho de una "página" ya incluye el gap ENTRE sus propias tarjetas (ver
+        // .services-systems-track .service-card en styles.css: flex-basis descuenta ese gap
+        // para que N tarjetas + sus gaps internos sumen exactamente el ancho del viewport).
+        // Pero entre el último elemento de una página y el primero de la siguiente hay OTRO
+        // gap del track que no pertenece a ninguna página — hay que sumarlo por cada página
+        // avanzada o el desplazamiento se queda corto y arrastra un poco de la tarjeta vecina.
+        const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        track.style.transform = `translateX(-${page * (viewport.clientWidth + gap)}px)`;
+    }
+
+    function goTo(index) {
+        const count = pageCount();
+        page = (index + count) % count;
+        render();
+    }
+
+    prevBtn.addEventListener('click', () => goTo(page - 1));
+    nextBtn.addEventListener('click', () => goTo(page + 1));
+
+    // Al cruzar el breakpoint (1 <-> 2 tarjetas por página) el número de páginas cambia:
+    // se reinicia a la primera para no dejar el track en una posición inválida.
+    perPageQuery.addEventListener('change', () => {
+        page = 0;
+        render();
+    });
+    window.addEventListener('resize', render);
+
+    render();
+
+    // Modo automático: avanza sola cada 4.5s y hace loop; se pausa mientras el cursor o el
+    // foco estén sobre el carrusel (mismo criterio que .facilities-carousel en studio.html)
+    // y se retoma al salir.
+    if (prefersReducedMotion.matches) return;
+
+    let timer = null;
+    let isHovering = false;
+    let isFocused = false;
+
+    function stopAutoplay() {
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+        }
+    }
+
+    function startAutoplay() {
+        if (timer || isHovering || isFocused) return;
+        timer = setInterval(() => goTo(page + 1), 4500);
+    }
+
+    const carouselEl = viewport.closest('.services-systems-carousel') || viewport;
+    carouselEl.addEventListener('mouseenter', () => { isHovering = true; stopAutoplay(); });
+    carouselEl.addEventListener('mouseleave', () => { isHovering = false; startAutoplay(); });
+    carouselEl.addEventListener('focusin', () => { isFocused = true; stopAutoplay(); });
+    carouselEl.addEventListener('focusout', () => { isFocused = false; startAutoplay(); });
+
+    startAutoplay();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    initNavToggle();
     initNavIndicator();
+    initNavToggle();
     initScrollReveal();
     initHeroVideo();
-    initHeroDecrypt();
+    initIntro();
     initComingSoonDecrypt();
+    initAboutHeroDecrypt();
+    initXoraMeaningDecrypt();
     initTerritorySwitch();
-    initContactTabs();
+    initStudioCarousel();
+    initStudioFacilities();
+    initServicesSystemsCarousel();
+    initAlcanceCarousel();
     initCoverageMap();
 });

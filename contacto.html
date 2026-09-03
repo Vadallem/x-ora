@@ -1,26 +1,31 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="contacto-page">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacto | x-ora Ecosistema Global</title>
-    
+    <title>Contacto | X-ORA</title>
+
     <!-- Importación de Tipografías -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Enlace al archivo CSS principal -->
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="contacto-page">
 
-    <!-- NAV BAR VERTICAL (DESKTOP: LATERAL DERECHA / MÓVIL: DESPLEGABLE) -->
-    <nav class="side-nav" id="sideNav" aria-label="Navegación principal">
-        <button type="button" class="side-nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">
-            <span class="sr-only">Abrir menú</span>
-            <span class="side-nav-arrow" aria-hidden="true"></span>
+    <!-- NAV BAR CLÁSICA SUPERIOR (LOGO IZQUIERDA + ENLACES, SIEMPRE VISIBLE) -->
+    <nav class="top-nav" aria-label="Navegación principal">
+        <a href="index.html" class="top-nav-logo" aria-label="X-ORA — Inicio">
+            <img src="assets/Logo.svg" alt="X-ORA" width="38" height="37">
+        </a>
+
+        <button type="button" class="nav-toggle" id="navToggle" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="navLinks">
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
         </button>
 
-        <div class="side-nav-links" id="navLinks">
+        <div class="top-nav-links" id="navLinks">
             <a href="index.html">Inicio</a>
             <a href="about.html">Nosotros</a>
             <a href="services.html">Services</a>
@@ -29,80 +34,169 @@
         </div>
     </nav>
 
-    <!-- SECCIÓN: HERO -->
-    <section class="hero-contact">
-        <h1>Enlace Operativo</h1>
-        <p>
-            Establece comunicación directa con nuestro equipo. Selecciona la división correspondiente a tu requerimiento técnico o académico.
-        </p>
+    <!-- BOTÓN FLOTANTE DE WHATSAPP: redirige a Contacto -->
+    <a href="contacto.html" class="whatsapp-float" aria-label="Contáctanos por WhatsApp">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.4.7 4.62 1.9 6.5L4 29l7.66-1.86a12.9 12.9 0 0 0 4.36.76h.01c6.62 0 12.02-5.4 12.02-12.02C28.05 8.4 22.65 3 16.02 3Zm0 21.9c-1.68 0-3.32-.44-4.75-1.28l-.34-.2-3.63.88.96-3.55-.22-.36a9.86 9.86 0 0 1-1.51-5.37c0-5.47 4.45-9.92 9.92-9.92a9.86 9.86 0 0 1 7.02 2.9 9.86 9.86 0 0 1 2.9 7.02c0 5.47-4.46 9.92-9.92 9.92l.57-.04Zm5.44-7.43c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z"/></svg>
+    </a>
+
+    <!-- SWITCH X — ORA: TRANSICIÓN DE TERRITORIO (idéntico al de home.html) -->
+    <section class="switch-section reveal" aria-labelledby="switch-title">
+        <h2 id="switch-title" class="sr-only">Selecciona un territorio X-ORA</h2>
+
+        <div class="xora-diagonal" id="xoraDiagonal" role="radiogroup" aria-label="Cambiar entre X-ORA Services y X-ORA Studio" data-territory="services">
+            <button type="button" class="diagonal-half diagonal-services is-active" id="segServices" role="radio" aria-checked="true" data-target="services"><span><span class="diagonal-check" aria-hidden="true"></span>Services</span></button>
+            <button type="button" class="diagonal-half diagonal-studio" id="segStudio" role="radio" aria-checked="false" tabindex="-1" data-target="studio"><span><span class="diagonal-check" aria-hidden="true"></span>Studio</span></button>
+        </div>
+
+        <p class="sr-only" id="switchAnnounce" role="status" aria-live="polite"></p>
     </section>
 
-    <!-- NAVEGACIÓN DUAL (TABS) -->
-    <div class="tab-container">
-        <button class="tab-btn active-services" data-tab-target="contact-services">x-ora Services</button>
-        <button class="tab-btn" data-tab-target="contact-studio">x-ora Studio</button>
+    <!-- PANEL DE TERRITORIO: misma información y diseño que la sección de contacto de
+         services.html (#services-contact) y studio.html (#studio-contact) -->
+    <div class="territory-wrapper" id="territoryWrapper" data-territory="services">
+        <span class="territory-bg territory-bg-services" aria-hidden="true"></span>
+        <span class="territory-bg territory-bg-studio" aria-hidden="true"></span>
+
+        <!-- SERVICES: contenido idéntico a services.html #services-contact -->
+        <article class="territory-panel" id="panel-services" data-panel="services">
+            <div class="services-panel-content">
+                <h2>Contacto</h2>
+                <p>Escríbenos para agendar una evaluación técnica o resolver dudas sobre su infraestructura crítica. Nuestro equipo responde por WhatsApp en minutos.</p>
+
+                <ul class="services-contact-list">
+                    <li>
+                        <span class="services-contact-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.25 1.01l-2.2 2.2Z"/></svg>
+                        </span>
+                        <div>
+                            <span class="services-contact-label">Teléfono</span>
+                            <span class="services-contact-value">+52 (55) 1234 5678</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="services-contact-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 7 12 8 12s8-6.75 8-12c0-4.42-3.58-8-8-8Zm0 10.5A2.5 2.5 0 1 1 12 7.5a2.5 2.5 0 0 1 0 5Z"/></svg>
+                        </span>
+                        <div>
+                            <span class="services-contact-label">Oficina</span>
+                            <span class="services-contact-value">Av. San Juan 77-Loc 15 Primer Piso, Chapultepec, 62450 Cuernavaca, Mor.</span>
+                            <span class="services-contact-note">Atendemos bajo cita previa para garantizar la disponibilidad de un ingeniero especializado.</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="services-contact-actions">
+                    <a href="https://wa.me/5215512345678?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20X-ORA%20Services" class="btn-whatsapp" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.4.7 4.62 1.9 6.5L4 29l7.66-1.86a12.9 12.9 0 0 0 4.36.76h.01c6.62 0 12.02-5.4 12.02-12.02C28.05 8.4 22.65 3 16.02 3Zm0 21.9c-1.68 0-3.32-.44-4.75-1.28l-.34-.2-3.63.88.96-3.55-.22-.36a9.86 9.86 0 0 1-1.51-5.37c0-5.47 4.45-9.92 9.92-9.92a9.86 9.86 0 0 1 7.02 2.9 9.86 9.86 0 0 1 2.9 7.02c0 5.47-4.46 9.92-9.92 9.92l.57-.04Zm5.44-7.43c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z"/></svg>
+                        Contactar por WhatsApp
+                    </a>
+
+                    <!-- TODO: reemplazar "#" con los enlaces reales de Instagram y Facebook de x-ora -->
+                    <div class="services-contact-social">
+                        <a href="#" target="_blank" rel="noopener" aria-label="Instagram de X-ORA Services">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.15.5.5.87 1.03 1.15 1.72.25.63.42 1.36.47 2.42.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.77c-.5.5-1.03.87-1.72 1.15-.63.25-1.36.42-2.42.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.72c-.25-.63-.42-1.36-.47-2.42C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.15-1.77.5-.5 1.03-.87 1.72-1.15.63-.25 1.36-.42 2.42-.47C8.94 2.01 9.28 2 12 2Zm0 1.8c-2.67 0-2.99.01-4.04.06-.87.04-1.34.18-1.65.3-.42.16-.72.36-1.03.67-.31.31-.5.6-.67 1.03-.12.31-.26.78-.3 1.65C4.26 8.56 4.25 8.88 4.25 11.55v.45c0 2.67.01 2.99.06 4.04.04.87.18 1.34.3 1.65.16.42.36.72.67 1.03.31.31.6.5 1.03.67.31.12.78.26 1.65.3 1.05.05 1.37.06 4.04.06s2.99-.01 4.04-.06c.87-.04 1.34-.18 1.65-.3.42-.16.72-.36 1.03-.67.31-.31.5-.6.67-1.03.12-.31.26-.78.3-1.65.05-1.05.06-1.37.06-4.04s-.01-2.99-.06-4.04c-.04-.87-.18-1.34-.3-1.65-.16-.42-.36-.72-.67-1.03a2.8 2.8 0 0 0-1.03-.67c-.31-.12-.78-.26-1.65-.3-1.05-.05-1.37-.06-4.04-.06ZM12 7.35A4.65 4.65 0 1 1 12 16.65 4.65 4.65 0 0 1 12 7.35Zm0 1.8a2.85 2.85 0 1 0 0 5.7 2.85 2.85 0 0 0 0-5.7Zm4.84-2a1.08 1.08 0 1 1 0 2.16 1.08 1.08 0 0 1 0-2.16Z"/></svg>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener" aria-label="Facebook de X-ORA Services">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8.4h2.82l.42-3.28H13.5V8.24c0-.95.26-1.6 1.62-1.6h1.74V3.72C16.55 3.65 15.55 3.56 14.38 3.56c-2.46 0-4.14 1.5-4.14 4.26v2.5H7.4v3.28h2.84V22Z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="services-panel-media">
+                <div class="services-contact-map reveal reveal-scale">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1887.1610476400297!2d-99.21398400370482!3d18.91713206395256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cddfa625f571e3%3A0x87c02c02ae129550!2sIMA%20Technologies!5e0!3m2!1ses-419!2smx!4v1788254502664!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Ubicación de X-ORA Services en Google Maps"></iframe>
+                </div>
+            </div>
+        </article>
+
+        <!-- STUDIO: contenido idéntico a studio.html #studio-contact -->
+        <article class="territory-panel" id="panel-studio" data-panel="studio" hidden>
+            <div class="studio-contact-head">
+                <h2>Contáctanos e Inscríbete</h2>
+                <p>Agenda una visita o resuelve tus dudas directamente con nuestro equipo. Te respondemos por WhatsApp en minutos.</p>
+            </div>
+
+            <div class="studio-contact-card">
+                <div class="studio-contact-card-info">
+                    <div class="studio-contact-block">
+                        <h3>Contacto Directo</h3>
+                        <p><strong>Teléfono:</strong> +52 (55) 1234 5678</p>
+
+                        <!-- TODO: reemplazar "#" con los enlaces reales de Instagram y Facebook de x-ora -->
+                        <div class="studio-contact-social">
+                            <a href="#" target="_blank" rel="noopener" aria-label="Instagram de X-ORA Studio">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.15.5.5.87 1.03 1.15 1.72.25.63.42 1.36.47 2.42.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.77c-.5.5-1.03.87-1.72 1.15-.63.25-1.36.42-2.42.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.72c-.25-.63-.42-1.36-.47-2.42C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.15-1.77.5-.5 1.03-.87 1.72-1.15.63-.25 1.36-.42 2.42-.47C8.94 2.01 9.28 2 12 2Zm0 1.8c-2.67 0-2.99.01-4.04.06-.87.04-1.34.18-1.65.3-.42.16-.72.36-1.03.67-.31.31-.5.6-.67 1.03-.12.31-.26.78-.3 1.65C4.26 8.56 4.25 8.88 4.25 11.55v.45c0 2.67.01 2.99.06 4.04.04.87.18 1.34.3 1.65.16.42.36.72.67 1.03.31.31.6.5 1.03.67.31.12.78.26 1.65.3 1.05.05 1.37.06 4.04.06s2.99-.01 4.04-.06c.87-.04 1.34-.18 1.65-.3.42-.16.72-.36 1.03-.67.31-.31.5-.6.67-1.03.12-.31.26-.78.3-1.65.05-1.05.06-1.37.06-4.04s-.01-2.99-.06-4.04c-.04-.87-.18-1.34-.3-1.65-.16-.42-.36-.72-.67-1.03a2.8 2.8 0 0 0-1.03-.67c-.31-.12-.78-.26-1.65-.3-1.05-.05-1.37-.06-4.04-.06ZM12 7.35A4.65 4.65 0 1 1 12 16.65 4.65 4.65 0 0 1 12 7.35Zm0 1.8a2.85 2.85 0 1 0 0 5.7 2.85 2.85 0 0 0 0-5.7Zm4.84-2a1.08 1.08 0 1 1 0 2.16 1.08 1.08 0 0 1 0-2.16Z"/></svg>
+                            </a>
+                            <a href="#" target="_blank" rel="noopener" aria-label="Facebook de X-ORA Studio">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8.4h2.82l.42-3.28H13.5V8.24c0-.95.26-1.6 1.62-1.6h1.74V3.72C16.55 3.65 15.55 3.56 14.38 3.56c-2.46 0-4.14 1.5-4.14 4.26v2.5H7.4v3.28h2.84V22Z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="studio-contact-block">
+                        <h3>Visita al Taller</h3>
+                        <p><strong>Dirección:</strong> Av. San Juan 77-Loc 15 Primer Piso, Chapultepec, 62450 Cuernavaca, Mor.</p>
+                        <p>Las visitas requieren cita previa para asegurar la atención de un ingeniero residente.</p>
+                    </div>
+
+                    <a href="https://wa.me/5215512345678?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20X-ORA%20Studio" class="btn-whatsapp" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.4.7 4.62 1.9 6.5L4 29l7.66-1.86a12.9 12.9 0 0 0 4.36.76h.01c6.62 0 12.02-5.4 12.02-12.02C28.05 8.4 22.65 3 16.02 3Zm0 21.9c-1.68 0-3.32-.44-4.75-1.28l-.34-.2-3.63.88.96-3.55-.22-.36a9.86 9.86 0 0 1-1.51-5.37c0-5.47 4.45-9.92 9.92-9.92a9.86 9.86 0 0 1 7.02 2.9 9.86 9.86 0 0 1 2.9 7.02c0 5.47-4.46 9.92-9.92 9.92l.57-.04Zm5.44-7.43c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z"/></svg>
+                        Solicitar Inscripción
+                    </a>
+                </div>
+
+                <div class="studio-contact-card-side">
+                    <div class="studio-contact-schedule">
+                        <table class="studio-schedule-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Días</th>
+                                    <th scope="col">Horario</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Lunes y Miércoles</td>
+                                    <td>16:00 – 18:00 hrs</td>
+                                </tr>
+                                <tr>
+                                    <td>Martes y Jueves</td>
+                                    <td>16:30 – 18:30 hrs</td>
+                                </tr>
+                                <tr>
+                                    <td>Sábados</td>
+                                    <td>09:00 – 13:00 hrs</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="studio-contact-card-map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1887.1610476400297!2d-99.21398400370482!3d18.91713206395256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cddfa625f571e3%3A0x87c02c02ae129550!2sIMA%20Technologies!5e0!3m2!1ses-419!2smx!4v1788254502664!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Ubicación de X-ORA Studio en Google Maps"></iframe>
+                    </div>
+                </div>
+            </div>
+        </article>
     </div>
-
-    <!-- SECCIÓN DE DATOS: SERVICES -->
-    <section id="contact-services" class="content-section active">
-        <h2>Requerimiento de Ingeniería y Soporte</h2>
-        <span class="descriptor">Área: Critical Power & Control Systems</span>
-        <p>Contacte a nuestro centro de operaciones para comisionamiento, diagnóstico de infraestructura crítica o despliegue de soporte en campo. Operamos con rigor mineral y garantizamos alta disponibilidad.</p>
-        
-        <div class="contact-data-container">
-            <div class="data-block">
-                <h3>Dirección Operativa</h3>
-                <p><strong>Base Central:</strong> Parque Industrial Tecnológico, Nave 4.</p>
-                <p>Ciudad de México, CP 02300.</p>
-            </div>
-            
-            <div class="data-block">
-                <h3>Contacto Directo</h3>
-                <p><strong>Operaciones:</strong> +52 (55) 9000 1111</p>
-                <p><strong>Emergencias (24/7):</strong> +52 (55) 9000 1199</p>
-                <p><strong>Email:</strong> ingenieria@x-ora.com</p>
-            </div>
-
-            <div class="data-block">
-                <h3>Horario de Atención</h3>
-                <p><strong>Soporte en Campo:</strong> 24/7</p>
-                <p><strong>Oficinas Administrativas:</strong> Lunes a Viernes, 08:00 - 18:00 hrs.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECCIÓN DE DATOS: STUDIO -->
-    <section id="contact-studio" class="content-section">
-        <h2>Admisiones y Diagnóstico de Integración</h2>
-        <span class="descriptor">Área: Engineering & Technology</span>
-        <p>Comunícate con nuestro equipo de admisiones para agendar un diagnóstico técnico o coordinar una visita presencial a nuestros laboratorios y conocer nuestro modelo de aprendizaje basado en sistemas.</p>
-        
-        <div class="contact-data-container studio-data">
-            <div class="data-block">
-                <h3>Ubicación del Ecosistema</h3>
-                <p><strong>Campus x-ora Studio:</strong> Av. de la Innovación 404.</p>
-                <p>Ciudad de México, CP 02350.</p>
-                <p><em>(Las visitas requieren cita previa con un ingeniero residente).</em></p>
-            </div>
-            
-            <div class="data-block">
-                <h3>Contacto de Admisiones</h3>
-                <p><strong>Teléfono:</strong> +52 (55) 1234 5678</p>
-                <p><strong>WhatsApp:</strong> +52 (55) 1234 5679</p>
-                <p><strong>Email:</strong> admisiones@x-ora.com</p>
-            </div>
-
-            <div class="data-block">
-                <h3>Horario de Atención</h3>
-                <p><strong>Lunes a Viernes:</strong> 10:00 - 19:00 hrs.</p>
-                <p><strong>Sábados:</strong> 09:00 - 14:00 hrs.</p>
-            </div>
-        </div>
-    </section>
 
     <!-- PIE DE PÁGINA -->
     <footer>
-        <p>&copy; 2026 x-ora. Transformando la complejidad en ejecución real.</p>
+        <div class="footer-inner">
+            <p class="footer-copy">&copy; 2026 X-ORA. Transformando la complejidad en ejecución real.</p>
+            <div class="footer-contact">
+                <a href="tel:+525512345678">+52 (55) 1234 5678</a>
+                <span>Av. San Juan 77-Loc 15, Chapultepec, Cuernavaca, Mor.</span>
+                <!-- TODO: reemplazar "#" con los enlaces reales de Instagram y Facebook de x-ora -->
+                <span class="footer-social">
+                    <a href="#" target="_blank" rel="noopener" aria-label="Instagram de X-ORA">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.15.5.5.87 1.03 1.15 1.72.25.63.42 1.36.47 2.42.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.77c-.5.5-1.03.87-1.72 1.15-.63.25-1.36.42-2.42.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.72c-.25-.63-.42-1.36-.47-2.42C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.15-1.77.5-.5 1.03-.87 1.72-1.15.63-.25 1.36-.42 2.42-.47C8.94 2.01 9.28 2 12 2Zm0 1.8c-2.67 0-2.99.01-4.04.06-.87.04-1.34.18-1.65.3-.42.16-.72.36-1.03.67-.31.31-.5.6-.67 1.03-.12.31-.26.78-.3 1.65C4.26 8.56 4.25 8.88 4.25 11.55v.45c0 2.67.01 2.99.06 4.04.04.87.18 1.34.3 1.65.16.42.36.72.67 1.03.31.31.6.5 1.03.67.31.12.78.26 1.65.3 1.05.05 1.37.06 4.04.06s2.99-.01 4.04-.06c.87-.04 1.34-.18 1.65-.3.42-.16.72-.36 1.03-.67.31-.31.5-.6.67-1.03.12-.31.26-.78.3-1.65.05-1.05.06-1.37.06-4.04s-.01-2.99-.06-4.04c-.04-.87-.18-1.34-.3-1.65-.16-.42-.36-.72-.67-1.03a2.8 2.8 0 0 0-1.03-.67c-.31-.12-.78-.26-1.65-.3-1.05-.05-1.37-.06-4.04-.06ZM12 7.35A4.65 4.65 0 1 1 12 16.65 4.65 4.65 0 0 1 12 7.35Zm0 1.8a2.85 2.85 0 1 0 0 5.7 2.85 2.85 0 0 0 0-5.7Zm4.84-2a1.08 1.08 0 1 1 0 2.16 1.08 1.08 0 0 1 0-2.16Z"/></svg>
+                    </a>
+                    <a href="#" target="_blank" rel="noopener" aria-label="Facebook de X-ORA">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8.4h2.82l.42-3.28H13.5V8.24c0-.95.26-1.6 1.62-1.6h1.74V3.72C16.55 3.65 15.55 3.56 14.38 3.56c-2.46 0-4.14 1.5-4.14 4.26v2.5H7.4v3.28h2.84V22Z"/></svg>
+                    </a>
+                </span>
+            </div>
+        </div>
     </footer>
 
     <script src="script.js"></script>

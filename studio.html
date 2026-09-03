@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>x-ora Studio | Engineering & Technology</title>
+    <title>X-ORA Studio | Engineering & Technology</title>
     
     <!-- Importación de Tipografías -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
@@ -11,16 +11,21 @@
     <!-- Enlace al archivo CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="studio-page">
 
-    <!-- NAV BAR VERTICAL (DESKTOP: LATERAL DERECHA / MÓVIL: DESPLEGABLE) -->
-    <nav class="side-nav" id="sideNav" aria-label="Navegación principal">
-        <button type="button" class="side-nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">
-            <span class="sr-only">Abrir menú</span>
-            <span class="side-nav-arrow" aria-hidden="true"></span>
+    <!-- NAV BAR CLÁSICA SUPERIOR (LOGO IZQUIERDA + ENLACES, SIEMPRE VISIBLE) -->
+    <nav class="top-nav" aria-label="Navegación principal">
+        <a href="index.html" class="top-nav-logo" aria-label="X-ORA — Inicio">
+            <img src="assets/Logo.svg" alt="X-ORA" width="38" height="37">
+        </a>
+
+        <button type="button" class="nav-toggle" id="navToggle" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="navLinks">
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
         </button>
 
-        <div class="side-nav-links" id="navLinks">
+        <div class="top-nav-links" id="navLinks">
             <a href="index.html">Inicio</a>
             <a href="about.html">Nosotros</a>
             <a href="services.html">Services</a>
@@ -29,115 +34,254 @@
         </div>
     </nav>
 
-    <!-- SECCIÓN 1: PRINCIPAL (HERO) -->
-    <section class="hero-studio">
-        <h1>La primera luz del conocimiento</h1>
-        <span class="descriptor">
-            Descriptor: Engineering & Technology
-        </span>
-        <p>
-            Un ecosistema educativo STEAM de alto nivel. Transformamos la curiosidad científica en capacidad de ejecución mediante el rigor técnico y el diseño de sistemas.
-        </p>
+    <!-- BOTÓN FLOTANTE DE WHATSAPP: redirige a Contacto -->
+    <a href="contacto.html" class="whatsapp-float" aria-label="Contáctanos por WhatsApp">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.4.7 4.62 1.9 6.5L4 29l7.66-1.86a12.9 12.9 0 0 0 4.36.76h.01c6.62 0 12.02-5.4 12.02-12.02C28.05 8.4 22.65 3 16.02 3Zm0 21.9c-1.68 0-3.32-.44-4.75-1.28l-.34-.2-3.63.88.96-3.55-.22-.36a9.86 9.86 0 0 1-1.51-5.37c0-5.47 4.45-9.92 9.92-9.92a9.86 9.86 0 0 1 7.02 2.9 9.86 9.86 0 0 1 2.9 7.02c0 5.47-4.46 9.92-9.92 9.92l.57-.04Zm5.44-7.43c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z"/></svg>
+    </a>
+
+    <!-- SECCIÓN 1: PRINCIPAL (HERO) — NARANJA QUEMADO -->
+    <section class="hero-studio reveal">
+        <span class="studio-kicker reveal reveal-fade reveal-d1">Bienvenidos a</span>
+        <h1 class="reveal reveal-d2">X - ORA Studio</h1>
+        <p class="reveal reveal-fade reveal-d3">Un espacio de aprendizaje práctico donde la ingeniería se usa como forma de pensar: niños de 5 a 9 años construyen, prueban y programan sus propias soluciones.</p>
+        <a href="#studio-contact" class="btn btn-studio reveal reveal-fade reveal-d4"><span>Inscríbete ahora</span><span class="btn-arrow" aria-hidden="true">→</span></a>
     </section>
 
-    <!-- SECCIÓN 2: MODELO DE APRENDIZAJE -->
-    <section class="content-section active">
-        <h2>Modelo de Aprendizaje</h2>
-        <p>En x-ora Studio rechazamos la simplificación infantil. Tratamos a nuestros estudiantes como individuos altamente capaces. Nuestro modelo se enfoca en enseñar a pensar en sistemas, donde el rigor utilizado para entender un prototipo robótico es el mismo que se exige en el mundo real para diagnosticar un "Punto Crítico de Fallo".</p>
+    <!-- SECCIÓN INTERMEDIA: FOTO DEL TALLER (FRANJA ANGOSTA A TODO EL ANCHO) -->
+    <section class="studio-banner reveal reveal-scale">
+        <img src="assets/studio.jpg" alt="Vista del taller de X-ORA Studio" loading="lazy">
     </section>
 
-    <!-- SECCIÓN 3: METODOLOGÍA -->
-    <section class="content-section bg-gris active">
-        <h2>Metodología y Código STARIS</h2>
-        <p>Nuestro proceso educativo codifica el ciclo completo de la transformación técnica, actuando como un puente entre la incógnita (la variable) y la primera luz (el entendimiento).</p>
-        
-        <div class="grid-container">
-            <div class="card-studio">
-                <h3>Imaginar</h3>
-                <p>Definición del reto técnico frente a lo desconocido. Formulación de hipótesis basadas en evidencia.</p>
+    <!-- SECCIÓN 2: PILARES (INSPIRADA EN RECUADROS MISIÓN / VISIÓN / FILOSOFÍA) -->
+    <section class="studio-pillars">
+        <div class="studio-pillars-head">
+            <h2 class="reveal reveal-fade">Nuestros Pilares</h2>
+            <p class="reveal reveal-fade reveal-d1">Los principios que sostienen cada clase, cada prototipo y cada decisión pedagógica dentro de X-ORA Studio.</p>
+        </div>
+
+        <div class="pillars-grid">
+            <div class="pillar-card reveal reveal-scale reveal-d1">
+                <svg class="pillar-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <circle cx="24" cy="24" r="18"/>
+                    <circle cx="24" cy="24" r="10"/>
+                    <circle cx="24" cy="24" r="2" fill="currentColor" stroke="none"/>
+                </svg>
+                <h3>Misión</h3>
+                <p>Formar mentes capaces de transformar la curiosidad en soluciones reales, combinando pensamiento científico, creatividad y disciplina técnica desde edades tempranas.</p>
             </div>
-            <div class="card-studio">
-                <h3>Experimentar</h3>
-                <p>Aplicación de los principios del Código STARIS. Trabajo manipulativo estructurado y preciso.</p>
+            <div class="pillar-card is-highlight reveal reveal-scale reveal-d2">
+                <svg class="pillar-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M4 24c4-8 12-13 20-13s16 5 20 13c-4 8-12 13-20 13S8 32 4 24Z"/>
+                    <circle cx="24" cy="24" r="6"/>
+                </svg>
+                <h3>Visión</h3>
+                <p>Ser un entorno donde la ingeniería aplicada forma niños capaces de construir, probar y mejorar sus propias ideas, dentro y fuera del Studio.</p>
             </div>
-            <div class="card-studio">
-                <h3>Errar e Iterar</h3>
-                <p>El error como dato métrico, no como fracaso. Rediseño continuo hasta que el mecanismo cobra vida.</p>
+            <div class="pillar-card reveal reveal-scale reveal-d3">
+                <svg class="pillar-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M6 36 18 16l7 10 5-7 12 17H6Z"/>
+                    <path d="M18 16v-6"/>
+                    <path d="M18 10h7l-3 3"/>
+                </svg>
+                <h3>Filosofía</h3>
+                <p>Creemos que la ingeniería es una estructura de pensamiento: un método para observar, cuestionar, iterar y construir con propósito.</p>
             </div>
         </div>
     </section>
 
-    <!-- SECCIÓN 4: TECNOLOGÍA -->
-    <section class="content-section active">
-        <h2>Tecnología Operativa</h2>
-        <p>Nuestros laboratorios sustituyen el juguete tradicional por herramientas de ingeniería aplicada. Los estudiantes interactúan genuinamente con interfaces de programación, circuitos de control real y plataformas de prototipado mecatrónico que exigen concentración y exactitud.</p>
-    </section>
+    <!-- SECCIÓN 3: ¿QUÉ ES STEAM? -->
+    <section class="studio-steam">
+        <div class="steam-circle steam-circle-bl" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 750 749.999995" preserveAspectRatio="xMidYMid meet" version="1.0">
+                <defs>
+                    <clipPath id="steamCircleClipBl">
+                        <path d="M 375 0 C 167.894531 0 0 167.894531 0 375 C 0 582.105469 167.894531 750 375 750 C 582.105469 750 750 582.105469 750 375 C 750 167.894531 582.105469 0 375 0 Z M 375 0 " clip-rule="nonzero"/>
+                    </clipPath>
+                </defs>
+                <g clip-path="url(#steamCircleClipBl)">
+                    <path d="M 145.539062 131.609375 C 119.25 156.40625 97.546875 184.652344 80.4375 216.34375 C 62.945312 248.742188 51.167969 283.082031 45.097656 319.371094 L -34.792969 306.011719 C -27.242188 260.871094 -12.59375 218.15625 9.160156 177.863281 C 30.40625 138.511719 57.339844 103.449219 89.964844 72.683594 Z M 41.070312 355.273438 C 40.691406 361.828125 40.5 368.40625 40.5 375 C 40.5 408.863281 45.441406 441.796875 55.324219 473.808594 C 64.886719 504.789062 78.722656 533.800781 96.832031 560.84375 L 29.523438 605.910156 C 7.019531 572.300781 -10.179688 536.230469 -22.074219 497.703125 C -34.359375 457.90625 -40.5 417.007812 -40.5 375 C -40.5 366.839844 -40.265625 358.699219 -39.792969 350.578125 Z M 118.515625 589.738281 C 141.773438 617.484375 168.773438 640.851562 199.519531 659.835938 C 230.808594 679.160156 264.324219 692.910156 300.066406 701.085938 L 282.007812 780.042969 C 237.542969 769.875 195.859375 752.777344 156.957031 728.753906 C 118.800781 705.191406 85.296875 676.195312 56.441406 641.773438 Z M 335.640625 707.210938 C 348.667969 708.738281 361.789062 709.5 375 709.5 C 435.742188 709.5 492.132812 694.210938 544.171875 663.636719 L 585.203125 733.476562 C 553.847656 751.898438 520.675781 765.933594 485.695312 775.582031 C 449.632812 785.527344 412.734375 790.5 375 790.5 C 358.636719 790.5 342.378906 789.554688 326.222656 787.664062 Z M 574.277344 643.691406 C 603.382812 622.066406 628.335938 596.414062 649.136719 566.734375 C 670.214844 536.65625 685.878906 504.066406 696.132812 468.964844 L 773.882812 491.671875 C 761.132812 535.332031 741.660156 575.847656 715.464844 613.222656 C 689.65625 650.046875 658.695312 681.875 622.589844 708.707031 Z M 704.351562 433.835938 C 707.785156 414.46875 709.5 394.855469 709.5 375 C 709.5 321.230469 697.367188 270.589844 673.101562 223.082031 L 745.238281 186.238281 C 775.414062 245.316406 790.5 308.238281 790.5 375 C 790.5 399.605469 788.367188 423.929688 784.105469 447.972656 Z M 654.964844 191.863281 C 635.058594 161.503906 610.855469 135.050781 582.347656 112.5 C 553.589844 89.746094 522.027344 72.226562 487.667969 59.9375 L 514.945312 -16.332031 C 557.664062 -1.054688 596.882812 20.714844 632.605469 48.972656 C 667.96875 76.953125 698.003906 109.777344 722.703125 147.453125 Z M 453.09375 49.65625 C 427.558594 43.550781 401.527344 40.5 375 40.5 C 337.691406 40.5 301.570312 46.476562 266.640625 58.429688 C 232.871094 69.984375 201.699219 86.597656 173.121094 108.261719 L 124.183594 43.71875 C 159.683594 16.800781 198.429688 -3.839844 240.417969 -18.207031 C 283.847656 -33.070312 328.707031 -40.5 375 -40.5 C 407.894531 -40.5 440.203125 -36.707031 471.925781 -29.125 Z M 453.09375 49.65625 " fill-rule="nonzero"/>
+                </g>
+            </svg>
+        </div>
+        <div class="steam-circle steam-circle-tr" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 750 749.999995" preserveAspectRatio="xMidYMid meet" version="1.0">
+                <defs>
+                    <clipPath id="steamCircleClipTr">
+                        <path d="M 375 0 C 167.894531 0 0 167.894531 0 375 C 0 582.105469 167.894531 750 375 750 C 582.105469 750 750 582.105469 750 375 C 750 167.894531 582.105469 0 375 0 Z M 375 0 " clip-rule="nonzero"/>
+                    </clipPath>
+                </defs>
+                <g clip-path="url(#steamCircleClipTr)">
+                    <path d="M 145.539062 131.609375 C 119.25 156.40625 97.546875 184.652344 80.4375 216.34375 C 62.945312 248.742188 51.167969 283.082031 45.097656 319.371094 L -34.792969 306.011719 C -27.242188 260.871094 -12.59375 218.15625 9.160156 177.863281 C 30.40625 138.511719 57.339844 103.449219 89.964844 72.683594 Z M 41.070312 355.273438 C 40.691406 361.828125 40.5 368.40625 40.5 375 C 40.5 408.863281 45.441406 441.796875 55.324219 473.808594 C 64.886719 504.789062 78.722656 533.800781 96.832031 560.84375 L 29.523438 605.910156 C 7.019531 572.300781 -10.179688 536.230469 -22.074219 497.703125 C -34.359375 457.90625 -40.5 417.007812 -40.5 375 C -40.5 366.839844 -40.265625 358.699219 -39.792969 350.578125 Z M 118.515625 589.738281 C 141.773438 617.484375 168.773438 640.851562 199.519531 659.835938 C 230.808594 679.160156 264.324219 692.910156 300.066406 701.085938 L 282.007812 780.042969 C 237.542969 769.875 195.859375 752.777344 156.957031 728.753906 C 118.800781 705.191406 85.296875 676.195312 56.441406 641.773438 Z M 335.640625 707.210938 C 348.667969 708.738281 361.789062 709.5 375 709.5 C 435.742188 709.5 492.132812 694.210938 544.171875 663.636719 L 585.203125 733.476562 C 553.847656 751.898438 520.675781 765.933594 485.695312 775.582031 C 449.632812 785.527344 412.734375 790.5 375 790.5 C 358.636719 790.5 342.378906 789.554688 326.222656 787.664062 Z M 574.277344 643.691406 C 603.382812 622.066406 628.335938 596.414062 649.136719 566.734375 C 670.214844 536.65625 685.878906 504.066406 696.132812 468.964844 L 773.882812 491.671875 C 761.132812 535.332031 741.660156 575.847656 715.464844 613.222656 C 689.65625 650.046875 658.695312 681.875 622.589844 708.707031 Z M 704.351562 433.835938 C 707.785156 414.46875 709.5 394.855469 709.5 375 C 709.5 321.230469 697.367188 270.589844 673.101562 223.082031 L 745.238281 186.238281 C 775.414062 245.316406 790.5 308.238281 790.5 375 C 790.5 399.605469 788.367188 423.929688 784.105469 447.972656 Z M 654.964844 191.863281 C 635.058594 161.503906 610.855469 135.050781 582.347656 112.5 C 553.589844 89.746094 522.027344 72.226562 487.667969 59.9375 L 514.945312 -16.332031 C 557.664062 -1.054688 596.882812 20.714844 632.605469 48.972656 C 667.96875 76.953125 698.003906 109.777344 722.703125 147.453125 Z M 453.09375 49.65625 C 427.558594 43.550781 401.527344 40.5 375 40.5 C 337.691406 40.5 301.570312 46.476562 266.640625 58.429688 C 232.871094 69.984375 201.699219 86.597656 173.121094 108.261719 L 124.183594 43.71875 C 159.683594 16.800781 198.429688 -3.839844 240.417969 -18.207031 C 283.847656 -33.070312 328.707031 -40.5 375 -40.5 C 407.894531 -40.5 440.203125 -36.707031 471.925781 -29.125 Z M 453.09375 49.65625 " fill-rule="nonzero"/>
+                </g>
+            </svg>
+        </div>
+        <div class="studio-steam-head">
+            <h2 class="reveal reveal-fade">¿Qué es STEAM?</h2>
+            <p class="reveal reveal-fade reveal-d1">STEAM es el marco pedagógico detrás de cada actividad en X-ORA Studio: una integración real entre ciencia, tecnología, ingeniería, arte y matemáticas.</p>
+        </div>
 
-    <!-- SECCIÓN 5: HORARIOS -->
-    <section class="content-section bg-gris active">
-        <h2>Estructura de Horarios</h2>
-        <p>Sesiones diseñadas para mantener la concentración y permitir la lectura prolongada de datos, código y ensamblaje sin fatiga cognitiva.</p>
-        
-        <div class="schedule-panel">
-            <table class="schedule-table">
-                <thead>
-                    <tr>
-                        <th>Nivel / Grupo</th>
-                        <th>Días de Sesión</th>
-                        <th>Horario Operativo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Fundamentos de Ingeniería</td>
-                        <td>Lunes y Miércoles</td>
-                        <td>16:00 - 18:00 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Sistemas y Control Avanzado</td>
-                        <td>Martes y Jueves</td>
-                        <td>16:30 - 18:30 hrs</td>
-                    </tr>
-                    <tr>
-                        <td>Prototipado Sabatino</td>
-                        <td>Sábados</td>
-                        <td>09:00 - 13:00 hrs</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="steam-grid">
+            <div class="steam-letter reveal reveal-scale reveal-d1">
+                <span class="letter">S</span>
+                <span class="word">Ciencia</span>
+                <p>Observación, método y evidencia como base de todo aprendizaje.</p>
+            </div>
+            <div class="steam-letter reveal reveal-scale reveal-d2">
+                <span class="letter">T</span>
+                <span class="word">Tecnología</span>
+                <p>Herramientas digitales y de programación aplicadas a retos reales.</p>
+            </div>
+            <div class="steam-letter reveal reveal-scale reveal-d3">
+                <span class="letter">E</span>
+                <span class="word">Ingeniería</span>
+                <p>Diseño, construcción y mejora continua de soluciones funcionales.</p>
+            </div>
+            <div class="steam-letter reveal reveal-scale reveal-d4">
+                <span class="letter">A</span>
+                <span class="word">Arte</span>
+                <p>Creatividad y comunicación visual como parte del proceso de diseño.</p>
+            </div>
+            <div class="steam-letter reveal reveal-scale reveal-d5">
+                <span class="letter">M</span>
+                <span class="word">Matemáticas</span>
+                <p>Lógica cuantitativa que sostiene cada cálculo y decisión técnica.</p>
+            </div>
         </div>
     </section>
 
-    <!-- SECCIÓN 6: VISITA, CONTACTO Y MAPA -->
-    <section class="content-section active">
-        <h2>Integración al Ecosistema</h2>
-        <p>Inicia el tránsito activo. Programa un diagnóstico técnico para evaluar la capacidad cognitiva de integración a nuestros programas.</p>
+    <!-- SECCIÓN 4: APRENDIZAJES Y CLASES (CARRUSEL DE TEXTO) -->
+    <section class="studio-learning">
+        <div class="learning-bulb-mark reveal reveal-scale" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 7C9.23858 7 7 9.23858 7 12C7 13.3613 7.54402 14.5955 8.42651 15.4972C8.77025 15.8484 9.05281 16.2663 9.14923 16.7482L9.67833 19.3924C9.86537 20.3272 10.6862 21 11.6395 21H12.3605C13.3138 21 14.1346 20.3272 14.3217 19.3924L14.8508 16.7482C14.9472 16.2663 15.2297 15.8484 15.5735 15.4972C16.456 14.5955 17 13.3613 17 12C17 9.23858 14.7614 7 12 7Z" stroke="#000000" stroke-width="2"/>
+                <path d="M12 4V3" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M18 6L19 5" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M20 12H21" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 12H3" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 5L6 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10 17H14" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <div class="studio-learning-inner">
+            <h2 class="reveal reveal-fade">Aprendizajes y Clases</h2>
+            <p class="reveal reveal-fade reveal-d1">Cada clase avanza por cuatro momentos: Activación, donde surge la pregunta del día; Entrenamiento, donde se practican habilidades técnicas; Descubrimiento, donde se experimenta con libertad; y Misión, donde todo se integra en un prototipo funcional.</p>
 
-        <div class="contact-grid">
+            <div class="studio-carousel reveal reveal-slide-right reveal-d2">
+                <span class="studio-carousel-prefix">En cada clase exploramos</span>
+                <span class="studio-carousel-word" id="studioCarouselWord">Robótica</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 5: INSTALACIONES (GALERÍA INTERACTIVA) -->
+    <section class="studio-facilities">
+        <div class="studio-facilities-grid">
+            <div class="studio-facilities-head">
+                <h2 class="reveal reveal-fade">Instalaciones</h2>
+                <p class="reveal reveal-fade reveal-d1">El taller cuenta con iluminación técnica controlada, paneles termoacústicos, aire acondicionado filtrado y mobiliario ergonómico adaptable. Trabajamos con kits LEGO Education, tablets, sensores y software de programación, bajo un protocolo de seguridad con control de acceso y supervisión constante.</p>
+            </div>
+
+            <div class="facilities-carousel reveal reveal-scale reveal-d1" id="facilitiesCarousel" role="region" aria-roledescription="carrusel" aria-label="Fotos de las instalaciones">
+                <div class="facilities-carousel-viewport">
+                    <img class="facilities-carousel-img is-active" src="assets/Studio/classroom/1.jpg" alt="Estación de trabajo en el taller de X-ORA Studio" id="facilitiesCarouselImgA">
+                    <img class="facilities-carousel-img" src="" alt="" id="facilitiesCarouselImgB" aria-hidden="true">
+                </div>
+                <button type="button" class="facilities-carousel-arrow facilities-carousel-prev" id="facilitiesPrev" aria-label="Imagen anterior">&#8592;</button>
+                <button type="button" class="facilities-carousel-arrow facilities-carousel-next" id="facilitiesNext" aria-label="Imagen siguiente">&#8594;</button>
+                <div class="facilities-carousel-dots" id="facilitiesDots"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 6: CONTÁCTANOS E INSCRÍBETE -->
+    <section class="studio-contact" id="studio-contact">
+        <div class="studio-contact-head">
+            <h2 class="reveal reveal-fade">Contáctanos e Inscríbete</h2>
+            <p class="reveal reveal-fade reveal-d1">Agenda una visita o resuelve tus dudas directamente con nuestro equipo. Te respondemos por WhatsApp en minutos.</p>
+        </div>
+
+        <div class="studio-contact-card reveal reveal-scale reveal-d1">
             <!-- Datos de Contacto e Inscripción -->
-            <div class="contact-info">
-                <h3>Contacto Directo</h3>
-                <p><strong>Email:</strong> admisiones@x-ora.com</p>
-                <p><strong>Teléfono:</strong> +52 (55) 1234 5678</p>
+            <div class="studio-contact-card-info">
+                <div class="studio-contact-block">
+                    <h3>Contacto Directo</h3>
+                    <p><strong>Teléfono:</strong> +52 (55) 1234 5678</p>
 
-                <h3>Visita al Taller</h3>
-                <p><strong>Dirección:</strong> Av. de la Innovación 404, Parque Tecnológico, CDMX.</p>
-                <p>Las visitas requieren cita previa para asegurar la atención de un ingeniero residente.</p>
-                
-                <a href="mailto:admisiones@x-ora.com" class="btn-studio-solid">Solicitar Inscripción</a>
+                    <!-- TODO: reemplazar "#" con los enlaces reales de Instagram y Facebook de x-ora -->
+                    <div class="studio-contact-social">
+                        <a href="#" target="_blank" rel="noopener" aria-label="Instagram de X-ORA Studio">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.15.5.5.87 1.03 1.15 1.72.25.63.42 1.36.47 2.42.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.77c-.5.5-1.03.87-1.72 1.15-.63.25-1.36.42-2.42.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.72c-.25-.63-.42-1.36-.47-2.42C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.15-1.77.5-.5 1.03-.87 1.72-1.15.63-.25 1.36-.42 2.42-.47C8.94 2.01 9.28 2 12 2Zm0 1.8c-2.67 0-2.99.01-4.04.06-.87.04-1.34.18-1.65.3-.42.16-.72.36-1.03.67-.31.31-.5.6-.67 1.03-.12.31-.26.78-.3 1.65C4.26 8.56 4.25 8.88 4.25 11.55v.45c0 2.67.01 2.99.06 4.04.04.87.18 1.34.3 1.65.16.42.36.72.67 1.03.31.31.6.5 1.03.67.31.12.78.26 1.65.3 1.05.05 1.37.06 4.04.06s2.99-.01 4.04-.06c.87-.04 1.34-.18 1.65-.3.42-.16.72-.36 1.03-.67.31-.31.5-.6.67-1.03.12-.31.26-.78.3-1.65.05-1.05.06-1.37.06-4.04s-.01-2.99-.06-4.04c-.04-.87-.18-1.34-.3-1.65-.16-.42-.36-.72-.67-1.03a2.8 2.8 0 0 0-1.03-.67c-.31-.12-.78-.26-1.65-.3-1.05-.05-1.37-.06-4.04-.06ZM12 7.35A4.65 4.65 0 1 1 12 16.65 4.65 4.65 0 0 1 12 7.35Zm0 1.8a2.85 2.85 0 1 0 0 5.7 2.85 2.85 0 0 0 0-5.7Zm4.84-2a1.08 1.08 0 1 1 0 2.16 1.08 1.08 0 0 1 0-2.16Z"/></svg>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener" aria-label="Facebook de X-ORA Studio">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8.4h2.82l.42-3.28H13.5V8.24c0-.95.26-1.6 1.62-1.6h1.74V3.72C16.55 3.65 15.55 3.56 14.38 3.56c-2.46 0-4.14 1.5-4.14 4.26v2.5H7.4v3.28h2.84V22Z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="studio-contact-block">
+                    <h3>Visita al Taller</h3>
+                    <p><strong>Dirección:</strong> Av. San Juan 77-Loc 15 Primer Piso, Chapultepec, 62450 Cuernavaca, Mor.</p>
+                    <p>Las visitas requieren cita previa para asegurar la atención de un ingeniero residente.</p>
+                </div>
+
+                <a href="https://wa.me/5215512345678?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20X-ORA%20Studio" class="btn-whatsapp" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.4.7 4.62 1.9 6.5L4 29l7.66-1.86a12.9 12.9 0 0 0 4.36.76h.01c6.62 0 12.02-5.4 12.02-12.02C28.05 8.4 22.65 3 16.02 3Zm0 21.9c-1.68 0-3.32-.44-4.75-1.28l-.34-.2-3.63.88.96-3.55-.22-.36a9.86 9.86 0 0 1-1.51-5.37c0-5.47 4.45-9.92 9.92-9.92a9.86 9.86 0 0 1 7.02 2.9 9.86 9.86 0 0 1 2.9 7.02c0 5.47-4.46 9.92-9.92 9.92l.57-.04Zm5.44-7.43c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z"/></svg>
+                    Solicitar Inscripción
+                </a>
             </div>
 
-            <!-- Mapa (Placeholder Embebido de Google Maps) -->
-            <div class="map-container">
-                <!-- Aquí puedes incrustar el iframe real de Google Maps -->
-                <p>[ Mapa Interactivo - Google Maps ]</p>
+            <!-- Horarios + Mapa -->
+            <div class="studio-contact-card-side">
+                <div class="studio-contact-schedule">
+                    <table class="studio-schedule-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Días</th>
+                                <th scope="col">Horario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Lunes y Miércoles</td>
+                                <td>16:00 – 18:00 hrs</td>
+                            </tr>
+                            <tr>
+                                <td>Martes y Jueves</td>
+                                <td>16:30 – 18:30 hrs</td>
+                            </tr>
+                            <tr>
+                                <td>Sábados</td>
+                                <td>09:00 – 13:00 hrs</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="studio-contact-card-map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1887.1610476400297!2d-99.21398400370482!3d18.91713206395256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cddfa625f571e3%3A0x87c02c02ae129550!2sIMA%20Technologies!5e0!3m2!1ses-419!2smx!4v1788254502664!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Ubicación de X-ORA Studio en Google Maps"></iframe>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- PIE DE PÁGINA -->
     <footer>
-        <p>&copy; 2026 x-ora. Transformando la complejidad en ejecución real.</p>
+        <div class="footer-inner">
+            <p class="footer-copy">&copy; 2026 X-ORA. Transformando la complejidad en ejecución real.</p>
+            <div class="footer-contact">
+                <a href="tel:+525512345678">+52 (55) 1234 5678</a>
+                <span>Av. San Juan 77-Loc 15, Chapultepec, Cuernavaca, Mor.</span>
+                <!-- TODO: reemplazar "#" con los enlaces reales de Instagram y Facebook de x-ora -->
+                <span class="footer-social">
+                    <a href="#" target="_blank" rel="noopener" aria-label="Instagram de X-ORA">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.15.5.5.87 1.03 1.15 1.72.25.63.42 1.36.47 2.42.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.77c-.5.5-1.03.87-1.72 1.15-.63.25-1.36.42-2.42.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.72c-.25-.63-.42-1.36-.47-2.42C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.15-1.77.5-.5 1.03-.87 1.72-1.15.63-.25 1.36-.42 2.42-.47C8.94 2.01 9.28 2 12 2Zm0 1.8c-2.67 0-2.99.01-4.04.06-.87.04-1.34.18-1.65.3-.42.16-.72.36-1.03.67-.31.31-.5.6-.67 1.03-.12.31-.26.78-.3 1.65C4.26 8.56 4.25 8.88 4.25 11.55v.45c0 2.67.01 2.99.06 4.04.04.87.18 1.34.3 1.65.16.42.36.72.67 1.03.31.31.6.5 1.03.67.31.12.78.26 1.65.3 1.05.05 1.37.06 4.04.06s2.99-.01 4.04-.06c.87-.04 1.34-.18 1.65-.3.42-.16.72-.36 1.03-.67.31-.31.5-.6.67-1.03.12-.31.26-.78.3-1.65.05-1.05.06-1.37.06-4.04s-.01-2.99-.06-4.04c-.04-.87-.18-1.34-.3-1.65-.16-.42-.36-.72-.67-1.03a2.8 2.8 0 0 0-1.03-.67c-.31-.12-.78-.26-1.65-.3-1.05-.05-1.37-.06-4.04-.06ZM12 7.35A4.65 4.65 0 1 1 12 16.65 4.65 4.65 0 0 1 12 7.35Zm0 1.8a2.85 2.85 0 1 0 0 5.7 2.85 2.85 0 0 0 0-5.7Zm4.84-2a1.08 1.08 0 1 1 0 2.16 1.08 1.08 0 0 1 0-2.16Z"/></svg>
+                    </a>
+                    <a href="#" target="_blank" rel="noopener" aria-label="Facebook de X-ORA">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8.4h2.82l.42-3.28H13.5V8.24c0-.95.26-1.6 1.62-1.6h1.74V3.72C16.55 3.65 15.55 3.56 14.38 3.56c-2.46 0-4.14 1.5-4.14 4.26v2.5H7.4v3.28h2.84V22Z"/></svg>
+                    </a>
+                </span>
+            </div>
+        </div>
     </footer>
 
     <script src="script.js"></script>

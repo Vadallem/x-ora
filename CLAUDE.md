@@ -15,7 +15,7 @@
 - Diseño Mobile Firts
 - Experiencia visual premium
 - Responsive
-- Animaciones fluidas y 
+- Animaciones fluidas
 - Buen rendimiento
 - Accesibilidad
 
