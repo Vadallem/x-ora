@@ -228,7 +228,7 @@ h2 {
     overflow: hidden;
 }
 
-.hero-video {
+.hero-bg {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -237,11 +237,13 @@ h2 {
     z-index: 0;
 }
 
+/* Oscurece la foto de fondo lo suficiente para que el texto en blanco hueso siga siendo
+   legible sobre un interior claro y saturado de color (ver .hero-coming-soon). */
 .hero-overlay {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(180deg, rgba(8, 42, 74, 0.1) 0%, rgba(8, 42, 74, 0.55) 45%, rgba(8, 42, 74, 0.7) 65%, var(--azul-medianoche) 100%);
+    background: linear-gradient(180deg, rgba(8, 42, 74, 0.55) 0%, rgba(8, 42, 74, 0.72) 45%, rgba(8, 42, 74, 0.82) 65%, var(--azul-medianoche) 100%);
 }
 
 .hero-logo-coming,
@@ -254,13 +256,14 @@ h2 {
 /* Logo centrado sobre el titular X-ORA (Coming Soon y Home) */
 .hero-logo-coming {
     display: block;
-    width: clamp(44px, 6vw, 72px);
+    width: clamp(90px, 12vw, 250px);
     height: auto;
     margin: 0 auto clamp(1rem, 2.5vh, 1.6rem);
+    margin-bottom: 5rem;
 }
 
 .hero-title {
-    font-size: 3.5rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
 }
 
@@ -282,6 +285,11 @@ h2 {
     margin: 0 auto clamp(2.6rem, 7vh, 4.5rem);
 }
 
+/* Sin franja naranja al pie del hero de Coming Soon (index.html) */
+.hero-coming-soon {
+    border-bottom: none;
+}
+
 /* Titular principal: una sola línea centrada, dominante pero contenida */
 .hero-title-xl {
     position: relative;
@@ -292,10 +300,10 @@ h2 {
     justify-content: center;
     white-space: nowrap;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
+    font-weight: 500;
     text-transform: uppercase;
     color: var(--blanco);
-    font-size: clamp(2.4rem, 6.5vw, 5.5rem);
+    font-size: clamp(2.4rem, 6.5vw, 3.5rem);
     line-height: 1;
     letter-spacing: -0.02em;
     margin: 0;
